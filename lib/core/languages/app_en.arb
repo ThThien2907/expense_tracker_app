@@ -1,0 +1,114 @@
+{
+  "onboardingTitle1": "Gain total control of your money",
+  "@onboardingTitle1": {
+    "description": ""
+  },
+  "onboardingTitle2": "Know where your money goes",
+  "@onboardingTitle2": {
+    "description": ""
+  },
+  "onboardingTitle3": "Planning ahead",
+  "@onboardingTitle3": {
+    "description": ""
+  },
+  "onboardingSubTitle1": "Become your own money manager and make every cent count",
+  "@onboardingSubTitle1": {
+    "description": ""
+  },
+  "onboardingSubTitle2": "Track your transaction easily, with categories and financial report",
+  "@onboardingSubTitle2": {
+    "description": ""
+  },
+  "onboardingSubTitle3": "Setup your budget for each category so you in control",
+  "@onboardingSubTitle3": {
+    "description": ""
+  },
+  "singUp": "Sign Up",
+  "@singUp": {
+    "description": ""
+  },
+  "login": "Login",
+  "@login": {
+    "description": ""
+  },
+  "email": "Email",
+  "@email": {
+    "description": ""
+  },
+  "password": "Password",
+  "@password": {
+    "description": ""
+  },
+  "fullName": "Full name",
+  "@fullName": {
+    "description": ""
+  },
+  "bySigningUpAgreeTo": "By signing up, you agree to the ",
+  "@bySigningUpAgreeTo": {
+    "description": ""
+  },
+  "privacyPolicy": "Terms of Service and Privacy Policy",
+  "@privacyPolicy": {
+    "description": ""
+  },
+  "alreadyHaveAnAccount": "Already have an account? ",
+  "@alreadyHaveAnAccount": {
+    "description": ""
+  },
+  "forgotPassword": "Forgot Password?",
+  "@forgotPassword": {
+    "description": ""
+  },
+  "dontHaveAnAccount": "Don’t have an account yet? ",
+  "@dontHaveAnAccount": {
+    "description": ""
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": ""
+  },
+  "loading": "Loading...",
+  "@loading": {
+    "description": ""
+  },
+  "emailExisted": "This email has existed",
+  "@emailExisted": {
+    "description": ""
+  },
+  "invalidLoginCredentials": "Invalid login credentials",
+  "@invalidLoginCredentials": {
+    "description": ""
+  },
+  "emailNotConfirmed": "Email not confirmed",
+  "@emailNotConfirmed": {
+    "description": ""
+  },
+  "weakPassword": "Password should be at least 6 characters",
+  "@weakPassword": {
+    "description": ""
+  },
+  "invalidEmailFormat": "Invalid email format",
+  "@invalidEmailFormat": {
+    "description": ""
+  },
+  "fillIn": "Please fill in all information",
+  "@fillIn": {
+    "description": ""
+  },
+  "emailSent": "Your email has been sent",
+  "@emailSent": {
+    "description": ""
+  },
+  "checkYourEmail": "Check your email to verify your account before logging in",
+  "@checkYourEmail": {
+    "description": ""
+  },
+  "backToLogin": "Back to Login",
+  "@backToLogin": {
+    "description": ""
+  },
+  "noInternetConnection": "No internet connection, please check your connection",
+  "@noInternetConnection": {
+    "description": ""
+  }
+}
