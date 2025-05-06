@@ -1,0 +1,2 @@
+C:/Users/thien/OneDrive/Desktop/flutter/expense_tracker_app/android/app/.cxx/Debug/3q1l4a6o/arm64-v8a/CMakeFiles/edit_cache.dir
+C:/Users/thien/OneDrive/Desktop/flutter/expense_tracker_app/android/app/.cxx/Debug/3q1l4a6o/arm64-v8a/CMakeFiles/rebuild_cache.dir
