@@ -27,5 +27,9 @@
     "emailSent": "Email của bạn đã được gửi đi",
     "checkYourEmail": "Kiểm tra email để xác minh tài khoản của bạn trước khi đăng nhập",
     "backToLogin": "Quay lại Đăng nhập",
-    "noInternetConnection": "Không có kết nối internet, vui lòng kiểm tra kết nối của bạn"
+    "noInternetConnection": "Không có kết nối internet, vui lòng kiểm tra kết nối của bạn",
+    "home": "Tổng quan",
+    "transactions": "Giao dịch",
+    "budgets": "Ngân sách",
+    "account": "Tài khoản"
 }

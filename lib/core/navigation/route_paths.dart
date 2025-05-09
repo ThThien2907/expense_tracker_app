@@ -10,4 +10,7 @@ class RoutePaths {
   static const String login = '/login';
   static const String emailSent = '/email_sent';
   static const String home = '/home';
+  static const String transaction = '/transaction';
+  static const String budget = '/budget';
+  static const String account = '/account';
 }

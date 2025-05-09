@@ -9,6 +9,7 @@ import 'package:expense_tracker_app/features/home/presentation/pages/home_page.d
 import 'package:expense_tracker_app/features/splash/presentation/pages/splash_page.dart';
 import 'package:expense_tracker_app/init_dependencies.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -18,6 +19,13 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initDependencies();
   runApp(const MyApp());
+
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent, // Làm trong suốt
+      // statusBarIconBrightness: Brightness.dark, // Icon màu đen (tùy nền)
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

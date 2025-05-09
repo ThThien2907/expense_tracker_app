@@ -91,4 +91,16 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get noInternetConnection => 'Không có kết nối internet, vui lòng kiểm tra kết nối của bạn';
+
+  @override
+  String get home => 'Tổng quan';
+
+  @override
+  String get transactions => 'Giao dịch';
+
+  @override
+  String get budgets => 'Ngân sách';
+
+  @override
+  String get account => 'Tài khoản';
 }

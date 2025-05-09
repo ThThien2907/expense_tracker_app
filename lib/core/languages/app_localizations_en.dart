@@ -91,4 +91,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noInternetConnection => 'No internet connection, please check your connection';
+
+  @override
+  String get home => 'Home';
+
+  @override
+  String get transactions => 'Transactions';
+
+  @override
+  String get budgets => 'Budgets';
+
+  @override
+  String get account => 'Account';
 }

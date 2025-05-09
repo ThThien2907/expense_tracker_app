@@ -110,5 +110,21 @@
   "noInternetConnection": "No internet connection, please check your connection",
   "@noInternetConnection": {
     "description": ""
+  },
+  "home": "Home",
+  "@home": {
+    "description": ""
+  },
+  "transactions": "Transactions",
+  "@transactions": {
+    "description": ""
+  },
+  "budgets": "Budgets",
+  "@budgets": {
+    "description": ""
+  },
+  "account": "Account",
+  "@account": {
+    "description": ""
   }
 }

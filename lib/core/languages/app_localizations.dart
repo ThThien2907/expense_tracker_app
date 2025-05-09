@@ -262,6 +262,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No internet connection, please check your connection'**
   String get noInternetConnection;
+
+  ///
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get home;
+
+  ///
+  ///
+  /// In en, this message translates to:
+  /// **'Transactions'**
+  String get transactions;
+
+  ///
+  ///
+  /// In en, this message translates to:
+  /// **'Budgets'**
+  String get budgets;
+
+  ///
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get account;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
