@@ -14,8 +14,10 @@ class EmailSentPage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(
+        width: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(
               height: 70,
