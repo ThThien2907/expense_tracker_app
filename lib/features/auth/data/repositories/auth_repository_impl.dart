@@ -48,17 +48,10 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<void> logOut() async {
-    await authRemoteDataSource.logOut();
-  }
-
-  @override
   Future<Either> getCurrentUser() async {
-    print('repo');
     final response = await authRemoteDataSource.getCurrentUser();
     return response.fold(
       (ifLeft) {
-        print('repo left');
         return Left(ifLeft);
       },
       (ifRight) {
