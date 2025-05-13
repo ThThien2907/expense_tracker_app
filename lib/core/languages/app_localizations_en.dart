@@ -103,4 +103,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get account => 'Account';
+
+  @override
+  String get totalBalance => 'Total Balance';
+
+  @override
+  String get income => 'Income';
+
+  @override
+  String get expense => 'Expense';
+
+  @override
+  String get wallet => 'Wallet';
+
+  @override
+  String get category => 'Category';
+
+  @override
+  String get setting => 'Settings';
+
+  @override
+  String get logout => 'Logout';
 }

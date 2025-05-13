@@ -126,5 +126,33 @@
   "account": "Account",
   "@account": {
     "description": ""
+  },
+  "totalBalance": "Total Balance",
+  "@totalBalance": {
+    "description": ""
+  },
+  "income": "Income",
+  "@income": {
+    "description": ""
+  },
+  "expense": "Expense",
+  "@expense": {
+    "description": ""
+  },
+  "wallet": "Wallet",
+  "@wallet": {
+    "description": ""
+  },
+  "category": "Category",
+  "@category": {
+    "description": ""
+  },
+  "setting": "Settings",
+  "@setting": {
+    "description": ""
+  },
+  "logout": "Logout",
+  "@logout": {
+    "description": ""
   }
 }

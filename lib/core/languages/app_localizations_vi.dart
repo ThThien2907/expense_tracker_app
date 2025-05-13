@@ -103,4 +103,25 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get account => 'Tài khoản';
+
+  @override
+  String get totalBalance => 'Tổng số dư';
+
+  @override
+  String get income => 'Thu nhập';
+
+  @override
+  String get expense => 'Chi tiêu';
+
+  @override
+  String get wallet => 'Ví tiền';
+
+  @override
+  String get category => 'Thể loại';
+
+  @override
+  String get setting => 'Cài đặt';
+
+  @override
+  String get logout => 'Đăng xuất';
 }

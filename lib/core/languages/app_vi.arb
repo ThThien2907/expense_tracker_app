@@ -31,5 +31,12 @@
     "home": "Tổng quan",
     "transactions": "Giao dịch",
     "budgets": "Ngân sách",
-    "account": "Tài khoản"
+    "account": "Tài khoản",
+    "totalBalance": "Tổng số dư",
+    "income": "Thu nhập",
+    "expense": "Chi tiêu",
+    "wallet": "Ví tiền",
+    "category": "Thể loại",
+    "setting": "Cài đặt",
+    "logout": "Đăng xuất"
 }

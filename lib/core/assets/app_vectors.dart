@@ -6,12 +6,18 @@ class AppVectors {
 
   static const appLogo = '$basePath/app_logo$format';
 
-  static const onboardingImage1 = '$basePath/onboarding_1$format';
-  static const onboardingImage2 = '$basePath/onboarding_2$format';
-  static const onboardingImage3 = '$basePath/onboarding_3$format';
-
   static const homeIcon = '$basePath/home_icon$format';
   static const transactionIcon = '$basePath/transaction_icon$format';
   static const budgetIcon = '$basePath/budget_icon$format';
   static const accountIcon = '$basePath/account_icon$format';
+
+  static const incomeIcon = '$basePath/income_icon$format';
+  static const expenseIcon = '$basePath/expense_icon$format';
+
+  static const walletIcon = '$basePath/wallet_icon$format';
+  static const categoryIcon = '$basePath/category_icon$format';
+  static const settingIcon = '$basePath/setting_icon$format';
+  static const logoutIcon = '$basePath/logout_icon$format';
+
+  static const shoppingIcon = '$basePath/shopping_icon$format';
 }

@@ -8,4 +8,6 @@ class AppImages {
   static const onboardingImage3 = '$basePath/onboarding_3.png';
 
   static const emailSent = '$basePath/email_sent.png';
+
+  static const defaultProfileAvatar = '$basePath/default_profile_avatar.jpg';
 }

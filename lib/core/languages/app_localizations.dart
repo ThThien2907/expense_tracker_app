@@ -286,6 +286,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Account'**
   String get account;
+
+  ///
+  ///
+  /// In en, this message translates to:
+  /// **'Total Balance'**
+  String get totalBalance;
+
+  ///
+  ///
+  /// In en, this message translates to:
+  /// **'Income'**
+  String get income;
+
+  ///
+  ///
+  /// In en, this message translates to:
+  /// **'Expense'**
+  String get expense;
+
+  ///
+  ///
+  /// In en, this message translates to:
+  /// **'Wallet'**
+  String get wallet;
+
+  ///
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get category;
+
+  ///
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get setting;
+
+  ///
+  ///
+  /// In en, this message translates to:
+  /// **'Logout'**
+  String get logout;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
