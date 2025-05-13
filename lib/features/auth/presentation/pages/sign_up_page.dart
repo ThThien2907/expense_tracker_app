@@ -1,3 +1,4 @@
+import 'package:expense_tracker_app/core/common/widgets/app_bar/custom_app_bar.dart';
 import 'package:expense_tracker_app/core/common/widgets/button/app_button.dart';
 import 'package:expense_tracker_app/core/common/widgets/loading/loading.dart';
 import 'package:expense_tracker_app/core/common/widgets/snack_bar/app_snack_bar.dart';
@@ -44,15 +45,8 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        title: Text(
-          AppLocalizations.of(context)!.singUp,
-          style: const TextStyle(
-            fontFamily: 'Inter',
-            fontSize: 18,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
+      appBar: CustomAppBar(
+        title: AppLocalizations.of(context)!.singUp,
         centerTitle: true,
       ),
       body: Padding(

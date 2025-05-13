@@ -1,3 +1,4 @@
+import 'package:expense_tracker_app/core/common/widgets/app_bar/custom_app_bar.dart';
 import 'package:expense_tracker_app/core/common/widgets/button/app_button.dart';
 import 'package:expense_tracker_app/core/common/widgets/loading/loading.dart';
 import 'package:expense_tracker_app/core/common/widgets/snack_bar/app_snack_bar.dart';
@@ -39,15 +40,8 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        title: Text(
-          AppLocalizations.of(context)!.login,
-          style: const TextStyle(
-            fontFamily: 'Inter',
-            fontSize: 18,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
+      appBar: CustomAppBar(
+        title: AppLocalizations.of(context)!.login,
         centerTitle: true,
       ),
       body: Padding(
