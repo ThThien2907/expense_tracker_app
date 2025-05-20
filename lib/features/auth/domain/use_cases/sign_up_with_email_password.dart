@@ -13,6 +13,7 @@ class SignUpWithEmailPassword extends UseCase<Either, SignUpParams> {
       fullName: params!.fullName,
       email: params.email,
       password: params.password,
+      language: params.language,
     );
     return response.fold(
       (ifLeft) {
@@ -29,10 +30,12 @@ class SignUpParams {
   final String fullName;
   final String email;
   final String password;
+  final String language;
 
   SignUpParams({
     required this.fullName,
     required this.email,
     required this.password,
+    required this.language,
   });
 }

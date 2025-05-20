@@ -7,6 +7,7 @@ import 'package:expense_tracker_app/core/navigation/app_router.dart';
 import 'package:expense_tracker_app/core/theme/app_colors.dart';
 import 'package:expense_tracker_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:expense_tracker_app/features/auth/presentation/widgets/password_field.dart';
+import 'package:expense_tracker_app/features/setting/presentation/bloc/setting_bloc.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -123,6 +124,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 email: emailController.text.trim(),
                                 password: passwordController.text.trim(),
                                 fullName: fullNameController.text.trim(),
+                                language: context.read<SettingBloc>().state.language,
                               ),
                             );
                       }

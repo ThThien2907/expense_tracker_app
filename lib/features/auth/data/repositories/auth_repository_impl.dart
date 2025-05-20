@@ -29,6 +29,7 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<Either> signUpWithEmailPassword({
     required String fullName,
+    required String language,
     required String email,
     required String password,
   }) async {
@@ -36,6 +37,7 @@ class AuthRepositoryImpl implements AuthRepository {
       fullName: fullName,
       email: email,
       password: password,
+      language: language,
     );
     return response.fold(
       (ifLeft) {

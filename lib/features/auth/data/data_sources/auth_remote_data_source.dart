@@ -6,6 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 abstract class AuthRemoteDataSource {
   Future<Either> signUpWithEmailPassword({
     required String fullName,
+    required String language,
     required String email,
     required String password,
   });
@@ -30,11 +31,12 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Future<Either> signUpWithEmailPassword({
     required String fullName,
+    required String language,
     required String email,
     required String password,
   }) async {
     try {
-      if(!await (connectionChecker.hasInternetConnection())){
+      if (!await (connectionChecker.hasInternetConnection())) {
         return const Left('No internet connection');
       }
       final user =
@@ -45,7 +47,10 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       await supabaseClient.auth.signUp(
         password: password,
         email: email,
-        data: {'full_name': fullName},
+        data: {
+          'full_name': fullName,
+          'language': language,
+        },
       );
       return const Right('Sign Up Success');
     } on AuthException catch (e) {
@@ -61,7 +66,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     required String password,
   }) async {
     try {
-      if(!await (connectionChecker.hasInternetConnection())){
+      if (!await (connectionChecker.hasInternetConnection())) {
         return const Left('No internet connection');
       }
       final response = await supabaseClient.auth.signInWithPassword(
@@ -87,7 +92,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Future<Either> getCurrentUser() async {
     try {
-      if(!await (connectionChecker.hasInternetConnection())){
+      if (!await (connectionChecker.hasInternetConnection())) {
         return const Left('No internet connection');
       }
       var currentUserSession = supabaseClient.auth.currentSession;
