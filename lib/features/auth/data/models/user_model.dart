@@ -1,11 +1,6 @@
 import 'package:expense_tracker_app/features/auth/domain/entities/user_entity.dart';
 
 class UserModel extends UserEntity{
-  // final String userId;
-  // final String email;
-  // final String fullName;
-  // final String? avatar;
-
   UserModel({
     required super.userId,
     required super.email,
@@ -29,10 +24,5 @@ class UserModel extends UserEntity{
       fullName: map['full_name'] ?? '',
       avatar: map['avatar'] ?? '',
     );
-  }
-
-  @override
-  String toString() {
-    return '$userId, $fullName, $email, $avatar';
   }
 }
