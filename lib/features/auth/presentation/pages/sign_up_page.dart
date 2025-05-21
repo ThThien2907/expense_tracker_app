@@ -124,7 +124,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 email: emailController.text.trim(),
                                 password: passwordController.text.trim(),
                                 fullName: fullNameController.text.trim(),
-                                language: context.read<SettingBloc>().state.language,
+                                language: context.read<SettingBloc>().state.setting.language,
                               ),
                             );
                       }

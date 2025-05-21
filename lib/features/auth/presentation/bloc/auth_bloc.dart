@@ -1,7 +1,9 @@
 import 'package:expense_tracker_app/core/common/cubits/app_user/app_user_cubit.dart';
+import 'package:expense_tracker_app/features/auth/data/models/user_model.dart';
 import 'package:expense_tracker_app/features/auth/domain/use_cases/get_current_user.dart';
 import 'package:expense_tracker_app/features/auth/domain/use_cases/login_with_email_password.dart';
 import 'package:expense_tracker_app/features/auth/domain/use_cases/sign_up_with_email_password.dart';
+import 'package:expense_tracker_app/features/setting/data/models/setting_model.dart';
 import 'package:expense_tracker_app/features/setting/presentation/bloc/setting_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -66,8 +68,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     response.fold(
       (ifLeft) => emit(AuthFailure(errorMessage: ifLeft)),
       (ifRight) {
-        _appUserCubit.setUser(ifRight);
-        _settingBloc.add(SettingStarted());
+        Map<String, dynamic> data = ifRight.first;
+        UserModel user = UserModel.fromMap(data);
+        _appUserCubit.setUser(user);
+        SettingModel setting = SettingModel.fromMap(data['settings'].first);
+        _settingBloc.add(SettingStarted(settingEntity: setting,));
         emit(AuthSuccess());
       },
     );
@@ -86,8 +91,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         if (ifRight == null) {
           emit(AuthInitial());
         } else {
-          _appUserCubit.setUser(ifRight);
-          _settingBloc.add(SettingStarted());
+          Map<String, dynamic> data = ifRight.first;
+          UserModel user = UserModel.fromMap(data);
+          _appUserCubit.setUser(user);
+          SettingModel setting = SettingModel.fromMap(data['settings'].first);
+          _settingBloc.add(SettingStarted(settingEntity: setting,));
           emit(AuthSuccess());
         }
       },
