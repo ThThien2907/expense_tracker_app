@@ -5,23 +5,21 @@ sealed class BudgetEvent extends Equatable {
 }
 
 final class BudgetStarted extends BudgetEvent {
-  final String userId;
+  final Completer<void>? completer;
 
-  const BudgetStarted({required this.userId});
+  const BudgetStarted({this.completer});
 
   @override
-  List<Object?> get props => [userId];
+  List<Object?> get props => [completer];
 }
 
 final class BudgetAdded extends BudgetEvent {
-  final String userId;
   final String categoryId;
   final double amountLimit;
   final DateTime startDate;
   final DateTime endDate;
 
   const BudgetAdded({
-    required this.userId,
     required this.categoryId,
     required this.amountLimit,
     required this.startDate,
@@ -30,12 +28,11 @@ final class BudgetAdded extends BudgetEvent {
 
   @override
   List<Object?> get props =>
-      [userId, categoryId, amountLimit, startDate, endDate];
+      [categoryId, amountLimit, startDate, endDate];
 }
 
 final class BudgetEdited extends BudgetEvent {
   final String budgetId;
-  final String userId;
   final String categoryId;
   final double amountLimit;
   final DateTime startDate;
@@ -43,7 +40,6 @@ final class BudgetEdited extends BudgetEvent {
 
   const BudgetEdited({
     required this.budgetId,
-    required this.userId,
     required this.categoryId,
     required this.amountLimit,
     required this.startDate,
@@ -52,7 +48,7 @@ final class BudgetEdited extends BudgetEvent {
 
   @override
   List<Object?> get props =>
-      [budgetId, userId, categoryId, amountLimit, startDate, endDate];
+      [budgetId, categoryId, amountLimit, startDate, endDate];
 }
 
 final class BudgetRemoved extends BudgetEvent {
@@ -62,4 +58,18 @@ final class BudgetRemoved extends BudgetEvent {
 
   @override
   List<Object?> get props => [budgetId];
+}
+
+final class BudgetChanged extends BudgetEvent {
+  final List<dynamic> data;
+
+  const BudgetChanged({required this.data});
+
+  @override
+  List<Object?> get props => [data];
+}
+
+final class ClearBudgets extends BudgetEvent {
+  @override
+  List<Object?> get props => [];
 }

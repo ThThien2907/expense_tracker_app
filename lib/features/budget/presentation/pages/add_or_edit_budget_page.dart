@@ -1,5 +1,4 @@
 import 'package:expense_tracker_app/core/common/constant/app_const.dart';
-import 'package:expense_tracker_app/core/common/cubits/app_user/app_user_cubit.dart';
 import 'package:expense_tracker_app/core/common/extensions/currency_formatter.dart';
 import 'package:expense_tracker_app/core/common/extensions/get_localized_name.dart';
 import 'package:expense_tracker_app/core/common/widgets/app_bar/custom_app_bar.dart';
@@ -14,6 +13,7 @@ import 'package:expense_tracker_app/features/budget/presentation/bloc/budget_blo
 import 'package:expense_tracker_app/features/category/presentation/bloc/category_bloc.dart';
 import 'package:expense_tracker_app/features/category/presentation/widgets/category_item.dart';
 import 'package:expense_tracker_app/features/setting/domain/entities/setting_entity.dart';
+import 'package:expense_tracker_app/features/setting/presentation/bloc/setting_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -24,12 +24,10 @@ class AddOrEditBudgetPage extends StatefulWidget {
     super.key,
     required this.isEdit,
     this.budget,
-    required this.setting,
   });
 
   final bool isEdit;
   final BudgetEntity? budget;
-  final SettingEntity setting;
 
   @override
   State<AddOrEditBudgetPage> createState() => _AddOrEditBudgetPageState();
@@ -50,14 +48,18 @@ class _AddOrEditBudgetPageState extends State<AddOrEditBudgetPage> {
   DateTime? startDate;
   DateTime? endDate;
 
+  late SettingEntity settingEntity;
+
   @override
   void initState() {
     super.initState();
+    settingEntity = context.read<SettingBloc>().state.setting;
+
     if (widget.isEdit) {
       if (widget.budget != null) {
         amountController.text = CurrencyFormatter.format(
           amount: widget.budget!.amountLimit,
-          toCurrency: widget.setting.currency,
+          toCurrency: settingEntity.currency,
           isShowSymbol: false,
         );
 
@@ -118,6 +120,7 @@ class _AddOrEditBudgetPageState extends State<AddOrEditBudgetPage> {
           centerTitle: true,
           titleColor: AppColors.light100,
           foregroundColor: AppColors.light100,
+          backgroundColor: AppColors.violet100,
         ),
         body: SingleChildScrollView(
           child: SizedBox(
@@ -149,11 +152,12 @@ class _AddOrEditBudgetPageState extends State<AddOrEditBudgetPage> {
                     vertical: 28,
                   ),
                   decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(32),
-                        topLeft: Radius.circular(32),
-                      ),
-                      color: AppColors.light100),
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(32),
+                      topLeft: Radius.circular(32),
+                    ),
+                    color: AppColors.light100,
+                  ),
                   width: MediaQuery.of(context).size.width,
                   child: Column(
                     children: [
@@ -185,7 +189,7 @@ class _AddOrEditBudgetPageState extends State<AddOrEditBudgetPage> {
                                   }
                                 }),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 16,
                           ),
                           Flexible(
@@ -220,7 +224,7 @@ class _AddOrEditBudgetPageState extends State<AddOrEditBudgetPage> {
                           FocusScope.of(context).unfocus();
                           double amountLimit = CurrencyFormatter.unFormat(
                             amount: amountController.text.trim(),
-                            fromCurrency: widget.setting.currency,
+                            fromCurrency: settingEntity.currency,
                           );
                           if (amountController.text.isEmpty ||
                               categoryController.text.isEmpty ||
@@ -235,13 +239,17 @@ class _AddOrEditBudgetPageState extends State<AddOrEditBudgetPage> {
 
                           if (endDate!.difference(startDate!).isNegative) {
                             AppSnackBar.showError(
-                                context, AppLocalizations.of(context)!.endDateCanNotBeBeforeStartDate);
+                                context,
+                                AppLocalizations.of(context)!
+                                    .endDateCanNotBeBeforeStartDate);
                             return;
                           }
 
                           if (endDate!.difference(now).isNegative) {
                             AppSnackBar.showError(
-                                context, AppLocalizations.of(context)!.endDateCanNotBeLessThanToday);
+                                context,
+                                AppLocalizations.of(context)!
+                                    .endDateCanNotBeLessThanToday);
                             return;
                           }
 
@@ -249,26 +257,24 @@ class _AddOrEditBudgetPageState extends State<AddOrEditBudgetPage> {
                             context.read<BudgetBloc>().add(
                                   BudgetEdited(
                                     budgetId: widget.budget!.budgetId,
-                                    userId: widget.budget!.userId,
                                     categoryId: categoryId,
                                     amountLimit: amountLimit,
-                                    startDate: startDate!.toUtc(),
+                                    startDate: startDate!,
                                     endDate: DateTime(endDate!.year,
-                                            endDate!.month, endDate!.day + 1)
-                                        .toUtc(),
+                                            endDate!.month, endDate!.day + 1),
                                   ),
                                 );
                           } else {
-                            final user = context.read<AppUserCubit>().state;
                             context.read<BudgetBloc>().add(
                                   BudgetAdded(
-                                    userId: user!.userId,
                                     categoryId: categoryId,
                                     amountLimit: amountLimit,
-                                    startDate: startDate!.toUtc(),
-                                    endDate: DateTime(endDate!.year,
-                                            endDate!.month, endDate!.day + 1,)
-                                        .toUtc(),
+                                    startDate: startDate!,
+                                    endDate: DateTime(
+                                      endDate!.year,
+                                      endDate!.month,
+                                      endDate!.day + 1
+                                    ),
                                   ),
                                 );
                           }
@@ -297,10 +303,10 @@ class _AddOrEditBudgetPageState extends State<AddOrEditBudgetPage> {
         focusedBorder: InputBorder.none,
         prefixIcon: Text(
           AppConst.currencies
-              .firstWhere((currency) =>
-                  currency.currencyCode == widget.setting.currency)
+              .firstWhere(
+                  (currency) => currency.currencyCode == settingEntity.currency)
               .currencySymbol,
-          style: TextStyle(
+          style: const TextStyle(
             fontFamily: 'Inter',
             color: AppColors.light80,
             fontSize: 42,
@@ -327,12 +333,13 @@ class _AddOrEditBudgetPageState extends State<AddOrEditBudgetPage> {
           controller: categoryController,
           readOnly: true,
           decoration: InputDecoration(
-              hintText: AppLocalizations.of(context)!.category,
-              suffixIcon: Icon(
-                Icons.arrow_drop_down_sharp,
-                color: AppColors.light20,
-                size: 32,
-              )),
+            hintText: AppLocalizations.of(context)!.category,
+            suffixIcon: const Icon(
+              Icons.arrow_drop_down_sharp,
+              color: AppColors.light20,
+              size: 32,
+            ),
+          ),
           style: const TextStyle(
             fontFamily: 'Inter',
             color: AppColors.dark100,
@@ -342,31 +349,35 @@ class _AddOrEditBudgetPageState extends State<AddOrEditBudgetPage> {
             AppBottomSheet.show(
               context: context,
               height: MediaQuery.of(context).size.height * 0.85,
-              widget: ListView.separated(
-                itemBuilder: (context, index) {
-                  return CategoryItem(
-                    name: state.categoriesExpense[index].name,
-                    iconName: state.categoriesExpense[index].iconName,
-                    color: state.categoriesExpense[index].color,
-                    onTap: () {
-                      categoryController.text =
-                          GetLocalizedName.getLocalizedName(
-                        context,
-                        state.categoriesExpense[index].name,
-                      );
-                      categoryId = state.categoriesExpense[index].categoryId;
-                      print(state.categoriesExpense[index].categoryId);
-                      print(categoryId);
-                      context.pop();
-                    },
-                  );
-                },
-                separatorBuilder: (context, index) {
-                  return SizedBox(
-                    height: 16,
-                  );
-                },
-                itemCount: state.categoriesExpense.length,
+              padding: EdgeInsets.zero,
+              widget: Scaffold(
+                appBar: CustomAppBar(
+                  title: AppLocalizations.of(context)!.expense,
+                  centerTitle: true,
+                ),
+                body: ListView.separated(
+                  padding: const EdgeInsets.only(bottom: 16, left: 16, right: 16),
+                  itemBuilder: (context, index) {
+                    return CategoryItem(
+                      categoryEntity: state.categoriesExpense[index],
+                      onTap: () {
+                        categoryController.text =
+                            GetLocalizedName.getLocalizedName(
+                          context,
+                              state.categoriesExpense[index].name,
+                        );
+                        categoryId = state.categoriesExpense[index].categoryId;
+                        context.pop();
+                      },
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    return const SizedBox(
+                      height: 16,
+                    );
+                  },
+                  itemCount: state.categoriesExpense.length,
+                ),
               ),
             );
           },
@@ -395,7 +406,7 @@ class _AddOrEditBudgetPageState extends State<AddOrEditBudgetPage> {
             ),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         TextField(
@@ -406,7 +417,7 @@ class _AddOrEditBudgetPageState extends State<AddOrEditBudgetPage> {
             color: AppColors.dark100,
             fontSize: 16,
           ),
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             suffixIcon: Icon(
               Icons.calendar_month,
               color: AppColors.light20,

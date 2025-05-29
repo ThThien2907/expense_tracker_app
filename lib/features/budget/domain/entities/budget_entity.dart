@@ -6,7 +6,7 @@ class BudgetEntity {
   final String userId;
   final DateTime createdAt;
   final double amountLimit;
-  final double amountSpent;
+  double amountSpent;
   final DateTime startDate;
   final DateTime endDate;
   final CategoryEntity category;

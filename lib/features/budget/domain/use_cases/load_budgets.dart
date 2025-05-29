@@ -2,32 +2,22 @@ import 'package:dartz/dartz.dart';
 import 'package:expense_tracker_app/core/usecase/usecase.dart';
 import 'package:expense_tracker_app/features/budget/domain/repositories/budget_repository.dart';
 
-class LoadBudgets extends UseCase<Either, LoadBudgetsParams> {
+class LoadBudgets extends UseCase<Either, NoParams> {
   final BudgetRepository budgetRepository;
 
   LoadBudgets(this.budgetRepository);
 
   @override
-  Future<Either> call({LoadBudgetsParams? params}) async {
-    final response = await budgetRepository.loadBudgets(
-      userId: params!.userId,
-    );
+  Future<Either> call({NoParams? params}) async {
+    final response = await budgetRepository.loadBudgets();
 
     return response.fold(
-          (ifLeft) {
+      (ifLeft) {
         return Left(ifLeft);
       },
-          (ifRight) {
+      (ifRight) {
         return Right(ifRight);
       },
     );
   }
-}
-
-class LoadBudgetsParams {
-  final String userId;
-
-  LoadBudgetsParams({
-    required this.userId,
-  });
 }

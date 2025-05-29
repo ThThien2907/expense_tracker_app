@@ -9,14 +9,12 @@ class BudgetRepositoryImpl implements BudgetRepository {
 
   @override
   Future<Either> addNewBudget({
-    required String userId,
     required String categoryId,
     required double amountLimit,
     required DateTime startDate,
     required DateTime endDate,
   }) async {
     final response = await budgetRemoteDatasource.addNewBudget(
-      userId: userId,
       categoryId: categoryId,
       amountLimit: amountLimit,
       startDate: startDate,
@@ -52,7 +50,6 @@ class BudgetRepositoryImpl implements BudgetRepository {
   @override
   Future<Either> editBudget({
     required String budgetId,
-    required String userId,
     required String categoryId,
     required double amountLimit,
     required DateTime startDate,
@@ -60,7 +57,6 @@ class BudgetRepositoryImpl implements BudgetRepository {
   }) async {
     final response = await budgetRemoteDatasource.editBudget(
       budgetId: budgetId,
-      userId: userId,
       categoryId: categoryId,
       amountLimit: amountLimit,
       startDate: startDate,
@@ -78,10 +74,8 @@ class BudgetRepositoryImpl implements BudgetRepository {
   }
 
   @override
-  Future<Either> loadBudgets({required String userId}) async {
-    final response = await budgetRemoteDatasource.loadBudgets(
-      userId: userId,
-    );
+  Future<Either> loadBudgets() async {
+    final response = await budgetRemoteDatasource.loadBudgets();
 
     return response.fold(
       (ifLeft) {

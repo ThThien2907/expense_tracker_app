@@ -58,6 +58,7 @@ class DetailBudgetPage extends StatelessWidget {
                     title: AppLocalizations.of(context)!.removeThisBudget,
                     subtitle: AppLocalizations.of(context)!.confirmRemoveBudget,
                     onPressedYesButton: () {
+                      context.pop();
                       context
                           .read<BudgetBloc>()
                           .add(BudgetRemoved(budgetId: budgetEntity.budgetId));
@@ -334,8 +335,6 @@ class DetailBudgetPage extends StatelessWidget {
                           context.push(
                             RoutePaths.addOrEditBudget,
                             extra: ({
-                              'setting':
-                                  context.read<SettingBloc>().state.setting,
                               'isEdit': true,
                               'budget': budgetEntity,
                             }),

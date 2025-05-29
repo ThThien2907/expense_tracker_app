@@ -5,7 +5,6 @@ import 'package:expense_tracker_app/core/navigation/app_router.dart';
 import 'package:expense_tracker_app/core/theme/app_colors.dart';
 import 'package:expense_tracker_app/features/budget/presentation/bloc/budget_bloc.dart';
 import 'package:expense_tracker_app/features/budget/presentation/widgets/budget_item.dart';
-import 'package:expense_tracker_app/features/setting/presentation/bloc/setting_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -82,6 +81,7 @@ class BudgetPage extends StatelessWidget {
                     );
                   }
                   return ListView.separated(
+                    padding: const EdgeInsets.only(bottom: 16, top: 16),
                     itemBuilder: (context, index) {
                       return BudgetItem(
                         budgetEntity: runningBudgets[index],
@@ -106,7 +106,6 @@ class BudgetPage extends StatelessWidget {
                 context.push(
                   RoutePaths.addOrEditBudget,
                   extra: ({
-                    'setting': context.read<SettingBloc>().state.setting,
                     'isEdit': false,
                   }),
                 );

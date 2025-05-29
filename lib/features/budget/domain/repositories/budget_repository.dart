@@ -1,12 +1,9 @@
 import 'package:dartz/dartz.dart';
 
 abstract class BudgetRepository {
-  Future<Either> loadBudgets({
-    required String userId,
-  });
+  Future<Either> loadBudgets();
 
   Future<Either> addNewBudget({
-    required String userId,
     required String categoryId,
     required double amountLimit,
     required DateTime startDate,
@@ -15,7 +12,6 @@ abstract class BudgetRepository {
 
   Future<Either> editBudget({
     required String budgetId,
-    required String userId,
     required String categoryId,
     required double amountLimit,
     required DateTime startDate,

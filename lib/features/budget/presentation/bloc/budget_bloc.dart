@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:equatable/equatable.dart';
 import 'package:expense_tracker_app/features/budget/domain/entities/budget_entity.dart';
 import 'package:expense_tracker_app/features/budget/domain/use_cases/add_new_budget.dart';
@@ -30,6 +32,8 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
     on<BudgetAdded>(_onBudgetAdded);
     on<BudgetEdited>(_onBudgetEdited);
     on<BudgetRemoved>(_onBudgetRemoved);
+    on<BudgetChanged>(_onBudgetChanged);
+    on<ClearBudgets>(_onClearBudgets);
   }
 
   _onBudgetStarted(
@@ -38,8 +42,7 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
   ) async {
     emit(state.copyWith(status: BudgetStatus.loading));
 
-    var response = await _loadBudgets.call(
-        params: LoadBudgetsParams(userId: event.userId));
+    var response = await _loadBudgets.call();
 
     response.fold(
       (ifLeft) {
@@ -47,6 +50,7 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
           status: BudgetStatus.failure,
           errorMessage: ifLeft,
         ));
+        event.completer?.completeError(ifLeft);
       },
       (ifRight) {
         emit(state.copyWith(
@@ -54,6 +58,7 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
           budgets: ifRight,
           errorMessage: '',
         ));
+        event.completer?.complete();
       },
     );
   }
@@ -66,7 +71,6 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
 
     var response = await _addNewBudget.call(
       params: AddNewBudgetParams(
-        userId: event.userId,
         categoryId: event.categoryId,
         amountLimit: event.amountLimit,
         startDate: event.startDate,
@@ -100,7 +104,6 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
     var response = await _editBudget.call(
       params: EditBudgetParams(
         budgetId: event.budgetId,
-        userId: event.userId,
         categoryId: event.categoryId,
         amountLimit: event.amountLimit,
         startDate: event.startDate,
@@ -116,7 +119,8 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
         ));
       },
       (ifRight) {
-        int index = state.budgets.indexWhere((budget) => budget.budgetId == event.budgetId);
+        int index = state.budgets
+            .indexWhere((budget) => budget.budgetId == event.budgetId);
         state.budgets.removeAt(index);
         state.budgets.insert(index, ifRight);
         emit(state.copyWith(
@@ -147,12 +151,37 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
         ));
       },
       (ifRight) {
-        state.budgets.removeWhere((budget) => budget.budgetId == event.budgetId);
+        state.budgets
+            .removeWhere((budget) => budget.budgetId == event.budgetId);
         emit(state.copyWith(
           status: BudgetStatus.success,
           errorMessage: '',
         ));
       },
     );
+  }
+
+  _onBudgetChanged(
+    BudgetChanged event,
+    Emitter<BudgetState> emit,
+  ) {
+    emit(state.copyWith(status: BudgetStatus.loading));
+    for (var budget in event.data) {
+      state.budgets
+          .firstWhere((e) => e.budgetId == budget['budget_id'])
+          .amountSpent = (budget['amount_spent'] as num).toDouble();
+    }
+    emit(state.copyWith(status: BudgetStatus.success));
+  }
+
+  _onClearBudgets(
+    ClearBudgets event,
+    Emitter<BudgetState> emit,
+  ) {
+    emit(state.copyWith(
+      status: BudgetStatus.initial,
+      budgets: const [],
+      errorMessage: '',
+    ));
   }
 }

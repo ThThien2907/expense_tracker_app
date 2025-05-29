@@ -10,8 +10,7 @@ class AddNewBudget extends UseCase<Either, AddNewBudgetParams> {
   @override
   Future<Either> call({AddNewBudgetParams? params}) async {
     final response = await budgetRepository.addNewBudget(
-      userId: params!.userId,
-      categoryId: params.categoryId,
+      categoryId: params!.categoryId,
       amountLimit: params.amountLimit,
       startDate: params.startDate,
       endDate: params.endDate,
@@ -29,14 +28,12 @@ class AddNewBudget extends UseCase<Either, AddNewBudgetParams> {
 }
 
 class AddNewBudgetParams {
-  final String userId;
   final String categoryId;
   final double amountLimit;
   final DateTime startDate;
   final DateTime endDate;
 
   AddNewBudgetParams({
-    required this.userId,
     required this.categoryId,
     required this.amountLimit,
     required this.startDate,

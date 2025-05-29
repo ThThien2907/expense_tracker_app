@@ -4,12 +4,9 @@ import 'package:expense_tracker_app/features/budget/data/models/budget_model.dar
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class BudgetRemoteDatasource {
-  Future<Either> loadBudgets({
-    required String userId,
-  });
+  Future<Either> loadBudgets();
 
   Future<Either> addNewBudget({
-    required String userId,
     required String categoryId,
     required double amountLimit,
     required DateTime startDate,
@@ -18,7 +15,6 @@ abstract class BudgetRemoteDatasource {
 
   Future<Either> editBudget({
     required String budgetId,
-    required String userId,
     required String categoryId,
     required double amountLimit,
     required DateTime startDate,
@@ -37,18 +33,18 @@ class BudgetRemoteDatasourceImpl implements BudgetRemoteDatasource {
   BudgetRemoteDatasourceImpl(this.supabaseClient, this.connectionChecker);
 
   @override
-  Future<Either> loadBudgets({
-    required String userId,
-  }) async {
+  Future<Either> loadBudgets() async {
     try {
       if (!await (connectionChecker.hasInternetConnection())) {
         return const Left('No internet connection');
       }
 
+      final user = supabaseClient.auth.currentUser;
+
       final response = await supabaseClient
           .from('budgets')
           .select('*, categories(*)')
-          .eq('user_id', userId)
+          .eq('user_id', user!.id)
           .order('created_at', ascending: false);
 
       return Right(response.map((e) => BudgetModel.fromMap(e)).toList());
@@ -61,7 +57,6 @@ class BudgetRemoteDatasourceImpl implements BudgetRemoteDatasource {
 
   @override
   Future<Either> addNewBudget({
-    required String userId,
     required String categoryId,
     required double amountLimit,
     required DateTime startDate,
@@ -71,14 +66,15 @@ class BudgetRemoteDatasourceImpl implements BudgetRemoteDatasource {
       if (!await (connectionChecker.hasInternetConnection())) {
         return const Left('No internet connection');
       }
+      final user = supabaseClient.auth.currentUser!;
 
       final transactionResponse = await supabaseClient
           .from('transactions')
           .select()
-          .eq('user_id', userId)
+          .eq('user_id', user.id)
           .eq('category_id', categoryId)
-          .gte('created_at', startDate)
-          .lte('created_at', endDate);
+          .gte('created_at', startDate.toUtc().toIso8601String())
+          .lte('created_at', endDate.toUtc().toIso8601String());
 
       double amountSpent = 0;
       if (transactionResponse.isNotEmpty) {
@@ -91,11 +87,11 @@ class BudgetRemoteDatasourceImpl implements BudgetRemoteDatasource {
           .from('budgets')
           .insert(({
             'category_id': categoryId,
-            'user_id': userId,
+            'user_id': user.id,
             'amount_limit': amountLimit,
             'amount_spent': amountSpent,
-            'start_date': startDate.toIso8601String(),
-            'end_date': endDate.toIso8601String(),
+            'start_date': startDate.toUtc().toIso8601String(),
+            'end_date': endDate.toUtc().toIso8601String(),
           }))
           .select('*, categories(*)');
 
@@ -113,7 +109,6 @@ class BudgetRemoteDatasourceImpl implements BudgetRemoteDatasource {
   @override
   Future<Either> editBudget({
     required String budgetId,
-    required String userId,
     required String categoryId,
     required double amountLimit,
     required DateTime startDate,
@@ -123,14 +118,15 @@ class BudgetRemoteDatasourceImpl implements BudgetRemoteDatasource {
       if (!await (connectionChecker.hasInternetConnection())) {
         return const Left('No internet connection');
       }
+      final user = supabaseClient.auth.currentUser!;
 
       final transactionResponse = await supabaseClient
           .from('transactions')
           .select()
-          .eq('user_id', userId)
+          .eq('user_id', user.id)
           .eq('category_id', categoryId)
-          .gte('created_at', startDate)
-          .lte('created_at', endDate);
+          .gte('created_at', startDate.toUtc().toIso8601String())
+          .lte('created_at', endDate.toUtc().toIso8601String());
 
       double amountSpent = 0;
       if (transactionResponse.isNotEmpty) {
@@ -145,8 +141,8 @@ class BudgetRemoteDatasourceImpl implements BudgetRemoteDatasource {
             'category_id': categoryId,
             'amount_limit': amountLimit,
             'amount_spent': amountSpent,
-            'start_date': startDate.toIso8601String(),
-            'end_date': endDate.toIso8601String(),
+            'start_date': startDate.toUtc().toIso8601String(),
+            'end_date': endDate.toUtc().toIso8601String(),
           }))
           .eq('budget_id', budgetId)
           .select('*, categories(*)');

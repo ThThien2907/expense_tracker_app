@@ -11,7 +11,6 @@ class EditBudget extends UseCase<Either, EditBudgetParams> {
   Future<Either> call({EditBudgetParams? params}) async {
     final response = await budgetRepository.editBudget(
       budgetId: params!.budgetId,
-      userId: params.userId,
       categoryId: params.categoryId,
       amountLimit: params.amountLimit,
       startDate: params.startDate,
@@ -31,7 +30,6 @@ class EditBudget extends UseCase<Either, EditBudgetParams> {
 
 class EditBudgetParams {
   final String budgetId;
-  final String userId;
   final String categoryId;
   final double amountLimit;
   final DateTime startDate;
@@ -39,7 +37,6 @@ class EditBudgetParams {
 
   EditBudgetParams({
     required this.budgetId,
-    required this.userId,
     required this.categoryId,
     required this.amountLimit,
     required this.startDate,
