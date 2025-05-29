@@ -1,8 +1,12 @@
+import 'package:expense_tracker_app/core/common/extensions/get_localized_name.dart';
 import 'package:expense_tracker_app/core/common/widgets/snack_bar/app_snack_bar.dart';
-import 'package:expense_tracker_app/core/languages/app_localizations.dart';
 import 'package:expense_tracker_app/core/navigation/app_router.dart';
 import 'package:expense_tracker_app/core/theme/app_colors.dart';
 import 'package:expense_tracker_app/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:expense_tracker_app/features/budget/presentation/bloc/budget_bloc.dart';
+import 'package:expense_tracker_app/features/category/presentation/bloc/category_bloc.dart';
+import 'package:expense_tracker_app/features/transaction/presentation/bloc/transaction_bloc.dart';
+import 'package:expense_tracker_app/features/wallet/presentation/bloc/wallet_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -15,7 +19,6 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-
   @override
   void initState() {
     super.initState();
@@ -28,23 +31,29 @@ class _SplashPageState extends State<SplashPage> {
       extendBody: true,
       backgroundColor: AppColors.violet100,
       body: BlocListener<AuthBloc, AuthState>(
-        listener: (context, state) {
-          if(state is AuthInitial) {
+        listener: (context, state) async {
+          if (state is AuthInitial) {
             context.go(RoutePaths.onboarding);
           }
 
-          if (state is AuthSuccess) {
-            context.go(RoutePaths.home);
+          if (state is AuthFailure) {
+            AppSnackBar.showError(
+              context,
+              GetLocalizedName.getLocalizedName(context, state.errorMessage),
+            );
           }
 
-          if (state is AuthFailure){
-            if (state.errorMessage == 'No internet connection') {
-              AppSnackBar.showError(
-                  context, AppLocalizations.of(context)!.noInternetConnection);
-            }
-            else {
-              AppSnackBar.showError(context, state.errorMessage);
-            }
+          if (state is AuthSuccess) {
+            context.read<WalletBloc>().add(const WalletStarted());
+            context.read<CategoryBloc>().add(CategoryStarted());
+            context.read<BudgetBloc>().add(const BudgetStarted());
+            context.read<TransactionBloc>().add(const TransactionStarted());
+
+            await Future.delayed(const Duration(seconds: 3)).then((_) {
+              if(context.mounted){
+                context.go(RoutePaths.home);
+              }
+            });
           }
         },
         child: Center(
