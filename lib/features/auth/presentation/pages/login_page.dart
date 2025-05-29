@@ -7,6 +7,10 @@ import 'package:expense_tracker_app/core/navigation/app_router.dart';
 import 'package:expense_tracker_app/core/theme/app_colors.dart';
 import 'package:expense_tracker_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:expense_tracker_app/features/auth/presentation/widgets/password_field.dart';
+import 'package:expense_tracker_app/features/budget/presentation/bloc/budget_bloc.dart';
+import 'package:expense_tracker_app/features/category/presentation/bloc/category_bloc.dart';
+import 'package:expense_tracker_app/features/transaction/presentation/bloc/transaction_bloc.dart';
+import 'package:expense_tracker_app/features/wallet/presentation/bloc/wallet_bloc.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -47,13 +51,12 @@ class _LoginPageState extends State<LoginPage> {
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: BlocListener<AuthBloc, AuthState>(
-          listener: (context, state) {
+          listener: (context, state) async {
             if (state is AuthLoading) {
               Loading.show(context);
-            } else {
-              Loading.hide(context);
             }
             if (state is AuthFailure) {
+              Loading.hide(context);
               if (state.errorMessage == 'Email not confirmed') {
                 AppSnackBar.showError(context, AppLocalizations.of(context)!.emailNotConfirmed);
               } else if (state.errorMessage == 'Invalid login credentials') {
@@ -63,7 +66,16 @@ class _LoginPageState extends State<LoginPage> {
               }
             }
             if (state is AuthSuccess) {
-              context.go(RoutePaths.home);
+              context.read<WalletBloc>().add(const WalletStarted());
+              context.read<CategoryBloc>().add(CategoryStarted());
+              context.read<BudgetBloc>().add(const BudgetStarted());
+              context.read<TransactionBloc>().add(const TransactionStarted());
+
+              await Future.delayed(const Duration(seconds: 3)).then((_) {
+                if(context.mounted){
+                  context.go(RoutePaths.home);
+                }
+              });
             }
           },
           child: Column(

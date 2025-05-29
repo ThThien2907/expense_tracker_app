@@ -81,8 +81,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   _onAuthLoggedIn(AuthLoggedIn event, Emitter emit) async {
     final response = await _getCurrentUser.call();
 
-    await Future.delayed(const Duration(seconds: 3));
-
     response.fold(
       (ifLeft) {
         emit(AuthFailure(errorMessage: ifLeft));
