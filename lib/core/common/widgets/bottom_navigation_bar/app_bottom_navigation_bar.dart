@@ -39,6 +39,21 @@ class AppBottomNavigationBar extends StatefulWidget {
 
 class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
   @override
+  void initState() {
+    super.initState();
+    // context
+    //     .read<WalletBloc>()
+    //     .add(WalletStarted(userId: context.read<AppUserCubit>().state!.userId));
+    // context.read<CategoryBloc>().add(CategoryStarted());
+    // context
+    //     .read<BudgetBloc>()
+    //     .add(BudgetStarted(userId: context.read<AppUserCubit>().state!.userId));
+    // context
+    //     .read<TransactionBloc>()
+    //     .add(TransactionStarted(userId: context.read<AppUserCubit>().state!.userId));
+  }
+
+  @override
   Widget build(BuildContext context) {
     final currentRoute = GoRouterState.of(context).uri.toString();
     int selectedIndex = 0;
@@ -53,25 +68,68 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
     }
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       extendBody: true,
-      floatingActionButton: InkWell(
-        onTap: () {},
-        child: Container(
-          width: 60,
-          height: 60,
-          decoration: BoxDecoration(
-            color: AppColors.violet100,
-            borderRadius: BorderRadius.circular(1000),
-          ),
-          child: const Center(
-            child: Icon(
-              Icons.add,
-              color: AppColors.light100,
-              size: 32,
-            ),
-          ),
-        ),
+      floatingActionButton: _buildFloatingActionButton(
+        backgroundColor: AppColors.violet100,
+        iconData: Icons.add,
+        onTap: () {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return Stack(
+                children: [
+                  Positioned(
+                    bottom: 120,
+                    left: MediaQuery.of(context).size.width / 2 - 100,
+                    child: _buildFloatingActionButton(
+                      backgroundColor: AppColors.red100,
+                      onTap: () {
+                        context.pop();
+                        context.push(
+                          RoutePaths.addOrEditTransaction,
+                          extra: ({'isExpense': true}),
+                        );
+                      },
+                      svgIcon: AppVectors.expenseIcon,
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 120,
+                    right: MediaQuery.of(context).size.width / 2 - 100,
+                    child: _buildFloatingActionButton(
+                      backgroundColor: AppColors.green100,
+                      onTap: () {
+                        context.pop();
+
+                        context.push(
+                          RoutePaths.addOrEditTransaction,
+                          extra: ({'isExpense': false}),
+                        );
+                      },
+                      svgIcon: AppVectors.incomeIcon,
+                    ),
+                  ),
+                  Align(
+                    alignment: const Alignment(0, 0.895),
+                    child: _buildFloatingActionButton(
+                      backgroundColor: AppColors.violet100,
+                      iconData: Icons.close,
+                      size: 62,
+                      onTap: () {
+                        context.pop();
+                      },
+                      // svgIcon: AppVectors.incomeIcon,
+                    ),
+                  ),
+                ],
+              );
+            },
+          ).then((value) {
+            if (value == null) {
+              debugPrint('dong dialog');
+            }
+          });
+        },
       ),
       floatingActionButtonLocation:
           FloatingActionButtonLocation.miniCenterDocked,
@@ -83,6 +141,7 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
         height: 70,
         elevation: 4,
         shadowColor: AppColors.dark100,
+        padding: const EdgeInsets.symmetric(horizontal: 6),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: List.generate(
@@ -92,43 +151,87 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
                 padding: index == 1
                     ? const EdgeInsets.only(right: 24)
                     : index == 2
-                        ? const EdgeInsets.only(left: 24)
-                        : EdgeInsets.zero,
-                child: GestureDetector(
+                    ? const EdgeInsets.only(left: 24)
+                    : EdgeInsets.zero,
+                child: InkWell(
+                  highlightColor: Colors.transparent,
+                  splashColor: AppColors.violet20.withValues(alpha: 0.4),
                   onTap: () {
                     widget.statefulNavigationShell.goBranch(index);
                   },
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SvgPicture.asset(
-                        AppBottomNavigationBar.icons[index],
-                        colorFilter: ColorFilter.mode(
-                          index == selectedIndex
-                              ? AppColors.violet100
-                              : AppColors.light20,
-                          BlendMode.srcIn,
+                  child: SizedBox(
+                    width: 74,
+                    // padding: EdgeInsets.symmetric(horizontal: 10),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(
+                          AppBottomNavigationBar.icons[index],
+                          colorFilter: ColorFilter.mode(
+                            index == selectedIndex
+                                ? AppColors.violet100
+                                : AppColors.light20,
+                            BlendMode.srcIn,
+                          ),
+                          height: 28,
                         ),
-                        height: 28,
-                      ),
-                      Text(
-                        AppBottomNavigationBar.labels(context)[index],
-                        style: TextStyle(
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w500,
-                          fontSize: 12,
-                          color: index == selectedIndex
-                              ? AppColors.violet100
-                              : AppColors.light20,
+                        Text(
+                          AppBottomNavigationBar.labels(context)[index],
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w500,
+                            fontSize: 12,
+                            color: index == selectedIndex
+                                ? AppColors.violet100
+                                : AppColors.light20,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               );
             },
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFloatingActionButton({
+    required Color backgroundColor,
+    required VoidCallback onTap,
+    String? svgIcon,
+    IconData? iconData,
+    double? size,
+  }) {
+    return Material(
+      color: backgroundColor,
+      borderRadius: BorderRadius.circular(1000),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(1000),
+        onTap: onTap,
+        child: Container(
+          width: size ?? 60,
+          height: size ?? 60,
+          alignment: Alignment.center,
+          child: svgIcon != null
+              ? SvgPicture.asset(
+                  svgIcon,
+                  height: 32,
+                  colorFilter: const ColorFilter.mode(
+                    AppColors.light100,
+                    BlendMode.srcIn,
+                  ),
+                )
+              : Center(
+                  child: Icon(
+                    iconData,
+                    color: AppColors.light100,
+                    size: 32,
+                  ),
+                ),
         ),
       ),
     );

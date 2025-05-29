@@ -5,10 +5,9 @@ class AppTheme {
   AppTheme._();
 
   static final appTheme = ThemeData.light().copyWith(
-    // useMaterial3: true,
     scaffoldBackgroundColor: AppColors.light100,
-    appBarTheme: AppBarTheme(
-      color: Colors.transparent,
+    appBarTheme: const AppBarTheme(
+      color: AppColors.light100,
     ),
     inputDecorationTheme: InputDecorationTheme(
       border: OutlineInputBorder(
@@ -37,7 +36,7 @@ class AppTheme {
         color: AppColors.light20,
         fontSize: 16,
       ),
-      contentPadding: EdgeInsets.symmetric(horizontal: 16,vertical: 18),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16,vertical: 18),
     ),
   );
 }

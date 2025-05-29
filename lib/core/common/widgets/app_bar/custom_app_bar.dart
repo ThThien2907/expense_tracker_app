@@ -9,6 +9,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.action,
     this.height,
     this.centerTitle,
+    this.titleColor,
+    this.foregroundColor,
+    this.backgroundColor,
   });
 
   final String? title;
@@ -16,6 +19,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final List<Widget>? action;
   final double? height;
   final bool? centerTitle;
+  final Color? titleColor;
+  final Color? foregroundColor;
+  final Color? backgroundColor;
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +29,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: widget ??
           Text(
             title!,
-            style: const TextStyle(
-              color: AppColors.dark50,
+            style: TextStyle(
+              color: titleColor ?? AppColors.dark100,
               fontSize: 18,
               fontWeight: FontWeight.w700,
             ),
           ),
+      foregroundColor: foregroundColor ?? AppColors.dark100,
+      backgroundColor: backgroundColor,
       toolbarHeight: height ?? 60,
       actions: action,
       scrolledUnderElevation: 0.0,

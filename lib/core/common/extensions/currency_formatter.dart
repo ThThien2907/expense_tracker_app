@@ -69,12 +69,13 @@ class CurrencyFormatter {
   static String format({
     required double amount,
     required String toCurrency,
+    String? fromCurrency,
     bool isShowSymbol = true,
   }) {
     final NumberFormat formatter = NumberFormat();
     amount = convertCurrency(
       amount: amount,
-      fromCurrency: 'VND',
+      fromCurrency: fromCurrency ?? 'VND',
       toCurrency: toCurrency,
     );
     return '${formatter.format(amount)}${isShowSymbol ? ' ${AppConst.currencies.firstWhere((currency) => currency.currencyCode == toCurrency).currencySymbol}' : ''}';

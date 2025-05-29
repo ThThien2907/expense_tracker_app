@@ -1,158 +1,139 @@
 {
   "onboardingTitle1": "Gain total control of your money",
-  "@onboardingTitle1": {
-    "description": ""
-  },
   "onboardingTitle2": "Know where your money goes",
-  "@onboardingTitle2": {
-    "description": ""
-  },
   "onboardingTitle3": "Planning ahead",
-  "@onboardingTitle3": {
-    "description": ""
-  },
   "onboardingSubTitle1": "Become your own money manager and make every cent count",
-  "@onboardingSubTitle1": {
-    "description": ""
-  },
   "onboardingSubTitle2": "Track your transaction easily, with categories and financial report",
-  "@onboardingSubTitle2": {
-    "description": ""
-  },
   "onboardingSubTitle3": "Setup your budget for each category so you in control",
-  "@onboardingSubTitle3": {
-    "description": ""
-  },
+
   "singUp": "Sign Up",
-  "@singUp": {
-    "description": ""
-  },
   "login": "Login",
-  "@login": {
-    "description": ""
-  },
   "email": "Email",
-  "@email": {
-    "description": ""
-  },
   "password": "Password",
-  "@password": {
-    "description": ""
-  },
   "fullName": "Full name",
-  "@fullName": {
-    "description": ""
-  },
   "bySigningUpAgreeTo": "By signing up, you agree to the ",
-  "@bySigningUpAgreeTo": {
-    "description": ""
-  },
   "privacyPolicy": "Terms of Service and Privacy Policy",
-  "@privacyPolicy": {
-    "description": ""
-  },
   "alreadyHaveAnAccount": "Already have an account? ",
-  "@alreadyHaveAnAccount": {
-    "description": ""
-  },
   "forgotPassword": "Forgot Password?",
-  "@forgotPassword": {
-    "description": ""
-  },
   "dontHaveAnAccount": "Don’t have an account yet? ",
-  "@dontHaveAnAccount": {
-    "description": ""
-  },
   "cancel": "Cancel",
-  "@cancel": {
-    "description": ""
-  },
   "loading": "Loading...",
-  "@loading": {
-    "description": ""
-  },
   "emailExisted": "This email has existed",
-  "@emailExisted": {
-    "description": ""
-  },
   "invalidLoginCredentials": "Invalid login credentials",
-  "@invalidLoginCredentials": {
-    "description": ""
-  },
   "emailNotConfirmed": "Email not confirmed",
-  "@emailNotConfirmed": {
-    "description": ""
-  },
   "weakPassword": "Password should be at least 6 characters",
-  "@weakPassword": {
-    "description": ""
-  },
   "invalidEmailFormat": "Invalid email format",
-  "@invalidEmailFormat": {
-    "description": ""
-  },
   "fillIn": "Please fill in all information",
-  "@fillIn": {
-    "description": ""
-  },
   "emailSent": "Your email has been sent",
-  "@emailSent": {
-    "description": ""
-  },
   "checkYourEmail": "Check your email to verify your account before logging in",
-  "@checkYourEmail": {
-    "description": ""
-  },
   "backToLogin": "Back to Login",
-  "@backToLogin": {
-    "description": ""
-  },
+  "confirmLogout": "Are you sure do you wanna logout?",
+
   "noInternetConnection": "No internet connection, please check your connection",
-  "@noInternetConnection": {
-    "description": ""
-  },
+  "failureTryAgain": "Failure, please try again later",
+
+  "yes": "Yes",
+  "no": "No",
+
   "home": "Home",
-  "@home": {
-    "description": ""
-  },
   "transactions": "Transactions",
-  "@transactions": {
-    "description": ""
-  },
   "budgets": "Budgets",
-  "@budgets": {
-    "description": ""
-  },
   "account": "Account",
-  "@account": {
-    "description": ""
-  },
-  "totalBalance": "Total Balance",
-  "@totalBalance": {
-    "description": ""
-  },
-  "income": "Income",
-  "@income": {
-    "description": ""
-  },
-  "expense": "Expense",
-  "@expense": {
-    "description": ""
-  },
+
   "wallet": "Wallet",
-  "@wallet": {
-    "description": ""
-  },
   "category": "Category",
-  "@category": {
-    "description": ""
-  },
   "setting": "Settings",
-  "@setting": {
-    "description": ""
-  },
   "logout": "Logout",
-  "@logout": {
-    "description": ""
-  }
+
+  "myWallet": "My Wallet",
+  "addNewWallet": "Add new wallet",
+  "editWallet": "Edit wallet",
+  "balance": "Balance",
+  "name": "Name",
+  "walletType": "Wallet Type",
+  "bank": "Bank",
+  "apply": "Apply",
+  "doNotHaveWallet": "You don't have a wallet yet, add one now",
+  "removeThisWallet": "Remove this wallet?",
+  "confirmRemoveWallet": "You will also delete all transactions related to with this wallet. Are you sure do you wanna remove this wallet?",
+
+  "seeYourFinancialReport": "See your financial report",
+  "recentTransaction": "Recent Transaction",
+  "seeAll": "See all",
+  "addNewExpense": "Add New Expense",
+  "editExpense": "Edit Expense",
+  "addNewIncome": "Add New Income",
+  "editIncome": "Edit Income",
+  "editTransaction": "Edit Transaction",
+  "amount": "Amount",
+  "description": "Description",
+  "totalBalance": "Total Balance",
+  "total": "Total",
+  "income": "Income",
+  "expense": "Expense",
+  "type": "Type",
+  "detailTransaction": "Detail Transaction",
+  "doNotHaveTransactionsThisMonth": "You don't have any transactions this month",
+  "doNotHaveRecentTransactions": "You don't have any recent transactions",
+  "removeThisTransaction": "Remove this transaction?",
+  "confirmRemoveTransaction": "Are you sure do you wanna remove this transaction?",
+
+  "detailBudget": "Detail Budget",
+  "remaining": "Remaining",
+  "overspent": "Overspent",
+  "spent": "Spent",
+  "limit": "Limit",
+  "daysLeft": "days left",
+  "budgetOf": "of",
+  "exceededSpendingLimit": "You have exceeded your spending limit!",
+  "addNewBudget": "Add new budget",
+  "editBudget": "Edit budget",
+  "finishedBudget": "Finished Budget",
+  "doNotHaveBudget": "You don’t have a budget.",
+  "startSavingMoneyByCreatingBudgets": "Start saving money by creating budgets.",
+  "howMuchDoYouWantToSpend": "How much do yo want to spend?",
+  "startDate": "Start Date",
+  "endDate": "End Date",
+  "removeThisBudget": "Remove this budget?",
+  "confirmRemoveBudget": "Are you sure do you wanna remove this budget?",
+  "endDateCanNotBeBeforeStartDate": "End date can't be before start date",
+  "endDateCanNotBeLessThanToday": "End date can't be less than today",
+
+  "currency": "Currency",
+  "language": "Language",
+  "vietnamese": "Vietnamese",
+  "english": "English",
+
+  "today": "Today",
+  "yesterday": "Yesterday",
+  "monday": "Monday",
+  "tuesday": "Tuesday",
+  "wednesday": "Wednesday",
+  "thursday": "Thursday",
+  "friday": "Friday",
+  "saturday": "Saturday",
+  "sunday": "Sunday",
+
+  "categoryFoodBeverage": "Food & Beverage",
+  "categoryBillUtilities": "Bill & Utilities",
+  "categoryShopping": "Shopping",
+  "categoryFamily": "Family",
+  "categoryTransportation": "Transportation",
+  "categoryHealthFitness": "Health & Fitness",
+  "categoryEducation": "Education",
+  "categoryEntertainment": "Entertainment",
+  "categoryInvestment": "Investment",
+  "categoryOtherExpense": "Other Expense",
+  "categoryOutgoingTransfer": "Outgoing transfer",
+  "categoryPayInterest": "Pay Interest",
+  "categoryLoan": "Loan",
+  "categoryRepayment": "Repayment",
+  "categoryUncategorizedExpense": "Uncategorized Expense",
+  "categorySalary": "Salary",
+  "categoryOtherIncome": "Other Income",
+  "categoryIncomingTransfer": "Incoming transfer",
+  "categoryCollectInterest": "Collect Interest",
+  "categoryDebt": "Debt",
+  "categoryDebtCollection": "Debt Collection",
+  "categoryUncategorizedIncome": "Uncategorized Income"
 }

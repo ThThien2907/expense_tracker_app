@@ -4,10 +4,42 @@ import 'package:flutter/material.dart';
 class GetLocalizedName {
   GetLocalizedName._();
 
-  static String getLocalizedCategoryName(BuildContext context, String name) {
+  static String getLocalizedName(BuildContext context, String name) {
     final l10n = AppLocalizations.of(context)!;
 
     switch (name) {
+      case "Total":
+        return l10n.total;
+
+      case "vi":
+        return l10n.vietnamese;
+      case "en":
+        return l10n.english;
+
+      case "No internet connection":
+        return l10n.noInternetConnection;
+      case "Failure, please try again later":
+        return l10n.failureTryAgain;
+
+      case "Today":
+        return l10n.today;
+      case "Yesterday":
+        return l10n.yesterday;
+      case "Monday":
+        return l10n.monday;
+      case "Tuesday":
+        return l10n.tuesday;
+      case "Wednesday":
+        return l10n.wednesday;
+      case "Thursday":
+        return l10n.thursday;
+      case "Friday":
+        return l10n.friday;
+      case "Saturday":
+        return l10n.saturday;
+      case "Sunday":
+        return l10n.sunday;
+
       case "Food & Beverage":
         return l10n.categoryFoodBeverage;
       case "Bill & Utilities":
@@ -36,8 +68,8 @@ class GetLocalizedName {
         return l10n.categoryLoan;
       case "Repayment":
         return l10n.categoryRepayment;
-      case "Expense Uncategorized":
-        return l10n.categoryExpenseUncategorized;
+      case "Uncategorized Expense":
+        return l10n.categoryUncategorizedExpense;
 
       case "Salary":
         return l10n.categorySalary;
@@ -51,8 +83,8 @@ class GetLocalizedName {
         return l10n.categoryDebt;
       case "Debt Collection":
         return l10n.categoryDebtCollection;
-      case "Income Uncategorized":
-        return l10n.categoryIncomeUncategorized;
+      case "Uncategorized Income":
+        return l10n.categoryUncategorizedIncome;
 
       default:
         return name;
