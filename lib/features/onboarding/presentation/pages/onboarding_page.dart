@@ -4,8 +4,11 @@ import 'package:expense_tracker_app/core/common/widgets/button/app_button.dart';
 import 'package:expense_tracker_app/core/languages/app_localizations.dart';
 import 'package:expense_tracker_app/core/navigation/app_router.dart';
 import 'package:expense_tracker_app/core/theme/app_colors.dart';
+import 'package:expense_tracker_app/features/budget/presentation/bloc/budget_bloc.dart';
 import 'package:expense_tracker_app/features/onboarding/presentation/widgets/onboarding_page_view.dart';
 import 'package:expense_tracker_app/features/setting/presentation/bloc/setting_bloc.dart';
+import 'package:expense_tracker_app/features/transaction/presentation/bloc/transaction_bloc.dart';
+import 'package:expense_tracker_app/features/wallet/presentation/bloc/wallet_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -29,6 +32,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
     if (context.read<AppUserCubit>().state != null) {
       context.read<AppUserCubit>().clearUser();
       context.read<SettingBloc>().add(ClearSettings());
+      context.read<WalletBloc>().add(ClearWallets());
+      context.read<BudgetBloc>().add(ClearBudgets());
+      context.read<TransactionBloc>().add(ClearTransactions());
     }
   }
 
@@ -42,6 +48,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        toolbarHeight: 0,
+      ),
       body: Stack(
         children: [
           Column(
