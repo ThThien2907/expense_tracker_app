@@ -1,9 +1,16 @@
+import 'package:expense_tracker_app/core/common/widgets/icon/app_icon.dart';
 import 'package:expense_tracker_app/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class AccountItem extends StatelessWidget {
-  const AccountItem({super.key, this.borderRadius, this.onTap, required this.icon, required this.label, this.iconColor, this.backgroundIconColor});
+  const AccountItem(
+      {super.key,
+      this.borderRadius,
+      this.onTap,
+      required this.icon,
+      required this.label,
+      this.iconColor,
+      this.backgroundIconColor});
 
   final BorderRadius? borderRadius;
   final Function()? onTap;
@@ -25,25 +32,19 @@ class AccountItem extends StatelessWidget {
           height: 90,
           child: Row(
             children: [
-              const SizedBox(width: 16,),
-              Container(
-                width: 52,
-                height: 52,
-                decoration: BoxDecoration(
-                  color: backgroundIconColor ?? AppColors.violet20,
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                alignment: Alignment.center,
-                child: SvgPicture.asset(
-                  icon,
-                  height: 32,
-                  colorFilter: ColorFilter.mode(
-                    iconColor ?? AppColors.violet100,
-                    BlendMode.srcIn,
-                  ),
-                ),
+              const SizedBox(
+                width: 16,
               ),
-              const SizedBox(width: 16,),
+              AppIcon(
+                icon: icon,
+                size: 52,
+                iconSize: 32,
+                backgroundIconColor: backgroundIconColor,
+                iconColor: iconColor,
+              ),
+              const SizedBox(
+                width: 16,
+              ),
               Text(
                 label,
                 style: const TextStyle(
