@@ -18,6 +18,12 @@ class _CategoryPageState extends State<CategoryPage> {
   final PageController _pageController = PageController();
 
   @override
+  void dispose() {
+    super.dispose();
+    _pageController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
@@ -30,9 +36,13 @@ class _CategoryPageState extends State<CategoryPage> {
           builder: (context, state) {
             return Column(
               children: [
-                const SizedBox(height: 8,),
+                const SizedBox(
+                  height: 8,
+                ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16,),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                  ),
                   child: PageViewToggle(
                     labels: [
                       AppLocalizations.of(context)!.expense,
@@ -58,36 +68,37 @@ class _CategoryPageState extends State<CategoryPage> {
                       controller: _pageController,
                       itemCount: 2,
                       itemBuilder: (context, index) {
-                        return index == 0 ?
-                         ListView.separated(
-                           itemBuilder: (context, itemIndex) {
-                             return CategoryItem(
-                               name: state.categoriesExpense[itemIndex].name,
-                               iconName: state.categoriesExpense[itemIndex].iconName,
-                               color: state.categoriesExpense[itemIndex].color,
-                             );
-                           },
-                           separatorBuilder: (context, index) {
-                             return const SizedBox(
-                               height: 16,
-                             );
-                           },
-                           itemCount: state.categoriesExpense.length,
-                         ) : ListView.separated(
-                           itemBuilder: (context, itemIndex) {
-                             return CategoryItem(
-                               name: state.categoriesIncome[itemIndex].name,
-                               iconName: state.categoriesIncome[itemIndex].iconName,
-                               color: state.categoriesIncome[itemIndex].color,
-                             );
-                           },
-                           separatorBuilder: (context, index) {
-                             return const SizedBox(
-                               height: 16,
-                             );
-                           },
-                           itemCount: state.categoriesIncome.length,
-                         );
+                        return index == 0
+                            ? ListView.separated(
+                                padding: EdgeInsets.zero,
+                                itemBuilder: (context, itemIndex) {
+                                  return CategoryItem(
+                                    categoryEntity:
+                                        state.categoriesExpense[itemIndex],
+                                  );
+                                },
+                                separatorBuilder: (context, index) {
+                                  return const SizedBox(
+                                    height: 16,
+                                  );
+                                },
+                                itemCount: state.categoriesExpense.length,
+                              )
+                            : ListView.separated(
+                                padding: EdgeInsets.zero,
+                                itemBuilder: (context, itemIndex) {
+                                  return CategoryItem(
+                                    categoryEntity:
+                                        state.categoriesIncome[itemIndex],
+                                  );
+                                },
+                                separatorBuilder: (context, index) {
+                                  return const SizedBox(
+                                    height: 16,
+                                  );
+                                },
+                                itemCount: state.categoriesIncome.length,
+                              );
                       },
                       onPageChanged: (index) {
                         setState(() {
