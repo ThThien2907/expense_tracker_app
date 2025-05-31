@@ -1,5 +1,6 @@
 import 'package:expense_tracker_app/core/assets/app_vectors.dart';
 import 'package:expense_tracker_app/core/common/extensions/currency_formatter.dart';
+import 'package:expense_tracker_app/core/common/extensions/get_localized_name.dart';
 import 'package:expense_tracker_app/core/common/widgets/icon/app_icon.dart';
 import 'package:expense_tracker_app/core/navigation/app_router.dart';
 import 'package:expense_tracker_app/core/theme/app_colors.dart';
@@ -36,7 +37,7 @@ class WalletItem extends StatelessWidget {
               child: Row(
                 children: [
                   AppIcon(
-                    icon: wallet.type == 0
+                    icon: wallet.walletId == 'total' ? AppVectors.worldIcon : wallet.type == 0
                         ? AppVectors.walletIcon
                         : AppVectors.bankIcon,
                     size: 52,
@@ -48,7 +49,7 @@ class WalletItem extends StatelessWidget {
                   ),
                   Expanded(
                     child: Text(
-                      wallet.name,
+                      GetLocalizedName.getLocalizedName(context, wallet.name),
                       style: const TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 18,

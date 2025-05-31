@@ -45,12 +45,15 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     emit(state.copyWith(status: WalletStatus.loading));
     final response = await _loadWallets.call();
     response.fold(
-      (ifLeft) => emit(
-        state.copyWith(
-          status: WalletStatus.failure,
-          errorMessage: ifLeft,
-        ),
-      ),
+      (ifLeft) {
+        emit(
+          state.copyWith(
+            status: WalletStatus.failure,
+            errorMessage: ifLeft,
+          ),
+        );
+        event.completer?.completeError(ifLeft);
+      },
       (ifRight) {
         final wallets = ifRight as List<WalletEntity>;
         double totalBalance = 0;
@@ -73,6 +76,7 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
             wallets: wallets,
           ),
         );
+        event.completer?.complete();
       },
     );
   }

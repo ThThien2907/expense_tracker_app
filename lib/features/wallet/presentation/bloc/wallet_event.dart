@@ -8,10 +8,12 @@ sealed class WalletEvent extends Equatable {
 }
 
 final class WalletStarted extends WalletEvent {
-  const WalletStarted();
+  final Completer<void>? completer;
+
+  const WalletStarted({this.completer});
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [completer];
 }
 
 final class WalletAdded extends WalletEvent {
