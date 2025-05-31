@@ -33,4 +33,6 @@ class RoutePaths {
   static const String setting = '/setting';
   static const String language = '/language';
   static const String currency = '/currency';
+
+  static const String report = '/report';
 }
