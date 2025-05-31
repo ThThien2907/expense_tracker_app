@@ -1,3 +1,4 @@
+import 'package:expense_tracker_app/core/common/cubits/type/selected_type_cubit.dart';
 import 'package:expense_tracker_app/core/common/widgets/bottom_navigation_bar/app_bottom_navigation_bar.dart';
 import 'package:expense_tracker_app/features/Account/presentation/pages/account_page.dart';
 import 'package:expense_tracker_app/features/auth/presentation/pages/email_sent_page.dart';
@@ -11,6 +12,7 @@ import 'package:expense_tracker_app/features/budget/presentation/pages/finished_
 import 'package:expense_tracker_app/features/category/presentation/pages/category_page.dart';
 import 'package:expense_tracker_app/features/home/presentation/pages/home_page.dart';
 import 'package:expense_tracker_app/features/onboarding/presentation/pages/onboarding_page.dart';
+import 'package:expense_tracker_app/features/report/presentation/pages/report_page.dart';
 import 'package:expense_tracker_app/features/setting/presentation/pages/currency_page.dart';
 import 'package:expense_tracker_app/features/setting/presentation/pages/language_page.dart';
 import 'package:expense_tracker_app/features/setting/presentation/pages/setting_page.dart';
@@ -20,10 +22,13 @@ import 'package:expense_tracker_app/features/transaction/presentation/pages/add_
 import 'package:expense_tracker_app/features/transaction/presentation/pages/detail_transaction_page.dart';
 import 'package:expense_tracker_app/features/transaction/presentation/pages/transaction_page.dart';
 import 'package:expense_tracker_app/features/wallet/domain/entities/wallet_entity.dart';
+import 'package:expense_tracker_app/features/wallet/presentation/bloc/cubit/selected_wallet_cubit.dart';
+import 'package:expense_tracker_app/features/wallet/presentation/bloc/wallet_bloc.dart';
 import 'package:expense_tracker_app/features/wallet/presentation/pages/add_or_edit_wallet.dart';
 import 'package:expense_tracker_app/features/wallet/presentation/pages/detail_wallet_page.dart';
 import 'package:expense_tracker_app/features/wallet/presentation/pages/wallet_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 part 'route_paths.dart';
@@ -154,6 +159,23 @@ class AppRouter {
             builder: (context, state) => const CurrencyPage(),
           ),
         ],
+      ),
+      GoRoute(
+        path: RoutePaths.report,
+        builder: (context, state) => MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => SelectedWalletCubit()
+                ..setWallet(context.read<WalletBloc>().state.wallets.firstWhere(
+                      (e) => e.walletId == 'total',
+                    )),
+            ),
+            BlocProvider(
+              create: (context) => SelectedTypeCubit(),
+            ),
+          ],
+          child: const ReportPage(),
+        ),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, statefulNavigationShell) {

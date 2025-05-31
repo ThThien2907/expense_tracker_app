@@ -129,6 +129,9 @@ class AppLocalizationsVi extends AppLocalizations {
   String get logout => 'Đăng xuất';
 
   @override
+  String get detailWallet => 'Chi tiết ví';
+
+  @override
   String get myWallet => 'Ví của tôi';
 
   @override
@@ -136,6 +139,12 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get editWallet => 'Chỉnh sửa ví';
+
+  @override
+  String get changeWallet => 'Thay đổi ví';
+
+  @override
+  String get walletBalance => 'Số dư ví';
 
   @override
   String get balance => 'Số dư';
@@ -202,6 +211,15 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get expense => 'Chi tiêu';
+
+  @override
+  String get totalIncome => 'Tổng thu';
+
+  @override
+  String get totalExpense => 'Tổng chi';
+
+  @override
+  String get difference => 'Chênh lệch';
 
   @override
   String get type => 'Loại';
@@ -280,6 +298,18 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get endDateCanNotBeLessThanToday => 'Ngày kết thúc không được nhỏ hơn ngày hôm nay';
+
+  @override
+  String get financialReport => 'Báo cáo tài chính';
+
+  @override
+  String get reportThisMonth => 'Báo cáo tháng này';
+
+  @override
+  String get seeReport => 'Xem báo cáo';
+
+  @override
+  String get day => 'Ngày';
 
   @override
   String get currency => 'Tiền tệ';

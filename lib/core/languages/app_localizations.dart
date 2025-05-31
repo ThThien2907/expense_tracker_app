@@ -335,6 +335,12 @@ abstract class AppLocalizations {
   /// **'Logout'**
   String get logout;
 
+  /// No description provided for @detailWallet.
+  ///
+  /// In en, this message translates to:
+  /// **'Detail Wallet'**
+  String get detailWallet;
+
   /// No description provided for @myWallet.
   ///
   /// In en, this message translates to:
@@ -352,6 +358,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Edit wallet'**
   String get editWallet;
+
+  /// No description provided for @changeWallet.
+  ///
+  /// In en, this message translates to:
+  /// **'Change wallet'**
+  String get changeWallet;
+
+  /// No description provided for @walletBalance.
+  ///
+  /// In en, this message translates to:
+  /// **'Wallet balance'**
+  String get walletBalance;
 
   /// No description provided for @balance.
   ///
@@ -484,6 +502,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Expense'**
   String get expense;
+
+  /// No description provided for @totalIncome.
+  ///
+  /// In en, this message translates to:
+  /// **'Total income'**
+  String get totalIncome;
+
+  /// No description provided for @totalExpense.
+  ///
+  /// In en, this message translates to:
+  /// **'Total expense'**
+  String get totalExpense;
+
+  /// No description provided for @difference.
+  ///
+  /// In en, this message translates to:
+  /// **'Difference'**
+  String get difference;
 
   /// No description provided for @type.
   ///
@@ -640,6 +676,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'End date can\'t be less than today'**
   String get endDateCanNotBeLessThanToday;
+
+  /// No description provided for @financialReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Financial Report'**
+  String get financialReport;
+
+  /// No description provided for @reportThisMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Report This Month'**
+  String get reportThisMonth;
+
+  /// No description provided for @seeReport.
+  ///
+  /// In en, this message translates to:
+  /// **'See Reports'**
+  String get seeReport;
+
+  /// No description provided for @day.
+  ///
+  /// In en, this message translates to:
+  /// **'Day'**
+  String get day;
 
   /// No description provided for @currency.
   ///

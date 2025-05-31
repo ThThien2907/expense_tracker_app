@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:expense_tracker_app/core/common/widgets/app_bar/custom_app_bar.dart';
 import 'package:expense_tracker_app/core/common/widgets/button/app_button.dart';
 import 'package:expense_tracker_app/core/common/widgets/loading/loading.dart';
@@ -66,16 +68,24 @@ class _LoginPageState extends State<LoginPage> {
               }
             }
             if (state is AuthSuccess) {
-              context.read<WalletBloc>().add(const WalletStarted());
-              context.read<CategoryBloc>().add(CategoryStarted());
-              context.read<BudgetBloc>().add(const BudgetStarted());
-              context.read<TransactionBloc>().add(const TransactionStarted());
+              final walletCompleter = Completer<void>();
+              final categoryCompleter = Completer<void>();
+              final budgetCompleter = Completer<void>();
+              final transactionCompleter = Completer<void>();
 
-              await Future.delayed(const Duration(seconds: 3)).then((_) {
-                if(context.mounted){
-                  context.go(RoutePaths.home);
-                }
-              });
+              context.read<WalletBloc>().add(WalletStarted(completer: walletCompleter));
+              context.read<CategoryBloc>().add(CategoryStarted(completer: categoryCompleter));
+              context.read<BudgetBloc>().add( BudgetStarted(completer: budgetCompleter));
+              context.read<TransactionBloc>().add( TransactionStarted(completer: transactionCompleter));
+
+              await walletCompleter.future;
+              await categoryCompleter.future;
+              await budgetCompleter.future;
+              await transactionCompleter.future;
+
+              if(context.mounted){
+                context.go(RoutePaths.home);
+              }
             }
           },
           child: Column(

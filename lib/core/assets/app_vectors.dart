@@ -19,8 +19,10 @@ class AppVectors {
   static const settingIcon = '$basePath/setting_icon$format';
   static const logoutIcon = '$basePath/logout_icon$format';
 
-  static const shoppingIcon = '$basePath/shopping_icon$format';
   static const bankIcon = '$basePath/bank_icon$format';
   static const deleteIcon = '$basePath/delete_icon$format';
   static const errorIcon = '$basePath/error_icon$format';
+
+  static const lineChartIcon = '$basePath/line_chart_icon$format';
+  static const worldIcon = '$basePath/world_icon$format';
 }

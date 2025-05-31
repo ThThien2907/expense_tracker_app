@@ -1,4 +1,3 @@
-import 'package:expense_tracker_app/core/languages/app_localizations.dart';
 import 'package:expense_tracker_app/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +15,7 @@ class Loading {
             color: AppColors.light100,
             borderRadius: BorderRadius.circular(16),
           ),
-          child: Center(
+          child: const Center(
             child: CircularProgressIndicator(
               color: AppColors.violet100,
             ),

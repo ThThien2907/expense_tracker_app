@@ -18,29 +18,33 @@ class SettingPage extends StatelessWidget {
         title: AppLocalizations.of(context)!.setting,
         centerTitle: true,
       ),
-      body: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        child: Column(
-          children: [
-            SettingParentItem(
-              settingName: AppLocalizations.of(context)!.currency,
-              selectedSetting: context.read<SettingBloc>().state.setting.currency,
-              onTap: () {
-                context.push(RoutePaths.setting + RoutePaths.currency);
-              },
+      body: BlocBuilder<SettingBloc, SettingState>(
+        builder: (context, state) {
+          return SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child: Column(
+              children: [
+                SettingParentItem(
+                  settingName: AppLocalizations.of(context)!.currency,
+                  selectedSetting: state.setting.currency,
+                  onTap: () {
+                    context.push(RoutePaths.setting + RoutePaths.currency);
+                  },
+                ),
+                SettingParentItem(
+                  settingName: AppLocalizations.of(context)!.language,
+                  selectedSetting: GetLocalizedName.getLocalizedName(
+                    context,
+                    state.setting.language,
+                  ),
+                  onTap: () {
+                    context.push(RoutePaths.setting + RoutePaths.language);
+                  },
+                ),
+              ],
             ),
-            SettingParentItem(
-              settingName: AppLocalizations.of(context)!.language,
-              selectedSetting: GetLocalizedName.getLocalizedName(
-                context,
-                context.read<SettingBloc>().state.setting.language,
-              ),
-              onTap: () {
-                context.push(RoutePaths.setting + RoutePaths.language);
-              },
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

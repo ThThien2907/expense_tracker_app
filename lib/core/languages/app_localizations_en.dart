@@ -129,6 +129,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get logout => 'Logout';
 
   @override
+  String get detailWallet => 'Detail Wallet';
+
+  @override
   String get myWallet => 'My Wallet';
 
   @override
@@ -136,6 +139,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get editWallet => 'Edit wallet';
+
+  @override
+  String get changeWallet => 'Change wallet';
+
+  @override
+  String get walletBalance => 'Wallet balance';
 
   @override
   String get balance => 'Balance';
@@ -202,6 +211,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get expense => 'Expense';
+
+  @override
+  String get totalIncome => 'Total income';
+
+  @override
+  String get totalExpense => 'Total expense';
+
+  @override
+  String get difference => 'Difference';
 
   @override
   String get type => 'Type';
@@ -280,6 +298,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get endDateCanNotBeLessThanToday => 'End date can\'t be less than today';
+
+  @override
+  String get financialReport => 'Financial Report';
+
+  @override
+  String get reportThisMonth => 'Report This Month';
+
+  @override
+  String get seeReport => 'See Reports';
+
+  @override
+  String get day => 'Day';
 
   @override
   String get currency => 'Currency';
