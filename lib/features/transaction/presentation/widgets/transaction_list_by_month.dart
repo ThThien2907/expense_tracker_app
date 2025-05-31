@@ -1,5 +1,5 @@
 import 'package:expense_tracker_app/core/common/extensions/date_formatter.dart';
-import 'package:expense_tracker_app/core/common/extensions/group_transactions_by_date.dart';
+import 'package:expense_tracker_app/core/common/extensions/group_transactions.dart';
 import 'package:expense_tracker_app/core/languages/app_localizations.dart';
 import 'package:expense_tracker_app/core/theme/app_colors.dart';
 import 'package:expense_tracker_app/features/transaction/presentation/bloc/transaction_bloc.dart';
@@ -58,7 +58,7 @@ class TransactionListByMonth extends StatelessWidget {
             );
           }
 
-          final grouped = GroupTransactionsByDate.groupTransactionsByDate(
+          final grouped = GroupTransactions.groupTransactionsByDate(
               transactionByMonth);
 
           final dateKeys = grouped.keys.toList();
