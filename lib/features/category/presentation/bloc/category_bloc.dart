@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:equatable/equatable.dart';
 import 'package:expense_tracker_app/features/category/domain/entities/category_entity.dart';
 import 'package:expense_tracker_app/features/category/domain/use_cases/load_categories.dart';
@@ -29,6 +31,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
           status: CategoryStatus.failure,
           errorMessage: ifLeft,
         ));
+        event.completer?.completeError(ifLeft);
       },
       (ifRight) {
         List<CategoryEntity> categories = ifRight;
@@ -45,6 +48,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
           categoriesExpense: categoriesExpense,
           categoriesIncome: categoriesIncome,
         ));
+        event.completer?.complete();
       },
     );
   }
