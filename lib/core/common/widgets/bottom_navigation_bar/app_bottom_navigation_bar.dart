@@ -41,16 +41,6 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
   @override
   void initState() {
     super.initState();
-    // context
-    //     .read<WalletBloc>()
-    //     .add(WalletStarted(userId: context.read<AppUserCubit>().state!.userId));
-    // context.read<CategoryBloc>().add(CategoryStarted());
-    // context
-    //     .read<BudgetBloc>()
-    //     .add(BudgetStarted(userId: context.read<AppUserCubit>().state!.userId));
-    // context
-    //     .read<TransactionBloc>()
-    //     .add(TransactionStarted(userId: context.read<AppUserCubit>().state!.userId));
   }
 
   @override
@@ -110,7 +100,7 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
                     ),
                   ),
                   Align(
-                    alignment: const Alignment(0, 0.895),
+                    alignment: const Alignment(0, 0.932),
                     child: _buildFloatingActionButton(
                       backgroundColor: AppColors.violet100,
                       iconData: Icons.close,
@@ -126,7 +116,6 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
             },
           ).then((value) {
             if (value == null) {
-              debugPrint('dong dialog');
             }
           });
         },
@@ -138,7 +127,7 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
         shape: const CircularNotchedRectangle(),
         notchMargin: 6,
         color: AppColors.light80,
-        height: 70,
+        height: 60,
         elevation: 4,
         shadowColor: AppColors.dark100,
         padding: const EdgeInsets.symmetric(horizontal: 6),

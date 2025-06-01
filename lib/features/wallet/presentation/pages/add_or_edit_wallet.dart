@@ -74,10 +74,9 @@ class _AddOrEditWalletState extends State<AddOrEditWallet> {
       listener: (context, state) {
         if (state.status == WalletStatus.loading) {
           Loading.show(context);
-        } else {
-          Loading.hide(context);
         }
         if (state.status == WalletStatus.failure) {
+          Loading.hide(context);
           AppSnackBar.showError(
             context,
             GetLocalizedName.getLocalizedName(
@@ -87,6 +86,7 @@ class _AddOrEditWalletState extends State<AddOrEditWallet> {
           );
         }
         if (state.status == WalletStatus.success) {
+          Loading.hide(context);
           context.pop('Success');
         }
       },
@@ -139,103 +139,102 @@ class _AddOrEditWalletState extends State<AddOrEditWallet> {
                 ]
               : [],
         ),
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height - 90,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Text(
-                      AppLocalizations.of(context)!.balance,
-                      style: TextStyle(
-                        fontFamily: 'Inter',
-                        fontSize: 18,
-                        color: AppColors.light80.withValues(alpha: 0.5),
-                        fontWeight: FontWeight.w700,
+        body: SingleChildScrollView(
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height - 90,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Text(
+                    AppLocalizations.of(context)!.balance,
+                    style: TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 18,
+                      color: AppColors.light80.withValues(alpha: 0.5),
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: _buildWalletBalanceField(context),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 28,
+                  ),
+                  decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(32),
+                        topLeft: Radius.circular(32),
                       ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: _buildWalletBalanceField(context),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 28,
-                    ),
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(32),
-                          topLeft: Radius.circular(32),
-                        ),
-                        color: AppColors.light100),
-                    width: MediaQuery.of(context).size.width,
-                    child: Column(
-                      children: [
-                        AppTextField(
-                          controller: nameController,
-                          hintText: AppLocalizations.of(context)!.name,
-                          maxLength: 30,
-                        ),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        _buildWalletTypeField(context),
-                        const SizedBox(
-                          height: 32,
-                        ),
-                        AppButton(
-                          onPressed: () {
-                            FocusScope.of(context).unfocus();
-                            if (balanceController.text.isNotEmpty &&
-                                nameController.text.isNotEmpty &&
-                                typeController.text.isNotEmpty) {
-                              double balance = CurrencyFormatter.unFormat(
-                                amount: balanceController.text.trim(),
-                                fromCurrency: settingEntity.currency,
-                              );
-                              int type = int.parse(typeController.text.trim());
-                              if (widget.isEdit) {
-                                context.read<WalletBloc>().add(
-                                      WalletEdited(
-                                        walletId: widget.wallet!.walletId,
-                                        name: nameController.text.trim(),
-                                        balance: balance,
-                                        type: type,
-                                        transactionBloc:
-                                            context.read<TransactionBloc>(),
-                                        budgetBloc: context.read<BudgetBloc>(),
-                                      ),
-                                    );
-                              } else {
-                                context.read<WalletBloc>().add(
-                                      WalletAdded(
-                                        name: nameController.text.trim(),
-                                        balance: balance,
-                                        type: type,
-                                        transactionBloc:
-                                            context.read<TransactionBloc>(),
-                                      ),
-                                    );
-                              }
+                      color: AppColors.light100),
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    children: [
+                      AppTextField(
+                        controller: nameController,
+                        hintText: AppLocalizations.of(context)!.name,
+                        maxLength: 30,
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      _buildWalletTypeField(context),
+                      const SizedBox(
+                        height: 32,
+                      ),
+                      AppButton(
+                        onPressed: () {
+                          FocusScope.of(context).unfocus();
+                          if (balanceController.text.isNotEmpty &&
+                              nameController.text.isNotEmpty &&
+                              typeController.text.isNotEmpty) {
+                            double balance = CurrencyFormatter.unFormat(
+                              amount: balanceController.text.trim(),
+                              fromCurrency: settingEntity.currency,
+                            );
+                            int type = int.parse(typeController.text.trim());
+                            if (widget.isEdit) {
+                              context.read<WalletBloc>().add(
+                                    WalletEdited(
+                                      walletId: widget.wallet!.walletId,
+                                      name: nameController.text.trim(),
+                                      balance: balance,
+                                      type: type,
+                                      transactionBloc:
+                                          context.read<TransactionBloc>(),
+                                      budgetBloc: context.read<BudgetBloc>(),
+                                    ),
+                                  );
                             } else {
-                              AppSnackBar.showError(
-                                  context, AppLocalizations.of(context)!.fillIn);
+                              context.read<WalletBloc>().add(
+                                    WalletAdded(
+                                      name: nameController.text.trim(),
+                                      balance: balance,
+                                      type: type,
+                                      transactionBloc:
+                                          context.read<TransactionBloc>(),
+                                    ),
+                                  );
                             }
-                          },
-                          buttonText: AppLocalizations.of(context)!.apply,
-                        ),
-                      ],
-                    ),
+                          } else {
+                            AppSnackBar.showError(
+                                context, AppLocalizations.of(context)!.fillIn);
+                          }
+                        },
+                        buttonText: AppLocalizations.of(context)!.apply,
+                      ),
+                      const SizedBox(height: 32,),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

@@ -3,12 +3,14 @@ import 'dart:async';
 import 'package:expense_tracker_app/core/common/extensions/get_localized_name.dart';
 import 'package:expense_tracker_app/core/common/widgets/snack_bar/app_snack_bar.dart';
 import 'package:expense_tracker_app/core/navigation/app_router.dart';
+import 'package:expense_tracker_app/core/services/notification_service.dart';
 import 'package:expense_tracker_app/core/theme/app_colors.dart';
 import 'package:expense_tracker_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:expense_tracker_app/features/budget/presentation/bloc/budget_bloc.dart';
 import 'package:expense_tracker_app/features/category/presentation/bloc/category_bloc.dart';
 import 'package:expense_tracker_app/features/transaction/presentation/bloc/transaction_bloc.dart';
 import 'package:expense_tracker_app/features/wallet/presentation/bloc/wallet_bloc.dart';
+import 'package:expense_tracker_app/init_dependencies.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -25,6 +27,7 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     super.initState();
     context.read<AuthBloc>().add(AuthLoggedIn());
+    serviceLocator<NotificationService>().scheduleDailyReminder();
   }
 
   @override

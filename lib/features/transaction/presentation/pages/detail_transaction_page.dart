@@ -82,11 +82,10 @@ class DetailTransactionPage extends StatelessWidget {
         listener: (context, state) {
           if (state.status == TransactionStatus.loading) {
             Loading.show(context);
-          } else {
-            Loading.hide(context);
           }
 
           if (state.status == TransactionStatus.failure) {
+            Loading.hide(context);
             AppSnackBar.showError(
               context,
               GetLocalizedName.getLocalizedName(
@@ -97,6 +96,7 @@ class DetailTransactionPage extends StatelessWidget {
           }
 
           if (state.status == TransactionStatus.success) {
+            Loading.hide(context);
             context.pop();
           }
         },

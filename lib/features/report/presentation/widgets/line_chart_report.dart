@@ -97,7 +97,7 @@ class LineChartReport extends StatelessWidget {
       ),
       borderData: FlBorderData(
           show: true,
-          border: const Border(top: BorderSide(color: AppColors.light40))),
+          border: const Border.symmetric(horizontal: BorderSide(color: AppColors.light40))),
       lineTouchData: LineTouchData(
         getTouchedSpotIndicator: (barData, indicators) {
           return indicators.map((int index) {

@@ -306,7 +306,7 @@ class HomePage extends StatelessWidget {
               builder: (context, state) {
                 if (state.transactions.isEmpty) {
                   return Padding(
-                    padding: const EdgeInsets.only(top: 32),
+                    padding: const EdgeInsets.only(top: 32, bottom: 120),
                     child: Text(
                       AppLocalizations.of(context)!.doNotHaveRecentTransactions,
                       style: const TextStyle(
@@ -320,7 +320,7 @@ class HomePage extends StatelessWidget {
                   );
                 }
                 return ListView.separated(
-                  padding: const EdgeInsets.only(bottom: 90),
+                  padding: const EdgeInsets.only(bottom: 120),
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
