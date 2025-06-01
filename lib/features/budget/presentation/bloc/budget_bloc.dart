@@ -86,11 +86,20 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
         ));
       },
       (ifRight) {
-        state.budgets.insert(0, ifRight);
+        final budget = ifRight as BudgetEntity;
+        state.budgets.insert(0, budget);
+
         emit(state.copyWith(
           status: BudgetStatus.success,
           errorMessage: '',
         ));
+
+        if (budget.amountSpent - budget.amountLimit > 0) {
+          emit(state.copyWith(
+            status: BudgetStatus.exceeded,
+            budgetExceeded: budget,
+          ));
+        }
       },
     );
   }
@@ -119,14 +128,20 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
         ));
       },
       (ifRight) {
-        int index = state.budgets
-            .indexWhere((budget) => budget.budgetId == event.budgetId);
+        int index = state.budgets.indexWhere((budget) => budget.budgetId == event.budgetId);
         state.budgets.removeAt(index);
-        state.budgets.insert(index, ifRight);
+        final budget = ifRight as BudgetEntity;
+        state.budgets.insert(index, budget);
         emit(state.copyWith(
           status: BudgetStatus.success,
           errorMessage: '',
         ));
+        if (budget.amountSpent - budget.amountLimit > 0) {
+          emit(state.copyWith(
+            status: BudgetStatus.exceeded,
+            budgetExceeded: budget,
+          ));
+        }
       },
     );
   }
@@ -151,8 +166,7 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
         ));
       },
       (ifRight) {
-        state.budgets
-            .removeWhere((budget) => budget.budgetId == event.budgetId);
+        state.budgets.removeWhere((budget) => budget.budgetId == event.budgetId);
         emit(state.copyWith(
           status: BudgetStatus.success,
           errorMessage: '',
@@ -167,11 +181,21 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
   ) {
     emit(state.copyWith(status: BudgetStatus.loading));
     for (var budget in event.data) {
-      state.budgets
-          .firstWhere((e) => e.budgetId == budget['budget_id'])
-          .amountSpent = (budget['amount_spent'] as num).toDouble();
+      state.budgets.firstWhere((e) => e.budgetId == budget['budget_id']).amountSpent =
+          (budget['amount_spent'] as num).toDouble();
     }
     emit(state.copyWith(status: BudgetStatus.success));
+
+    for (var budget in event.data) {
+      final budgetExceeded = state.budgets.firstWhere((e) => e.budgetId == budget['budget_id']);
+      if (budgetExceeded.amountSpent - budgetExceeded.amountLimit > 0) {
+        emit(state.copyWith(
+          status: BudgetStatus.exceeded,
+          budgetExceeded: budgetExceeded,
+        ));
+        break;
+      }
+    }
   }
 
   _onClearBudgets(

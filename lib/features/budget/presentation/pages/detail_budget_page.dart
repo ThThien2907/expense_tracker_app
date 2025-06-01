@@ -81,13 +81,13 @@ class DetailBudgetPage extends StatelessWidget {
         listener: (context, state) {
           if (state.status == BudgetStatus.loading) {
             Loading.show(context);
-          } else {
-            Loading.hide(context);
           }
           if (state.status == BudgetStatus.success) {
+            Loading.hide(context);
             context.pop();
           }
           if (state.status == BudgetStatus.failure) {
+            Loading.hide(context);
             AppSnackBar.showError(context,
                 GetLocalizedName.getLocalizedName(context, state.errorMessage));
           }

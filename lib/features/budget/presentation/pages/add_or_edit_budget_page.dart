@@ -18,6 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:month_picker_dialog/month_picker_dialog.dart';
 
 class AddOrEditBudgetPage extends StatefulWidget {
   const AddOrEditBudgetPage({
@@ -42,8 +43,7 @@ class _AddOrEditBudgetPageState extends State<AddOrEditBudgetPage> {
 
   String categoryId = '';
   DateFormat dateFormat = DateFormat('dd/MM/yyyy');
-  DateTime now =
-      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+  DateTime now = DateTime.now();
   DateTime? pickedDate;
   DateTime? startDate;
   DateTime? endDate;
@@ -78,8 +78,8 @@ class _AddOrEditBudgetPageState extends State<AddOrEditBudgetPage> {
         endDateController.text = dateFormat.format(endDate!);
       }
     } else {
-      startDate = now;
-      endDate = now;
+      startDate = now.firstDayOfMonth();
+      endDate = now.lastDayOfMonth();
       startDateController.text = dateFormat.format(startDate!);
       endDateController.text = dateFormat.format(endDate!);
     }
@@ -100,13 +100,13 @@ class _AddOrEditBudgetPageState extends State<AddOrEditBudgetPage> {
       listener: (context, state) {
         if (state.status == BudgetStatus.loading) {
           Loading.show(context);
-        } else {
-          Loading.hide(context);
         }
         if (state.status == BudgetStatus.success) {
+          Loading.hide(context);
           context.pop();
         }
         if (state.status == BudgetStatus.failure) {
+          Loading.hide(context);
           AppSnackBar.showError(context,
               GetLocalizedName.getLocalizedName(context, state.errorMessage));
         }
@@ -281,6 +281,7 @@ class _AddOrEditBudgetPageState extends State<AddOrEditBudgetPage> {
                         },
                         buttonText: AppLocalizations.of(context)!.apply,
                       ),
+                      const SizedBox(height: 32,),
                     ],
                   ),
                 ),
