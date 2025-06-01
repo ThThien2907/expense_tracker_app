@@ -300,6 +300,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get endDateCanNotBeLessThanToday => 'End date can\'t be less than today';
 
   @override
+  String get exceedTheBudget => 'Exceed the budget';
+
+  @override
+  String get youHaveSpentExceedingTheBudgetOf => 'You have spent exceeding the budget of';
+
+  @override
   String get financialReport => 'Financial Report';
 
   @override

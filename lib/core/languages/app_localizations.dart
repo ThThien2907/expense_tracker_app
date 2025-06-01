@@ -677,6 +677,18 @@ abstract class AppLocalizations {
   /// **'End date can\'t be less than today'**
   String get endDateCanNotBeLessThanToday;
 
+  /// No description provided for @exceedTheBudget.
+  ///
+  /// In en, this message translates to:
+  /// **'Exceed the budget'**
+  String get exceedTheBudget;
+
+  /// No description provided for @youHaveSpentExceedingTheBudgetOf.
+  ///
+  /// In en, this message translates to:
+  /// **'You have spent exceeding the budget of'**
+  String get youHaveSpentExceedingTheBudgetOf;
+
   /// No description provided for @financialReport.
   ///
   /// In en, this message translates to:

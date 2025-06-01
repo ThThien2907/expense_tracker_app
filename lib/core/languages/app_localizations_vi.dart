@@ -300,6 +300,12 @@ class AppLocalizationsVi extends AppLocalizations {
   String get endDateCanNotBeLessThanToday => 'Ngày kết thúc không được nhỏ hơn ngày hôm nay';
 
   @override
+  String get exceedTheBudget => 'Vượt ngân sách';
+
+  @override
+  String get youHaveSpentExceedingTheBudgetOf => 'Bạn đã chi tiêu vượt mức ngân sách';
+
+  @override
   String get financialReport => 'Báo cáo tài chính';
 
   @override

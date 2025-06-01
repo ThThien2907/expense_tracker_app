@@ -1,5 +1,6 @@
 import 'package:expense_tracker_app/core/common/cubits/app_user/app_user_cubit.dart';
 import 'package:expense_tracker_app/core/network/connection_checker.dart';
+import 'package:expense_tracker_app/core/services/notification_service.dart';
 import 'package:expense_tracker_app/features/auth/data/data_sources/auth_remote_data_source.dart';
 import 'package:expense_tracker_app/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:expense_tracker_app/features/auth/domain/repositories/auth_repository.dart';
@@ -61,6 +62,10 @@ Future<void> initDependencies() async {
 
   serviceLocator.registerLazySingleton(() => AppUserCubit());
 
+  serviceLocator.registerLazySingleton(() => NotificationService());
+
+  await serviceLocator<NotificationService>().init();
+
   _initAuth();
   _initTransaction();
   _initBudget();
@@ -103,12 +108,11 @@ void _initAuth() {
     //Bloc
     ..registerLazySingleton(
       () => AuthBloc(
-        signUpWithEmailPassword: serviceLocator(),
-        loginWithEmailPassword: serviceLocator(),
-        getCurrentUser: serviceLocator(),
-        appUserCubit: serviceLocator(),
-        settingBloc: serviceLocator()
-      ),
+          signUpWithEmailPassword: serviceLocator(),
+          loginWithEmailPassword: serviceLocator(),
+          getCurrentUser: serviceLocator(),
+          appUserCubit: serviceLocator(),
+          settingBloc: serviceLocator()),
     );
 }
 
@@ -256,44 +260,40 @@ void _initWallet() {
 
 void _initCategory() {
   serviceLocator
-  //Datasource
+    //Datasource
     ..registerFactory<CategoryRemoteDatasource>(
-          () =>
-          CategoryRemoteDatasourceImpl(
-            serviceLocator(),
-            serviceLocator(),
-          ),
+      () => CategoryRemoteDatasourceImpl(
+        serviceLocator(),
+        serviceLocator(),
+      ),
     )
-  //Repository
+    //Repository
     ..registerFactory<CategoryRepository>(
-          () =>
-          CategoryRepositoryImpl(
-            serviceLocator(),
-          ),
+      () => CategoryRepositoryImpl(
+        serviceLocator(),
+      ),
     )
-  //Usecases
+    //Usecases
     ..registerFactory(
-          () =>
-          LoadCategories(
-            serviceLocator(),
-          ),
+      () => LoadCategories(
+        serviceLocator(),
+      ),
     )
-  // ..registerFactory(
-  //   () => AddNewWallet(
-  //     serviceLocator(),
-  //   ),
-  // )
-  // ..registerFactory(
-  //   () => GetCurrentUser(
-  //     serviceLocator(),
-  //   ),
-  // )
-  //Bloc
+    // ..registerFactory(
+    //   () => AddNewWallet(
+    //     serviceLocator(),
+    //   ),
+    // )
+    // ..registerFactory(
+    //   () => GetCurrentUser(
+    //     serviceLocator(),
+    //   ),
+    // )
+    //Bloc
     ..registerLazySingleton(
-          () =>
-          CategoryBloc(
-            loadCategories: serviceLocator(),
-          ),
+      () => CategoryBloc(
+        loadCategories: serviceLocator(),
+      ),
     );
 }
 

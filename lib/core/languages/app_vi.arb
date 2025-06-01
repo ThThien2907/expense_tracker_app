@@ -104,6 +104,8 @@
     "confirmRemoveBudget": "Bạn có chắc chắn muốn xóa ngân sách này không?",
     "endDateCanNotBeBeforeStartDate": "Ngày kết thúc không được trước ngày bắt đầu",
     "endDateCanNotBeLessThanToday": "Ngày kết thúc không được nhỏ hơn ngày hôm nay",
+    "exceedTheBudget": "Vượt ngân sách",
+    "youHaveSpentExceedingTheBudgetOf": "Bạn đã chi tiêu vượt mức ngân sách",
 
     "financialReport": "Báo cáo tài chính",
     "reportThisMonth": "Báo cáo tháng này",

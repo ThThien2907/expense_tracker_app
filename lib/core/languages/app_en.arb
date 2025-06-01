@@ -104,6 +104,8 @@
   "confirmRemoveBudget": "Are you sure do you wanna remove this budget?",
   "endDateCanNotBeBeforeStartDate": "End date can't be before start date",
   "endDateCanNotBeLessThanToday": "End date can't be less than today",
+  "exceedTheBudget": "Exceed the budget",
+  "youHaveSpentExceedingTheBudgetOf": "You have spent exceeding the budget of",
 
   "financialReport": "Financial Report",
   "reportThisMonth": "Report This Month",
