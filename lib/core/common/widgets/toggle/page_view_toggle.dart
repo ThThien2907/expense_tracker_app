@@ -7,11 +7,15 @@ class PageViewToggle extends StatelessWidget {
     required this.selectedIndex,
     required this.onItemSelected,
     required this.labels,
+    this.height,
+    this.width,
   });
 
   final List<String> labels;
   final int selectedIndex;
   final ValueChanged<int> onItemSelected;
+  final double? height;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +24,8 @@ class PageViewToggle extends StatelessWidget {
       borderRadius: BorderRadius.circular(30),
       child: Container(
         padding: const EdgeInsets.all(6),
-        width: MediaQuery.of(context).size.width,
-        height: 60,
+        width: width ?? MediaQuery.of(context).size.width,
+        height: height ?? 60,
         child: Stack(
           children: [
             AnimatedAlign(
@@ -30,7 +34,7 @@ class PageViewToggle extends StatelessWidget {
                 Alignment.centerRight,
                 labels.length == 1 ? 0.0 : selectedIndex / (labels.length - 1),
               )!,
-              duration: const Duration(milliseconds: 300),
+              duration: const Duration(milliseconds: 200),
               child: Material(
                 color: AppColors.violet100,
                 borderRadius: BorderRadius.circular(30),
