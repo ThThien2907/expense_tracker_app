@@ -138,7 +138,7 @@ class _AddOrEditCategoryPageState extends State<AddOrEditCategoryPage> {
                     size: 56,
                     iconSize: 32,
                     iconColor: Color(int.parse(selectedColor)),
-                    backgroundIconColor: Color(int.parse(selectedColor)).withValues(alpha: 0.3),
+                    backgroundIconColor: Color(int.parse(selectedColor)).withValues(alpha: 0.15),
                   ),
                   const SizedBox(
                     width: 8,
@@ -213,7 +213,7 @@ class _AddOrEditCategoryPageState extends State<AddOrEditCategoryPage> {
                               ? Color(int.parse(color))
                               : AppColors.light20,
                           backgroundIconColor: _selectedCategoryIndex == index
-                              ? Color(int.parse(color)).withValues(alpha: 0.3)
+                              ? Color(int.parse(color)).withValues(alpha: 0.15)
                               : AppColors.light60,
                         ),
                       ),

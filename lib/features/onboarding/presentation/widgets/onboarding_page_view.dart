@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:expense_tracker_app/core/assets/app_images.dart';
 import 'package:expense_tracker_app/core/languages/app_localizations.dart';
 import 'package:expense_tracker_app/core/theme/app_colors.dart';
@@ -16,35 +17,33 @@ class OnboardingData {
 }
 
 class OnboardingPageView extends StatelessWidget {
-  const OnboardingPageView({super.key, required this.pageController});
+  const OnboardingPageView({super.key, required this.onPageChanged});
 
-  final PageController pageController;
-
+  final ValueChanged<int> onPageChanged;
 
   static List<OnboardingData> data(BuildContext context) => [
-    OnboardingData(
-      title: AppLocalizations.of(context)!.onboardingTitle1,
-      subTitle: AppLocalizations.of(context)!.onboardingSubTitle1,
-      image: AppImages.onboardingImage1,
-    ),
-    OnboardingData(
-      title: AppLocalizations.of(context)!.onboardingTitle2,
-      subTitle: AppLocalizations.of(context)!.onboardingSubTitle2,
-      image: AppImages.onboardingImage2,
-    ),
-    OnboardingData(
-      title: AppLocalizations.of(context)!.onboardingTitle3,
-      subTitle: AppLocalizations.of(context)!.onboardingSubTitle3,
-      image: AppImages.onboardingImage3,
-    ),
-  ];
+        OnboardingData(
+          title: AppLocalizations.of(context)!.onboardingTitle1,
+          subTitle: AppLocalizations.of(context)!.onboardingSubTitle1,
+          image: AppImages.onboardingImage1,
+        ),
+        OnboardingData(
+          title: AppLocalizations.of(context)!.onboardingTitle2,
+          subTitle: AppLocalizations.of(context)!.onboardingSubTitle2,
+          image: AppImages.onboardingImage2,
+        ),
+        OnboardingData(
+          title: AppLocalizations.of(context)!.onboardingTitle3,
+          subTitle: AppLocalizations.of(context)!.onboardingSubTitle3,
+          image: AppImages.onboardingImage3,
+        ),
+      ];
 
   @override
   Widget build(BuildContext context) {
-    return PageView.builder(
-      controller: pageController,
+    return CarouselSlider.builder(
       itemCount: 3,
-      itemBuilder: (context, index) {
+      itemBuilder: (context, index, pageIndex) {
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -53,9 +52,6 @@ class OnboardingPageView extends StatelessWidget {
               child: Image.asset(
                 data(context)[index].image,
                 width: 312,
-                // height: MediaQuery.of(context).size.height < 705
-                //     ? 312 - (705 - MediaQuery.of(context).size.height)
-                //     : 312,
               ),
             ),
             Padding(
@@ -67,8 +63,7 @@ class OnboardingPageView extends StatelessWidget {
                     style: TextStyle(
                       fontFamily: 'Inter',
                       fontWeight: FontWeight.w700,
-                      fontSize:
-                          MediaQuery.of(context).size.width < 315 ? 26 : 32,
+                      fontSize: MediaQuery.of(context).size.width < 315 ? 26 : 32,
                       color: AppColors.dark50,
                     ),
                     textAlign: TextAlign.center,
@@ -93,6 +88,17 @@ class OnboardingPageView extends StatelessWidget {
           ],
         );
       },
+      options: CarouselOptions(
+          height: double.infinity,
+          aspectRatio: 1,
+          enableInfiniteScroll: true,
+          viewportFraction: 1,
+          autoPlay: true,
+          autoPlayInterval: const Duration(seconds: 3),
+          autoPlayAnimationDuration: const Duration(milliseconds: 400),
+          onPageChanged: (index, reason) {
+            onPageChanged(index);
+          }),
     );
   }
 }

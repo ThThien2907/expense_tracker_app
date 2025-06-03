@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:expense_tracker_app/core/common/extensions/get_localized_name.dart';
 import 'package:expense_tracker_app/core/common/widgets/app_bar/custom_app_bar.dart';
 import 'package:expense_tracker_app/core/common/widgets/button/app_button.dart';
 import 'package:expense_tracker_app/core/common/widgets/loading/loading.dart';
@@ -78,13 +79,23 @@ class _LoginPageState extends State<LoginPage> {
               context.read<BudgetBloc>().add( BudgetStarted(completer: budgetCompleter));
               context.read<TransactionBloc>().add( TransactionStarted(completer: transactionCompleter));
 
-              await walletCompleter.future;
-              await categoryCompleter.future;
-              await budgetCompleter.future;
-              await transactionCompleter.future;
+              try {
+                await walletCompleter.future;
+                await categoryCompleter.future;
+                await budgetCompleter.future;
+                await transactionCompleter.future;
 
-              if(context.mounted){
-                context.go(RoutePaths.home);
+                if (context.mounted) {
+                  context.go(RoutePaths.home);
+                }
+              } catch (e) {
+                debugPrint('Error: $e');
+                if (context.mounted) {
+                  AppSnackBar.showError(
+                    context,
+                    GetLocalizedName.getLocalizedName(context, e.toString()),
+                  );
+                }
               }
             }
           },

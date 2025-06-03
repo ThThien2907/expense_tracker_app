@@ -9,6 +9,7 @@ import 'package:expense_tracker_app/core/common/widgets/loading/loading.dart';
 import 'package:expense_tracker_app/core/common/widgets/snack_bar/app_snack_bar.dart';
 import 'package:expense_tracker_app/core/common/widgets/text_field/app_text_field.dart';
 import 'package:expense_tracker_app/core/languages/app_localizations.dart';
+import 'package:expense_tracker_app/core/navigation/app_router.dart';
 import 'package:expense_tracker_app/core/theme/app_colors.dart';
 import 'package:expense_tracker_app/features/budget/presentation/bloc/budget_bloc.dart';
 import 'package:expense_tracker_app/features/category/presentation/bloc/category_bloc.dart';
@@ -288,37 +289,37 @@ class _AddOrEditTransactionState extends State<AddOrEditTransaction> {
   }
 
   Widget _buildCategoryButtonField(BuildContext context) {
-    return BlocBuilder<CategoryBloc, CategoryState>(
-      builder: (context, state) {
-        final defaultCategories = widget.isExpense
-            ? [...state.defaultCategoriesExpense]
-            : [...state.defaultCategoriesIncome];
+    return TextField(
+      controller: categoryController,
+      readOnly: true,
+      decoration: InputDecoration(
+        hintText: AppLocalizations.of(context)!.category,
+        suffixIcon: const Icon(
+          Icons.arrow_drop_down_sharp,
+          color: AppColors.light20,
+          size: 32,
+        ),
+      ),
+      style: const TextStyle(
+        fontFamily: 'Inter',
+        color: AppColors.dark100,
+        fontSize: 16,
+      ),
+      onTap: () {
+        AppBottomSheet.show(
+          context: context,
+          height: MediaQuery.of(context).size.height * 0.85,
+          padding: EdgeInsets.zero,
+          widget: BlocBuilder<CategoryBloc, CategoryState>(
+            builder: (context, state) {
+              final defaultCategories = widget.isExpense
+                  ? [...state.defaultCategoriesExpense]
+                  : [...state.defaultCategoriesIncome];
 
-        final userCategories =
-            widget.isExpense ? [...state.userCategoriesExpense] : [...state.userCategoriesIncome];
-
-        return TextField(
-          controller: categoryController,
-          readOnly: true,
-          decoration: InputDecoration(
-            hintText: AppLocalizations.of(context)!.category,
-            suffixIcon: const Icon(
-              Icons.arrow_drop_down_sharp,
-              color: AppColors.light20,
-              size: 32,
-            ),
-          ),
-          style: const TextStyle(
-            fontFamily: 'Inter',
-            color: AppColors.dark100,
-            fontSize: 16,
-          ),
-          onTap: () {
-            AppBottomSheet.show(
-              context: context,
-              height: MediaQuery.of(context).size.height * 0.85,
-              padding: EdgeInsets.zero,
-              widget: Scaffold(
+              final userCategories = widget.isExpense
+                  ? [...state.userCategoriesExpense]
+                  : [...state.userCategoriesIncome];
+              return Scaffold(
                 appBar: CustomAppBar(
                   title: widget.isExpense
                       ? AppLocalizations.of(context)!.expense
@@ -364,7 +365,7 @@ class _AddOrEditTransactionState extends State<AddOrEditTransaction> {
                           : ListView.separated(
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
-                              padding: const EdgeInsets.only(bottom: 16),
+                              padding:  EdgeInsets.zero,
                               itemBuilder: (context, index) {
                                 return CategoryItem(
                                   categoryEntity: userCategories[index],
@@ -385,6 +386,19 @@ class _AddOrEditTransactionState extends State<AddOrEditTransaction> {
                               },
                               itemCount: userCategories.length,
                             ),
+                      const SizedBox(height: 16,),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: AppButton(
+                          onPressed: () {
+                            context.push(RoutePaths.category + RoutePaths.addOrEditCategory, extra: ({
+                              'isEdit': false,
+                            }));
+                          },
+                          buttonText: AppLocalizations.of(context)!.addNewCategory,
+                        ),
+                      ),
+                      const SizedBox(height: 16,),
                       Text(
                         AppLocalizations.of(context)!.defaultCategories,
                         style: const TextStyle(
@@ -424,9 +438,9 @@ class _AddOrEditTransactionState extends State<AddOrEditTransaction> {
                     ],
                   ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         );
       },
     );

@@ -23,8 +23,9 @@ class OnboardingPage extends StatefulWidget {
 }
 
 class _OnboardingPageState extends State<OnboardingPage> {
-  final PageController _pageController = PageController();
   late String selectedValue;
+
+  int _currentPage = 0;
 
   @override
   void initState() {
@@ -43,7 +44,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
   @override
   void dispose() {
     super.dispose();
-    _pageController.dispose();
   }
 
   @override
@@ -57,14 +57,18 @@ class _OnboardingPageState extends State<OnboardingPage> {
         children: [
           Column(
             children: [
-              Expanded(
-                child: OnboardingPageView(pageController: _pageController),
+              Flexible(
+                child: OnboardingPageView(onPageChanged: (index) {
+                  setState(() {
+                    _currentPage = index;
+                  });
+                },),
               ),
               const SizedBox(
-                height: 16,
+                height: 8,
               ),
-              SmoothPageIndicator(
-                controller: _pageController,
+              AnimatedSmoothIndicator(
+                activeIndex: _currentPage,
                 count: 3,
                 effect: const ExpandingDotsEffect(
                   activeDotColor: AppColors.violet100,
@@ -74,7 +78,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 ),
               ),
               const SizedBox(
-                height: 32,
+                height: 56,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
