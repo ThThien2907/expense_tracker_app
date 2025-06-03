@@ -127,6 +127,14 @@
   "saturday": "Saturday",
   "sunday": "Sunday",
 
+  "addNewCategory": "Add New Category",
+  "editCategory": "Edit Category",
+  "myCategories": "My categories",
+  "defaultCategories": "Default categories",
+  "youHaveNotCreatedAnyCategoriesYet": "You have not created any categories yet",
+  "removeThisCategory": "Remove this category?",
+  "confirmRemoveCategory": "You will also delete all transactions and budgets associated with this category. Are you sure do you wanna remove this category?",
+
   "categoryFoodBeverage": "Food & Beverage",
   "categoryBillUtilities": "Bill & Utilities",
   "categoryShopping": "Shopping",

@@ -56,16 +56,28 @@ class _SplashPageState extends State<SplashPage> {
 
             context.read<WalletBloc>().add(WalletStarted(completer: walletCompleter));
             context.read<CategoryBloc>().add(CategoryStarted(completer: categoryCompleter));
-            context.read<BudgetBloc>().add( BudgetStarted(completer: budgetCompleter));
-            context.read<TransactionBloc>().add( TransactionStarted(completer: transactionCompleter));
+            context.read<BudgetBloc>().add(BudgetStarted(completer: budgetCompleter));
+            context
+                .read<TransactionBloc>()
+                .add(TransactionStarted(completer: transactionCompleter));
 
-            await walletCompleter.future;
-            await categoryCompleter.future;
-            await budgetCompleter.future;
-            await transactionCompleter.future;
+            try {
+              await walletCompleter.future;
+              await categoryCompleter.future;
+              await budgetCompleter.future;
+              await transactionCompleter.future;
 
-            if(context.mounted){
-              context.go(RoutePaths.home);
+              if (context.mounted) {
+                context.go(RoutePaths.home);
+              }
+            } catch (e) {
+              debugPrint('Error: $e');
+              if (context.mounted) {
+                AppSnackBar.showError(
+                  context,
+                  GetLocalizedName.getLocalizedName(context, e.toString()),
+                );
+              }
             }
           }
         },

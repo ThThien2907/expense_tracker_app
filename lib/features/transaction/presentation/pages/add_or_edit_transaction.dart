@@ -41,8 +41,7 @@ class AddOrEditTransaction extends StatefulWidget {
 }
 
 class _AddOrEditTransactionState extends State<AddOrEditTransaction> {
-  final TextEditingController amountController =
-      TextEditingController(text: '0');
+  final TextEditingController amountController = TextEditingController(text: '0');
   final TextEditingController categoryController = TextEditingController();
   final TextEditingController walletController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
@@ -113,8 +112,8 @@ class _AddOrEditTransactionState extends State<AddOrEditTransaction> {
         }
         if (state.status == TransactionStatus.failure) {
           Loading.hide(context);
-          AppSnackBar.showError(context,
-              GetLocalizedName.getLocalizedName(context, state.errorMessage));
+          AppSnackBar.showError(
+              context, GetLocalizedName.getLocalizedName(context, state.errorMessage));
         }
 
         if (state.status == TransactionStatus.success) {
@@ -123,8 +122,7 @@ class _AddOrEditTransactionState extends State<AddOrEditTransaction> {
         }
       },
       child: Scaffold(
-        backgroundColor:
-            widget.isExpense ? AppColors.red100 : AppColors.green100,
+        backgroundColor: widget.isExpense ? AppColors.red100 : AppColors.green100,
         appBar: CustomAppBar(
           title: widget.isExpense
               ? widget.isEdit
@@ -210,20 +208,17 @@ class _AddOrEditTransactionState extends State<AddOrEditTransaction> {
                               walletId.isEmpty ||
                               dateController.text.isEmpty ||
                               amount <= 0) {
-                            AppSnackBar.showError(
-                                context, AppLocalizations.of(context)!.fillIn);
+                            AppSnackBar.showError(context, AppLocalizations.of(context)!.fillIn);
                             return;
                           }
                           if (widget.isEdit) {
                             context.read<TransactionBloc>().add(
                                   TransactionEdited(
-                                    transactionId:
-                                        widget.transactionEntity!.transactionId,
+                                    transactionId: widget.transactionEntity!.transactionId,
                                     walletId: walletId,
                                     categoryId: categoryId,
                                     amount: amount,
-                                    description:
-                                        descriptionController.text.trim(),
+                                    description: descriptionController.text.trim(),
                                     createdAt: createdAt,
                                     walletBloc: context.read<WalletBloc>(),
                                     budgetBloc: context.read<BudgetBloc>(),
@@ -235,8 +230,7 @@ class _AddOrEditTransactionState extends State<AddOrEditTransaction> {
                                     categoryId: categoryId,
                                     walletId: walletId,
                                     amount: amount,
-                                    description:
-                                        descriptionController.text.trim(),
+                                    description: descriptionController.text.trim(),
                                     createdAt: createdAt,
                                     walletBloc: context.read<WalletBloc>(),
                                     budgetBloc: context.read<BudgetBloc>(),
@@ -246,7 +240,9 @@ class _AddOrEditTransactionState extends State<AddOrEditTransaction> {
                         },
                         buttonText: AppLocalizations.of(context)!.apply,
                       ),
-                      const SizedBox(height: 32,),
+                      const SizedBox(
+                        height: 32,
+                      ),
                     ],
                   ),
                 ),
@@ -269,8 +265,7 @@ class _AddOrEditTransactionState extends State<AddOrEditTransaction> {
         focusedBorder: InputBorder.none,
         prefixIcon: Text(
           AppConst.currencies
-              .firstWhere(
-                  (currency) => currency.currencyCode == settingEntity.currency)
+              .firstWhere((currency) => currency.currencyCode == settingEntity.currency)
               .currencySymbol,
           style: const TextStyle(
             fontFamily: 'Inter',
@@ -295,9 +290,12 @@ class _AddOrEditTransactionState extends State<AddOrEditTransaction> {
   Widget _buildCategoryButtonField(BuildContext context) {
     return BlocBuilder<CategoryBloc, CategoryState>(
       builder: (context, state) {
-        final categories = widget.isExpense
-            ? [...state.categoriesExpense]
-            : [...state.categoriesIncome];
+        final defaultCategories = widget.isExpense
+            ? [...state.defaultCategoriesExpense]
+            : [...state.defaultCategoriesIncome];
+
+        final userCategories =
+            widget.isExpense ? [...state.userCategoriesExpense] : [...state.userCategoriesIncome];
 
         return TextField(
           controller: categoryController,
@@ -327,30 +325,104 @@ class _AddOrEditTransactionState extends State<AddOrEditTransaction> {
                       : AppLocalizations.of(context)!.income,
                   centerTitle: true,
                 ),
-                body: ListView.separated(
-                  padding: const EdgeInsets.only(bottom: 16, left: 16, right: 16),
-                  itemBuilder: (context, index) {
-                    return CategoryItem(
-                      categoryEntity: categories[index],
-                      onTap: () {
-                        if (categoryId != categories[index].categoryId) {
-                          categoryController.text =
-                              GetLocalizedName.getLocalizedName(
-                            context,
-                            categories[index].name,
+                body: SingleChildScrollView(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.myCategories,
+                        style: const TextStyle(
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 20,
+                          color: AppColors.dark75,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      userCategories.isEmpty
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 24),
+                                  child: Text(
+                                    AppLocalizations.of(context)!.youHaveNotCreatedAnyCategoriesYet,
+                                    style: const TextStyle(
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16,
+                                      color: AppColors.light20,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ],
+                            )
+                          : ListView.separated(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              padding: const EdgeInsets.only(bottom: 16),
+                              itemBuilder: (context, index) {
+                                return CategoryItem(
+                                  categoryEntity: userCategories[index],
+                                  onTap: () {
+                                    categoryController.text = GetLocalizedName.getLocalizedName(
+                                      context,
+                                      userCategories[index].name,
+                                    );
+                                    categoryId = userCategories[index].categoryId;
+                                    context.pop();
+                                  },
+                                );
+                              },
+                              separatorBuilder: (context, index) {
+                                return const SizedBox(
+                                  height: 16,
+                                );
+                              },
+                              itemCount: userCategories.length,
+                            ),
+                      Text(
+                        AppLocalizations.of(context)!.defaultCategories,
+                        style: const TextStyle(
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 20,
+                          color: AppColors.dark75,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      ListView.separated(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        padding: const EdgeInsets.only(bottom: 16),
+                        itemBuilder: (context, index) {
+                          return CategoryItem(
+                            categoryEntity: defaultCategories[index],
+                            onTap: () {
+                              categoryController.text = GetLocalizedName.getLocalizedName(
+                                context,
+                                defaultCategories[index].name,
+                              );
+                              categoryId = defaultCategories[index].categoryId;
+                              context.pop();
+                            },
                           );
-                          categoryId = categories[index].categoryId;
-                        }
-                        context.pop();
-                      },
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return const SizedBox(
-                      height: 16,
-                    );
-                  },
-                  itemCount: categories.length,
+                        },
+                        separatorBuilder: (context, index) {
+                          return const SizedBox(
+                            height: 16,
+                          );
+                        },
+                        itemCount: defaultCategories.length,
+                      )
+                    ],
+                  ),
                 ),
               ),
             );

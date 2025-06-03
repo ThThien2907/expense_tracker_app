@@ -19,6 +19,9 @@ import 'package:expense_tracker_app/features/budget/presentation/bloc/budget_blo
 import 'package:expense_tracker_app/features/category/data/data_sources/category_remote_datasource.dart';
 import 'package:expense_tracker_app/features/category/data/repositories/category_repository_impl.dart';
 import 'package:expense_tracker_app/features/category/domain/repositories/category_repository.dart';
+import 'package:expense_tracker_app/features/category/domain/use_cases/add_new_category.dart';
+import 'package:expense_tracker_app/features/category/domain/use_cases/delete_category.dart';
+import 'package:expense_tracker_app/features/category/domain/use_cases/edit_category.dart';
 import 'package:expense_tracker_app/features/category/domain/use_cases/load_categories.dart';
 import 'package:expense_tracker_app/features/category/presentation/bloc/category_bloc.dart';
 import 'package:expense_tracker_app/features/setting/data/data_sources/setting_remote_datasource.dart';
@@ -279,20 +282,28 @@ void _initCategory() {
         serviceLocator(),
       ),
     )
-    // ..registerFactory(
-    //   () => AddNewWallet(
-    //     serviceLocator(),
-    //   ),
-    // )
-    // ..registerFactory(
-    //   () => GetCurrentUser(
-    //     serviceLocator(),
-    //   ),
-    // )
+    ..registerFactory(
+      () => AddNewCategory(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => EditCategory(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => DeleteCategory(
+        serviceLocator(),
+      ),
+    )
     //Bloc
     ..registerLazySingleton(
       () => CategoryBloc(
         loadCategories: serviceLocator(),
+        addNewCategory: serviceLocator(),
+        editCategory: serviceLocator(),
+        deleteCategory: serviceLocator(),
       ),
     );
 }

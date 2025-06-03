@@ -8,6 +8,7 @@ import 'package:expense_tracker_app/features/wallet/domain/use_cases/add_new_wal
 import 'package:expense_tracker_app/features/wallet/domain/use_cases/delete_wallet.dart';
 import 'package:expense_tracker_app/features/wallet/domain/use_cases/edit_wallet.dart';
 import 'package:expense_tracker_app/features/wallet/domain/use_cases/load_wallets.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'wallet_event.dart';
@@ -170,7 +171,11 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
 
       final completer = Completer<void>();
       event.budgetBloc.add(BudgetStarted(completer: completer));
-      await completer.future;
+      try {
+        await completer.future;
+      } catch (e) {
+        debugPrint('Error: $e');
+      }
 
       emit(state.copyWith(
         status: WalletStatus.success,
@@ -202,9 +207,12 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
       event.transactionBloc.add(TransactionStarted(
         completer: transactionCompleter,
       ));
-
-      await budgetCompleter.future;
-      await transactionCompleter.future;
+      try {
+        await budgetCompleter.future;
+        await transactionCompleter.future;
+      } catch (e) {
+        debugPrint('Error: $e');
+      }
 
       emit(state.copyWith(
         status: WalletStatus.success,

@@ -357,6 +357,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sunday => 'Sunday';
 
   @override
+  String get addNewCategory => 'Add New Category';
+
+  @override
+  String get editCategory => 'Edit Category';
+
+  @override
+  String get myCategories => 'My categories';
+
+  @override
+  String get defaultCategories => 'Default categories';
+
+  @override
+  String get youHaveNotCreatedAnyCategoriesYet => 'You have not created any categories yet';
+
+  @override
+  String get removeThisCategory => 'Remove this category?';
+
+  @override
+  String get confirmRemoveCategory => 'You will also delete all transactions and budgets associated with this category. Are you sure do you wanna remove this category?';
+
+  @override
   String get categoryFoodBeverage => 'Food & Beverage';
 
   @override

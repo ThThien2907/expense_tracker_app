@@ -1,7 +1,6 @@
 import 'package:expense_tracker_app/core/common/cubits/app_user/app_user_cubit.dart';
 import 'package:expense_tracker_app/core/languages/app_localizations.dart';
 import 'package:expense_tracker_app/core/navigation/app_router.dart';
-import 'package:expense_tracker_app/core/services/notification_service.dart';
 import 'package:expense_tracker_app/core/theme/app_theme.dart';
 import 'package:expense_tracker_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:expense_tracker_app/features/budget/presentation/bloc/budget_bloc.dart';

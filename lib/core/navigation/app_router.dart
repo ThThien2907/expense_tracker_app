@@ -9,6 +9,8 @@ import 'package:expense_tracker_app/features/budget/presentation/pages/add_or_ed
 import 'package:expense_tracker_app/features/budget/presentation/pages/budget_page.dart';
 import 'package:expense_tracker_app/features/budget/presentation/pages/detail_budget_page.dart';
 import 'package:expense_tracker_app/features/budget/presentation/pages/finished_budget_page.dart';
+import 'package:expense_tracker_app/features/category/domain/entities/category_entity.dart';
+import 'package:expense_tracker_app/features/category/presentation/pages/add_or_edit_category_page.dart';
 import 'package:expense_tracker_app/features/category/presentation/pages/category_page.dart';
 import 'package:expense_tracker_app/features/home/presentation/pages/home_page.dart';
 import 'package:expense_tracker_app/features/onboarding/presentation/pages/onboarding_page.dart';
@@ -145,6 +147,20 @@ class AppRouter {
       GoRoute(
         path: RoutePaths.category,
         builder: (context, state) => const CategoryPage(),
+        routes: [
+          GoRoute(
+            path: RoutePaths.addOrEditCategory,
+            builder: (context, state) {
+              final extra = state.extra as Map<String, dynamic>?;
+              final isEdit = extra?['isEdit'] as bool;
+              final category = extra?['category'] as CategoryEntity?;
+              return  AddOrEditCategoryPage(
+                isEdit: isEdit,
+                categoryEntity: category,
+              );
+            },
+          ),
+        ]
       ),
       GoRoute(
         path: RoutePaths.setting,

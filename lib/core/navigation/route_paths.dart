@@ -29,6 +29,7 @@ class RoutePaths {
   static const String addOrEditWallet = '/addOrEditWallet';
 
   static const String category = '/category';
+  static const String addOrEditCategory = '/addOrEditCategory';
 
   static const String setting = '/setting';
   static const String language = '/language';

@@ -41,7 +41,7 @@
     "account": "Tài khoản",
 
     "wallet": "Ví tiền",
-    "category": "Thể loại",
+    "category": "Danh mục",
     "setting": "Cài đặt",
     "logout": "Đăng xuất",
 
@@ -126,6 +126,14 @@
     "friday": "Thứ Sáu",
     "saturday": "Thứ bảy",
     "sunday": "Chủ nhật",
+
+    "addNewCategory": "Thêm danh mục mới",
+    "editCategory": "Chỉnh sửa danh mục",
+    "myCategories": "Danh mục của tôi",
+    "defaultCategories": "Danh mục mặc định",
+    "youHaveNotCreatedAnyCategoriesYet": "Bạn chưa tạo bất kỳ danh mục nào",
+    "removeThisCategory": "Xóa danh mục này?",
+    "confirmRemoveCategory": "Bạn cũng sẽ xóa tất cả các giao dịch và ngân sách liên quan đến danh mục này. Bạn có chắc chắn muốn xóa danh mục này không?",
 
     "categoryFoodBeverage": "Ăn uống",
     "categoryBillUtilities": "Hóa đơn & Tiện ích",

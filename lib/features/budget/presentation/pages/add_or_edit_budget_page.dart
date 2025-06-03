@@ -35,8 +35,7 @@ class AddOrEditBudgetPage extends StatefulWidget {
 }
 
 class _AddOrEditBudgetPageState extends State<AddOrEditBudgetPage> {
-  final TextEditingController amountController =
-      TextEditingController(text: '0');
+  final TextEditingController amountController = TextEditingController(text: '0');
   final TextEditingController categoryController = TextEditingController();
   final TextEditingController startDateController = TextEditingController();
   final TextEditingController endDateController = TextEditingController();
@@ -72,8 +71,7 @@ class _AddOrEditBudgetPageState extends State<AddOrEditBudgetPage> {
 
         categoryId = widget.budget!.category.categoryId;
         startDate = widget.budget!.startDate;
-        endDate = widget.budget!.endDate
-            .copyWith(day: widget.budget!.endDate.day - 1);
+        endDate = widget.budget!.endDate.copyWith(day: widget.budget!.endDate.day - 1);
         startDateController.text = dateFormat.format(startDate!);
         endDateController.text = dateFormat.format(endDate!);
       }
@@ -107,8 +105,8 @@ class _AddOrEditBudgetPageState extends State<AddOrEditBudgetPage> {
         }
         if (state.status == BudgetStatus.failure) {
           Loading.hide(context);
-          AppSnackBar.showError(context,
-              GetLocalizedName.getLocalizedName(context, state.errorMessage));
+          AppSnackBar.showError(
+              context, GetLocalizedName.getLocalizedName(context, state.errorMessage));
         }
       },
       child: Scaffold(
@@ -179,12 +177,10 @@ class _AddOrEditBudgetPageState extends State<AddOrEditBudgetPage> {
                                       lastDate: DateTime(2030),
                                       initialDate: startDate);
 
-                                  if (pickedDate != null &&
-                                      pickedDate != startDate) {
-                                    startDate = DateTime(pickedDate!.year,
-                                        pickedDate!.month, pickedDate!.day);
-                                    startDateController.text =
-                                        dateFormat.format(startDate!);
+                                  if (pickedDate != null && pickedDate != startDate) {
+                                    startDate = DateTime(
+                                        pickedDate!.year, pickedDate!.month, pickedDate!.day);
+                                    startDateController.text = dateFormat.format(startDate!);
                                     pickedDate = null;
                                   }
                                 }),
@@ -204,12 +200,10 @@ class _AddOrEditBudgetPageState extends State<AddOrEditBudgetPage> {
                                       lastDate: DateTime(2030),
                                       initialDate: endDate);
 
-                                  if (pickedDate != null &&
-                                      pickedDate != endDate) {
-                                    endDate = DateTime(pickedDate!.year,
-                                        pickedDate!.month, pickedDate!.day);
-                                    endDateController.text =
-                                        dateFormat.format(endDate!);
+                                  if (pickedDate != null && pickedDate != endDate) {
+                                    endDate = DateTime(
+                                        pickedDate!.year, pickedDate!.month, pickedDate!.day);
+                                    endDateController.text = dateFormat.format(endDate!);
                                     pickedDate = null;
                                   }
                                 }),
@@ -232,24 +226,19 @@ class _AddOrEditBudgetPageState extends State<AddOrEditBudgetPage> {
                               startDateController.text.isEmpty ||
                               endDateController.text.isEmpty ||
                               amountLimit <= 0) {
-                            AppSnackBar.showError(
-                                context, AppLocalizations.of(context)!.fillIn);
+                            AppSnackBar.showError(context, AppLocalizations.of(context)!.fillIn);
                             return;
                           }
 
                           if (endDate!.difference(startDate!).isNegative) {
-                            AppSnackBar.showError(
-                                context,
-                                AppLocalizations.of(context)!
-                                    .endDateCanNotBeBeforeStartDate);
+                            AppSnackBar.showError(context,
+                                AppLocalizations.of(context)!.endDateCanNotBeBeforeStartDate);
                             return;
                           }
 
                           if (endDate!.difference(now).isNegative) {
-                            AppSnackBar.showError(
-                                context,
-                                AppLocalizations.of(context)!
-                                    .endDateCanNotBeLessThanToday);
+                            AppSnackBar.showError(context,
+                                AppLocalizations.of(context)!.endDateCanNotBeLessThanToday);
                             return;
                           }
 
@@ -260,8 +249,8 @@ class _AddOrEditBudgetPageState extends State<AddOrEditBudgetPage> {
                                     categoryId: categoryId,
                                     amountLimit: amountLimit,
                                     startDate: startDate!,
-                                    endDate: DateTime(endDate!.year,
-                                            endDate!.month, endDate!.day + 1),
+                                    endDate:
+                                        DateTime(endDate!.year, endDate!.month, endDate!.day + 1),
                                   ),
                                 );
                           } else {
@@ -270,18 +259,17 @@ class _AddOrEditBudgetPageState extends State<AddOrEditBudgetPage> {
                                     categoryId: categoryId,
                                     amountLimit: amountLimit,
                                     startDate: startDate!,
-                                    endDate: DateTime(
-                                      endDate!.year,
-                                      endDate!.month,
-                                      endDate!.day + 1
-                                    ),
+                                    endDate:
+                                        DateTime(endDate!.year, endDate!.month, endDate!.day + 1),
                                   ),
                                 );
                           }
                         },
                         buttonText: AppLocalizations.of(context)!.apply,
                       ),
-                      const SizedBox(height: 32,),
+                      const SizedBox(
+                        height: 32,
+                      ),
                     ],
                   ),
                 ),
@@ -304,8 +292,7 @@ class _AddOrEditBudgetPageState extends State<AddOrEditBudgetPage> {
         focusedBorder: InputBorder.none,
         prefixIcon: Text(
           AppConst.currencies
-              .firstWhere(
-                  (currency) => currency.currencyCode == settingEntity.currency)
+              .firstWhere((currency) => currency.currencyCode == settingEntity.currency)
               .currencySymbol,
           style: const TextStyle(
             fontFamily: 'Inter',
@@ -356,28 +343,104 @@ class _AddOrEditBudgetPageState extends State<AddOrEditBudgetPage> {
                   title: AppLocalizations.of(context)!.expense,
                   centerTitle: true,
                 ),
-                body: ListView.separated(
-                  padding: const EdgeInsets.only(bottom: 16, left: 16, right: 16),
-                  itemBuilder: (context, index) {
-                    return CategoryItem(
-                      categoryEntity: state.categoriesExpense[index],
-                      onTap: () {
-                        categoryController.text =
-                            GetLocalizedName.getLocalizedName(
-                          context,
-                              state.categoriesExpense[index].name,
-                        );
-                        categoryId = state.categoriesExpense[index].categoryId;
-                        context.pop();
-                      },
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return const SizedBox(
-                      height: 16,
-                    );
-                  },
-                  itemCount: state.categoriesExpense.length,
+                body: SingleChildScrollView(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.myCategories,
+                        style: const TextStyle(
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 20,
+                          color: AppColors.dark75,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      state.userCategoriesExpense.isEmpty
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 24),
+                                  child: Text(
+                                    AppLocalizations.of(context)!.youHaveNotCreatedAnyCategoriesYet,
+                                    style: const TextStyle(
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16,
+                                      color: AppColors.light20,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ],
+                            )
+                          : ListView.separated(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              padding: const EdgeInsets.only(bottom: 16),
+                              itemBuilder: (context, index) {
+                                return CategoryItem(
+                                  categoryEntity: state.userCategoriesExpense[index],
+                                  onTap: () {
+                                    categoryController.text = GetLocalizedName.getLocalizedName(
+                                      context,
+                                      state.userCategoriesExpense[index].name,
+                                    );
+                                    categoryId = state.userCategoriesExpense[index].categoryId;
+                                    context.pop();
+                                  },
+                                );
+                              },
+                              separatorBuilder: (context, index) {
+                                return const SizedBox(
+                                  height: 16,
+                                );
+                              },
+                              itemCount: state.userCategoriesExpense.length,
+                            ),
+                      Text(
+                        AppLocalizations.of(context)!.defaultCategories,
+                        style: const TextStyle(
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 20,
+                          color: AppColors.dark75,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      ListView.separated(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        padding: const EdgeInsets.only(bottom: 16),
+                        itemBuilder: (context, index) {
+                          return CategoryItem(
+                            categoryEntity: state.defaultCategoriesExpense[index],
+                            onTap: () {
+                              categoryController.text = GetLocalizedName.getLocalizedName(
+                                context,
+                                state.defaultCategoriesExpense[index].name,
+                              );
+                              categoryId = state.defaultCategoriesExpense[index].categoryId;
+                              context.pop();
+                            },
+                          );
+                        },
+                        separatorBuilder: (context, index) {
+                          return const SizedBox(
+                            height: 16,
+                          );
+                        },
+                        itemCount: state.defaultCategoriesExpense.length,
+                      )
+                    ],
+                  ),
                 ),
               ),
             );

@@ -791,6 +791,48 @@ abstract class AppLocalizations {
   /// **'Sunday'**
   String get sunday;
 
+  /// No description provided for @addNewCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Add New Category'**
+  String get addNewCategory;
+
+  /// No description provided for @editCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Category'**
+  String get editCategory;
+
+  /// No description provided for @myCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'My categories'**
+  String get myCategories;
+
+  /// No description provided for @defaultCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Default categories'**
+  String get defaultCategories;
+
+  /// No description provided for @youHaveNotCreatedAnyCategoriesYet.
+  ///
+  /// In en, this message translates to:
+  /// **'You have not created any categories yet'**
+  String get youHaveNotCreatedAnyCategoriesYet;
+
+  /// No description provided for @removeThisCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove this category?'**
+  String get removeThisCategory;
+
+  /// No description provided for @confirmRemoveCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'You will also delete all transactions and budgets associated with this category. Are you sure do you wanna remove this category?'**
+  String get confirmRemoveCategory;
+
   /// No description provided for @categoryFoodBeverage.
   ///
   /// In en, this message translates to:

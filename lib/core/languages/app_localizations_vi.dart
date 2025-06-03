@@ -120,7 +120,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get wallet => 'Ví tiền';
 
   @override
-  String get category => 'Thể loại';
+  String get category => 'Danh mục';
 
   @override
   String get setting => 'Cài đặt';
@@ -355,6 +355,27 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get sunday => 'Chủ nhật';
+
+  @override
+  String get addNewCategory => 'Thêm danh mục mới';
+
+  @override
+  String get editCategory => 'Chỉnh sửa danh mục';
+
+  @override
+  String get myCategories => 'Danh mục của tôi';
+
+  @override
+  String get defaultCategories => 'Danh mục mặc định';
+
+  @override
+  String get youHaveNotCreatedAnyCategoriesYet => 'Bạn chưa tạo bất kỳ danh mục nào';
+
+  @override
+  String get removeThisCategory => 'Xóa danh mục này?';
+
+  @override
+  String get confirmRemoveCategory => 'Bạn cũng sẽ xóa tất cả các giao dịch và ngân sách liên quan đến danh mục này. Bạn có chắc chắn muốn xóa danh mục này không?';
 
   @override
   String get categoryFoodBeverage => 'Ăn uống';
