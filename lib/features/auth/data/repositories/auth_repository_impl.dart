@@ -61,4 +61,17 @@ class AuthRepositoryImpl implements AuthRepository {
       },
     );
   }
+
+  @override
+  Future<Either> loginWithGoogle({required String language}) async {
+    final response = await authRemoteDataSource.loginWithGoogle(language: language);
+    return response.fold(
+      (ifLeft) {
+        return Left(ifLeft);
+      },
+      (ifRight) {
+        return Right(ifRight);
+      },
+    );
+  }
 }

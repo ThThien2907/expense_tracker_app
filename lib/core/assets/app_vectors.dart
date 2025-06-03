@@ -6,6 +6,8 @@ class AppVectors {
 
   static const appLogo = '$basePath/app_logo$format';
 
+  static const googleIcon = '$basePath/google_icon$format';
+
   static const homeIcon = '$basePath/home_icon$format';
   static const transactionIcon = '$basePath/transaction_icon$format';
   static const budgetIcon = '$basePath/budget_icon$format';

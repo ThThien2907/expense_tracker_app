@@ -27,4 +27,12 @@ final class AuthLogin extends AuthEvent {
   });
 }
 
+final class AuthLoginWithGoogle extends AuthEvent {
+  final String language;
+
+  AuthLoginWithGoogle({
+    required this.language,
+  });
+}
+
 final class AuthLoggedIn extends AuthEvent {}

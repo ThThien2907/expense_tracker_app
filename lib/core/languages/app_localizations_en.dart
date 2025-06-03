@@ -90,6 +90,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get backToLogin => 'Back to Login';
 
   @override
+  String get or => 'Or';
+
+  @override
+  String get signInWithGoogle => 'Sign In with Google';
+
+  @override
   String get confirmLogout => 'Are you sure do you wanna logout?';
 
   @override

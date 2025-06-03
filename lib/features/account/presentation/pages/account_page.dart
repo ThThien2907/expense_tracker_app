@@ -2,14 +2,17 @@ import 'package:expense_tracker_app/core/assets/app_images.dart';
 import 'package:expense_tracker_app/core/assets/app_vectors.dart';
 import 'package:expense_tracker_app/core/common/cubits/app_user/app_user_cubit.dart';
 import 'package:expense_tracker_app/core/common/widgets/bottom_sheet/app_bottom_sheet.dart';
+import 'package:expense_tracker_app/core/common/widgets/snack_bar/app_snack_bar.dart';
 import 'package:expense_tracker_app/core/languages/app_localizations.dart';
 import 'package:expense_tracker_app/core/navigation/app_router.dart';
 import 'package:expense_tracker_app/core/theme/app_colors.dart';
 import 'package:expense_tracker_app/features/Account/presentation/widgets/account_item.dart';
 import 'package:expense_tracker_app/features/auth/domain/entities/user_entity.dart';
+import 'package:expense_tracker_app/init_dependencies.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AccountPage extends StatelessWidget {
@@ -88,17 +91,17 @@ class AccountPage extends StatelessWidget {
                               ],
                             ),
                           ),
-                          Positioned(
-                            top: 10,
-                            right: 10,
-                            child: IconButton(
-                              onPressed: () {},
-                              iconSize: 30,
-                              icon: const Icon(
-                                Icons.edit_outlined,
-                              ),
-                            ),
-                          ),
+                          // Positioned(
+                          //   top: 10,
+                          //   right: 10,
+                          //   child: IconButton(
+                          //     onPressed: () {},
+                          //     iconSize: 30,
+                          //     icon: const Icon(
+                          //       Icons.edit_outlined,
+                          //     ),
+                          //   ),
+                          // ),
                         ],
                       ),
                     );
@@ -150,16 +153,19 @@ class AccountPage extends StatelessWidget {
                     widget: ConfirmEventBottomSheet(
                       title: '${AppLocalizations.of(context)!.logout}?',
                       subtitle: AppLocalizations.of(context)!.confirmLogout,
-                      onPressedYesButton: () {
+                      onPressedYesButton: () async {
                         try {
-                          var supabase = Supabase.instance.client;
-                          supabase.auth.signOut();
+                          await serviceLocator<GoogleSignIn>().signOut();
+                          await serviceLocator<SupabaseClient>().auth.signOut();
 
-                          if (supabase.auth.currentSession == null) {
+                          if(context.mounted) {
                             context.go(RoutePaths.onboarding);
                           }
                         } catch (e) {
                           debugPrint('Error: $e');
+                          if(context.mounted) {
+                            AppSnackBar.showError(context, e.toString());
+                          }
                         }
                       },
                     ),

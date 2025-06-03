@@ -90,6 +90,12 @@ class AppLocalizationsVi extends AppLocalizations {
   String get backToLogin => 'Quay lại Đăng nhập';
 
   @override
+  String get or => 'hoặc';
+
+  @override
+  String get signInWithGoogle => 'Đăng nhập bằng Google';
+
+  @override
   String get confirmLogout => 'Bạn có chắc chắn muốn đăng xuất không?';
 
   @override

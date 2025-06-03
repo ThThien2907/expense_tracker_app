@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:expense_tracker_app/core/assets/app_vectors.dart';
 import 'package:expense_tracker_app/core/common/extensions/get_localized_name.dart';
 import 'package:expense_tracker_app/core/common/widgets/app_bar/custom_app_bar.dart';
 import 'package:expense_tracker_app/core/common/widgets/button/app_button.dart';
@@ -12,11 +13,13 @@ import 'package:expense_tracker_app/features/auth/presentation/bloc/auth_bloc.da
 import 'package:expense_tracker_app/features/auth/presentation/widgets/password_field.dart';
 import 'package:expense_tracker_app/features/budget/presentation/bloc/budget_bloc.dart';
 import 'package:expense_tracker_app/features/category/presentation/bloc/category_bloc.dart';
+import 'package:expense_tracker_app/features/setting/presentation/bloc/setting_bloc.dart';
 import 'package:expense_tracker_app/features/transaction/presentation/bloc/transaction_bloc.dart';
 import 'package:expense_tracker_app/features/wallet/presentation/bloc/wallet_bloc.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginPage extends StatefulWidget {
@@ -63,7 +66,9 @@ class _LoginPageState extends State<LoginPage> {
               if (state.errorMessage == 'Email not confirmed') {
                 AppSnackBar.showError(context, AppLocalizations.of(context)!.emailNotConfirmed);
               } else if (state.errorMessage == 'Invalid login credentials') {
-                AppSnackBar.showError(context, AppLocalizations.of(context)!.invalidLoginCredentials);
+                AppSnackBar.showError(
+                    context, AppLocalizations.of(context)!.invalidLoginCredentials);
+              } else if (state.errorMessage.isEmpty) {
               } else {
                 AppSnackBar.showError(context, state.errorMessage);
               }
@@ -76,8 +81,10 @@ class _LoginPageState extends State<LoginPage> {
 
               context.read<WalletBloc>().add(WalletStarted(completer: walletCompleter));
               context.read<CategoryBloc>().add(CategoryStarted(completer: categoryCompleter));
-              context.read<BudgetBloc>().add( BudgetStarted(completer: budgetCompleter));
-              context.read<TransactionBloc>().add( TransactionStarted(completer: transactionCompleter));
+              context.read<BudgetBloc>().add(BudgetStarted(completer: budgetCompleter));
+              context
+                  .read<TransactionBloc>()
+                  .add(TransactionStarted(completer: transactionCompleter));
 
               try {
                 await walletCompleter.future;
@@ -109,8 +116,7 @@ class _LoginPageState extends State<LoginPage> {
                 focusNode: emailFocus,
                 controller: emailController,
                 keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                    hintText: AppLocalizations.of(context)!.email),
+                decoration: InputDecoration(hintText: AppLocalizations.of(context)!.email),
               ),
               const SizedBox(
                 height: 16,
@@ -128,21 +134,20 @@ class _LoginPageState extends State<LoginPage> {
                     emailFocus.unfocus();
                     passwordFocus.unfocus();
 
-                    if(emailController.text.isNotEmpty && passwordController.text.isNotEmpty){
+                    if (emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
                       final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-                      if (emailRegex.hasMatch(emailController.text.trim())){
+                      if (emailRegex.hasMatch(emailController.text.trim())) {
                         context.read<AuthBloc>().add(
-                          AuthLogin(
-                            email: emailController.text.trim(),
-                            password: passwordController.text.trim(),
-                          ),
-                        );
+                              AuthLogin(
+                                email: emailController.text.trim(),
+                                password: passwordController.text.trim(),
+                              ),
+                            );
+                      } else {
+                        AppSnackBar.showError(
+                            context, AppLocalizations.of(context)!.invalidEmailFormat);
                       }
-                      else {
-                        AppSnackBar.showError(context, AppLocalizations.of(context)!.invalidEmailFormat);
-                      }
-                    }
-                    else {
+                    } else {
                       AppSnackBar.showError(context, AppLocalizations.of(context)!.fillIn);
                     }
                   },
@@ -162,6 +167,73 @@ class _LoginPageState extends State<LoginPage> {
               //     ),
               //   ),
               // ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Expanded(
+                    child: Divider(
+                      indent: 20,
+                      endIndent: 20,
+                      color: AppColors.light40,
+                      thickness: 2,
+                    ),
+                  ),
+                  Text(
+                    AppLocalizations.of(context)!.or,
+                    style: const TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.light20,
+                    ),
+                  ),
+                  const Expanded(
+                    child: Divider(
+                      indent: 20,
+                      endIndent: 20,
+                      color: AppColors.light40,
+                      thickness: 2,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 32,
+              ),
+              AppButton(
+                onPressed: () {
+                  context.read<AuthBloc>().add(
+                        AuthLoginWithGoogle(
+                          language: context.read<SettingBloc>().state.setting.language,
+                        ),
+                      );
+                },
+                buttonColor: AppColors.light100,
+                textColor: AppColors.dark75,
+                borderSide: const BorderSide(
+                  color: AppColors.light40,
+                  width: 2,
+                ),
+                widget: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      AppVectors.googleIcon,
+                      height: 24,
+                    ),
+                    const SizedBox(width: 16,),
+                    Text(
+                      AppLocalizations.of(context)!.signInWithGoogle,
+                      style: const TextStyle(
+                        fontFamily: 'Inter',
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.dark75,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               const Spacer(),
               RichText(
                 text: TextSpan(
@@ -190,7 +262,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               const SizedBox(
-                height: 16,
+                height: 32,
               ),
             ],
           ),

@@ -14,4 +14,8 @@ abstract class AuthRepository {
   });
 
   Future<Either> getCurrentUser();
+
+  Future<Either> loginWithGoogle({
+    required String language,
+  });
 }

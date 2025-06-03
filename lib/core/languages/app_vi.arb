@@ -27,6 +27,8 @@
     "emailSent": "Email của bạn đã được gửi đi",
     "checkYourEmail": "Kiểm tra email để xác minh tài khoản của bạn trước khi đăng nhập",
     "backToLogin": "Quay lại Đăng nhập",
+    "or": "hoặc",
+    "signInWithGoogle": "Đăng nhập bằng Google",
     "confirmLogout": "Bạn có chắc chắn muốn đăng xuất không?",
 
     "noInternetConnection": "Không có kết nối internet, vui lòng kiểm tra kết nối của bạn",

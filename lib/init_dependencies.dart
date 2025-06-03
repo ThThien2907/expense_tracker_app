@@ -6,6 +6,7 @@ import 'package:expense_tracker_app/features/auth/data/repositories/auth_reposit
 import 'package:expense_tracker_app/features/auth/domain/repositories/auth_repository.dart';
 import 'package:expense_tracker_app/features/auth/domain/use_cases/get_current_user.dart';
 import 'package:expense_tracker_app/features/auth/domain/use_cases/login_with_email_password.dart';
+import 'package:expense_tracker_app/features/auth/domain/use_cases/login_with_google.dart';
 import 'package:expense_tracker_app/features/auth/domain/use_cases/sign_up_with_email_password.dart';
 import 'package:expense_tracker_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:expense_tracker_app/features/budget/data/data_sources/budget_remote_datasource.dart';
@@ -48,6 +49,7 @@ import 'package:expense_tracker_app/features/wallet/domain/use_cases/edit_wallet
 import 'package:expense_tracker_app/features/wallet/domain/use_cases/load_wallets.dart';
 import 'package:expense_tracker_app/features/wallet/presentation/bloc/wallet_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 final serviceLocator = GetIt.instance;
@@ -58,8 +60,13 @@ Future<void> initDependencies() async {
     anonKey:
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhhcnpidm1xY2Zib2tpYmNjdHNzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMyMzE4NzgsImV4cCI6MjA1ODgwNzg3OH0.jWCQ4bkXP8y2z5DccSG3gXg0gFtZjlieRzlqcUyy6kY',
   );
+  const webClientId = '36344512343-2socokh5o6csm65fdc6msobdcdqbvhni.apps.googleusercontent.com';
 
   serviceLocator.registerLazySingleton(() => supabase.client);
+
+  serviceLocator.registerLazySingleton(() => GoogleSignIn(
+    serverClientId: webClientId,
+  ));
 
   serviceLocator.registerFactory(() => ConnectionChecker());
 
@@ -82,6 +89,7 @@ void _initAuth() {
     //Datasource
     ..registerFactory<AuthRemoteDataSource>(
       () => AuthRemoteDataSourceImpl(
+        serviceLocator(),
         serviceLocator(),
         serviceLocator(),
       ),
@@ -108,12 +116,18 @@ void _initAuth() {
         serviceLocator(),
       ),
     )
+    ..registerFactory(
+      () => LoginWithGoogle(
+        serviceLocator(),
+      ),
+    )
     //Bloc
     ..registerLazySingleton(
       () => AuthBloc(
           signUpWithEmailPassword: serviceLocator(),
           loginWithEmailPassword: serviceLocator(),
           getCurrentUser: serviceLocator(),
+          loginWithGoogle: serviceLocator(),
           appUserCubit: serviceLocator(),
           settingBloc: serviceLocator()),
     );

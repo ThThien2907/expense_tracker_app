@@ -257,6 +257,18 @@ abstract class AppLocalizations {
   /// **'Back to Login'**
   String get backToLogin;
 
+  /// No description provided for @or.
+  ///
+  /// In en, this message translates to:
+  /// **'Or'**
+  String get or;
+
+  /// No description provided for @signInWithGoogle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign In with Google'**
+  String get signInWithGoogle;
+
   /// No description provided for @confirmLogout.
   ///
   /// In en, this message translates to:

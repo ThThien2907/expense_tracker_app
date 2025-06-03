@@ -27,6 +27,8 @@
   "emailSent": "Your email has been sent",
   "checkYourEmail": "Check your email to verify your account before logging in",
   "backToLogin": "Back to Login",
+  "or": "Or",
+  "signInWithGoogle": "Sign In with Google",
   "confirmLogout": "Are you sure do you wanna logout?",
 
   "noInternetConnection": "No internet connection, please check your connection",
