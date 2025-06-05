@@ -46,6 +46,10 @@
     "category": "Danh mục",
     "setting": "Cài đặt",
     "logout": "Đăng xuất",
+    "exportData": "Xuất dữ liệu",
+    "selectDateRangeToExportData": "Chọn phạm vi ngày để xuất dữ liệu",
+    "exportDataSuccess": "Xuất dữ liệu thành công",
+    "exportDataFailure": "Xuất dữ liệu thất bại",
 
     "detailWallet": "Chi tiết ví",
     "myWallet": "Ví của tôi",

@@ -1,23 +1,34 @@
 import 'package:expense_tracker_app/core/assets/app_images.dart';
 import 'package:expense_tracker_app/core/assets/app_vectors.dart';
 import 'package:expense_tracker_app/core/common/cubits/app_user/app_user_cubit.dart';
+import 'package:expense_tracker_app/core/common/extensions/export_transactions_data.dart';
 import 'package:expense_tracker_app/core/common/widgets/bottom_sheet/app_bottom_sheet.dart';
+import 'package:expense_tracker_app/core/common/widgets/button/app_button.dart';
 import 'package:expense_tracker_app/core/common/widgets/snack_bar/app_snack_bar.dart';
 import 'package:expense_tracker_app/core/languages/app_localizations.dart';
 import 'package:expense_tracker_app/core/navigation/app_router.dart';
 import 'package:expense_tracker_app/core/theme/app_colors.dart';
 import 'package:expense_tracker_app/features/Account/presentation/widgets/account_item.dart';
 import 'package:expense_tracker_app/features/auth/domain/entities/user_entity.dart';
+import 'package:expense_tracker_app/features/transaction/presentation/bloc/transaction_bloc.dart';
+import 'package:expense_tracker_app/features/wallet/presentation/bloc/wallet_bloc.dart';
 import 'package:expense_tracker_app/init_dependencies.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:intl/intl.dart';
+import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class AccountPage extends StatelessWidget {
+class AccountPage extends StatefulWidget {
   const AccountPage({super.key});
 
+  @override
+  State<AccountPage> createState() => _AccountPageState();
+}
+
+class _AccountPageState extends State<AccountPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -148,6 +159,125 @@ class AccountPage extends StatelessWidget {
               ),
               AccountItem(
                 onTap: () {
+                  final dateFormat = DateFormat('dd/MM/yyyy');
+                  final now = DateTime.now();
+                  DateTime startDate = now.firstDayOfMonth()!;
+                  DateTime endDate = now.lastDayOfMonth()!;
+
+                  AppBottomSheet.show(
+                    context: context,
+                    isScrollControlled: false,
+                    widget: StatefulBuilder(
+                      builder: (context, setModelState) {
+                        return Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              AppLocalizations.of(context)!.selectDateRangeToExportData,
+                              style: const TextStyle(
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w700,
+                                fontSize: 20,
+                                color: AppColors.dark100,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            const SizedBox(
+                              height: 32,
+                            ),
+                            Row(
+                              children: [
+                                _buildSelectedDateField(
+                                  context: context,
+                                  label: AppLocalizations.of(context)!.startDate,
+                                  date: dateFormat.format(startDate),
+                                  onTap: () {
+                                    showDatePicker(
+                                      context: context,
+                                      firstDate: DateTime(2023),
+                                      lastDate: DateTime(now.year + 1),
+                                      initialDate: startDate,
+                                    ).then((date) {
+                                      setModelState(() {
+                                        if (date != null && date != startDate) {
+                                          startDate = date;
+                                        }
+                                      });
+                                    });
+                                  },
+                                ),
+                                const SizedBox(
+                                  width: 16,
+                                ),
+                                _buildSelectedDateField(
+                                  context: context,
+                                  label: AppLocalizations.of(context)!.endDate,
+                                  date: dateFormat.format(endDate),
+                                  onTap: () {
+                                    showDatePicker(
+                                      context: context,
+                                      firstDate: DateTime(2023),
+                                      lastDate: DateTime(now.year + 1),
+                                      initialDate: endDate,
+                                    ).then((date) {
+                                      setModelState(() {
+                                        if (date != null && date != endDate) {
+                                          endDate = date;
+                                        }
+                                      });
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 32,
+                            ),
+                            AppButton(
+                              onPressed: () async {
+                                final transactions =
+                                    context.read<TransactionBloc>().state.transactions;
+                                final wallets = context.read<WalletBloc>().state.wallets;
+
+                                final response =
+                                await ExportTransactionsData.exportTransactionsDataToExcel(
+                                  context: context,
+                                  transactions: transactions,
+                                  wallets: wallets,
+                                  startDate: startDate,
+                                  endDate: endDate,
+                                );
+                                if (context.mounted) {
+                                  if (response) {
+                                    AppSnackBar.showSuccess(
+                                      context,
+                                      AppLocalizations.of(context)!.exportDataSuccess,
+                                    );
+                                  } else {
+                                    AppSnackBar.showError(
+                                      context,
+                                      AppLocalizations.of(context)!.exportDataFailure,
+                                    );
+                                  }
+                                  context.pop();
+                                }
+                              },
+                              buttonText: AppLocalizations.of(context)!.apply,
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  );
+                },
+                icon: AppVectors.exportDataIcon,
+                label: AppLocalizations.of(context)!.exportData,
+              ),
+              const SizedBox(
+                height: 1,
+              ),
+              AccountItem(
+                onTap: () {
                   AppBottomSheet.show(
                     context: context,
                     widget: ConfirmEventBottomSheet(
@@ -158,12 +288,12 @@ class AccountPage extends StatelessWidget {
                           await serviceLocator<GoogleSignIn>().signOut();
                           await serviceLocator<SupabaseClient>().auth.signOut();
 
-                          if(context.mounted) {
+                          if (context.mounted) {
                             context.go(RoutePaths.onboarding);
                           }
                         } catch (e) {
                           debugPrint('Error: $e');
-                          if(context.mounted) {
+                          if (context.mounted) {
                             AppSnackBar.showError(context, e.toString());
                           }
                         }
@@ -183,6 +313,66 @@ class AccountPage extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildSelectedDateField({
+    required BuildContext context,
+    required String label,
+    required String date,
+    required VoidCallback onTap,
+  }) {
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: const TextStyle(
+              fontFamily: 'Inter',
+              fontWeight: FontWeight.w700,
+              fontSize: 16,
+              color: AppColors.dark100,
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Material(
+            color: AppColors.light100,
+            borderRadius: BorderRadius.circular(12),
+            child: InkWell(
+              onTap: onTap,
+              borderRadius: BorderRadius.circular(12),
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
+                ),
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: AppColors.light40,
+                    width: 2,
+                  ),
+                ),
+                child: Text(
+                  date,
+                  style: const TextStyle(
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w500,
+                    fontSize: 16,
+                    color: AppColors.dark75,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

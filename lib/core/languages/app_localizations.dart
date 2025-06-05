@@ -347,6 +347,30 @@ abstract class AppLocalizations {
   /// **'Logout'**
   String get logout;
 
+  /// No description provided for @exportData.
+  ///
+  /// In en, this message translates to:
+  /// **'Export Data'**
+  String get exportData;
+
+  /// No description provided for @selectDateRangeToExportData.
+  ///
+  /// In en, this message translates to:
+  /// **'Select date range to export data'**
+  String get selectDateRangeToExportData;
+
+  /// No description provided for @exportDataSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Export Data Success'**
+  String get exportDataSuccess;
+
+  /// No description provided for @exportDataFailure.
+  ///
+  /// In en, this message translates to:
+  /// **'Export Data Failure'**
+  String get exportDataFailure;
+
   /// No description provided for @detailWallet.
   ///
   /// In en, this message translates to:

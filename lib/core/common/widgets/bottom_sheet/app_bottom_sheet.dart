@@ -9,13 +9,14 @@ class AppBottomSheet {
     required Widget widget,
     double? height,
     EdgeInsets? padding,
+    bool? isScrollControlled,
   }) {
     return showModalBottomSheet(
       context: context,
       useRootNavigator: true,
       showDragHandle: true,
       backgroundColor: AppColors.light100,
-      isScrollControlled: true,
+      isScrollControlled: isScrollControlled ?? true,
       builder: (context) {
         return Container(
           decoration: const BoxDecoration(
@@ -25,7 +26,7 @@ class AppBottomSheet {
               topRight: Radius.circular(25),
             ),
           ),
-          padding: padding ?? const EdgeInsets.only(left: 16, right: 16, bottom: 32),
+          padding: padding ?? const EdgeInsets.only(left: 16, right: 16, bottom: 48),
           width: MediaQuery.of(context).size.width,
           height: height,
           child: widget,

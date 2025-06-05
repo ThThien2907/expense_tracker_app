@@ -52,6 +52,7 @@ class AppSnackBar {
           content: SnackBarCustom(
             content: content,
           ),
+          behavior: SnackBarBehavior.floating,
         ),
       );
   }
@@ -65,6 +66,7 @@ class AppSnackBar {
           content: SnackBarCustom(
             content: content,
           ),
+          behavior: SnackBarBehavior.floating,
         ),
       );
   }

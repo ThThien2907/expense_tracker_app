@@ -46,6 +46,10 @@
   "category": "Category",
   "setting": "Settings",
   "logout": "Logout",
+  "exportData": "Export Data",
+  "selectDateRangeToExportData": "Select date range to export data",
+  "exportDataSuccess": "Export Data Success",
+  "exportDataFailure": "Export Data Failure",
 
   "detailWallet": "Detail Wallet",
   "myWallet": "My Wallet",

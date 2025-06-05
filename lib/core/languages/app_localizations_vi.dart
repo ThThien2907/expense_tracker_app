@@ -135,6 +135,18 @@ class AppLocalizationsVi extends AppLocalizations {
   String get logout => 'Đăng xuất';
 
   @override
+  String get exportData => 'Xuất dữ liệu';
+
+  @override
+  String get selectDateRangeToExportData => 'Chọn phạm vi ngày để xuất dữ liệu';
+
+  @override
+  String get exportDataSuccess => 'Xuất dữ liệu thành công';
+
+  @override
+  String get exportDataFailure => 'Xuất dữ liệu thất bại';
+
+  @override
   String get detailWallet => 'Chi tiết ví';
 
   @override

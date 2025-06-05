@@ -135,6 +135,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get logout => 'Logout';
 
   @override
+  String get exportData => 'Export Data';
+
+  @override
+  String get selectDateRangeToExportData => 'Select date range to export data';
+
+  @override
+  String get exportDataSuccess => 'Export Data Success';
+
+  @override
+  String get exportDataFailure => 'Export Data Failure';
+
+  @override
   String get detailWallet => 'Detail Wallet';
 
   @override
