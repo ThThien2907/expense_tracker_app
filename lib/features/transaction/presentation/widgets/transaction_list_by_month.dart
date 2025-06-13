@@ -11,7 +11,8 @@ class TransactionListByMonth extends StatelessWidget {
   const TransactionListByMonth({
     super.key,
     this.walletId,
-    required this.initialDate, this.padding,
+    required this.initialDate,
+    this.padding,
   });
 
   final String? walletId;
@@ -26,24 +27,30 @@ class TransactionListByMonth extends StatelessWidget {
           return previous.status != current.status;
         },
         builder: (context, state) {
-          final transactionByMonth = walletId != null
-              ? state.transactions
-                  .where((e) =>
-                      e.createdAt.isAfter(
-                          DateTime(initialDate.year, initialDate.month, 1)) &&
-                      e.createdAt.isBefore(DateTime(
-                          initialDate.year, initialDate.month + 1, 1)) &&
-                      e.walletId == walletId)
-                  .toList()
-              : state.transactions
-                  .where((e) =>
-                      e.createdAt.isAfter(
-                          DateTime(initialDate.year, initialDate.month, 1)) &&
-                      e.createdAt.isBefore(
-                          DateTime(initialDate.year, initialDate.month + 1, 1)))
-                  .toList();
+          // final transactionByMonth = walletId != null
+          //     ? state.transactions
+          //         .where((e) =>
+          //             e.createdAt.isAfter(
+          //                 DateTime(initialDate.year, initialDate.month, 1)) &&
+          //             e.createdAt.isBefore(DateTime(
+          //                 initialDate.year, initialDate.month + 1, 1)) &&
+          //             e.walletId == walletId)
+          //         .toList()
+          //     : state.transactions
+          //         .where((e) =>
+          //             e.createdAt.isAfter(
+          //                 DateTime(initialDate.year, initialDate.month, 1)) &&
+          //             e.createdAt.isBefore(
+          //                 DateTime(initialDate.year, initialDate.month + 1, 1)))
+          //         .toList();
+          final transactionByMonth = state.transactions
+              .where((e) =>
+                  e.createdAt.isAfter(DateTime(initialDate.year, initialDate.month, 1)) &&
+                  e.createdAt.isBefore(DateTime(initialDate.year, initialDate.month + 1, 1)) &&
+                  (walletId == null || e.walletId == walletId))
+              .toList();
 
-          if(transactionByMonth.isEmpty){
+          if (transactionByMonth.isEmpty) {
             return Center(
               child: Text(
                 AppLocalizations.of(context)!.doNotHaveTransactionsThisMonth,
@@ -58,8 +65,7 @@ class TransactionListByMonth extends StatelessWidget {
             );
           }
 
-          final grouped = GroupTransactions.groupTransactionsByDate(
-              transactionByMonth);
+          final grouped = GroupTransactions.groupTransactionsByDate(transactionByMonth);
 
           final dateKeys = grouped.keys.toList();
           return ListView.builder(
@@ -86,8 +92,7 @@ class TransactionListByMonth extends StatelessWidget {
                   ),
                   ...transactions.map(
                     (transaction) => Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 6, horizontal: 4),
+                      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
                       child: TransactionItem(transactionEntity: transaction),
                     ),
                   ),

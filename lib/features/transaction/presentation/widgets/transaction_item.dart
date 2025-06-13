@@ -14,11 +14,12 @@ class TransactionItem extends StatelessWidget {
   const TransactionItem({
     super.key,
     required this.transactionEntity,
-    this.isShowCreatedAt = false,
+    this.isShowCreatedAt = false, this.onTap,
   });
 
   final TransactionEntity transactionEntity;
   final bool isShowCreatedAt;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,7 @@ class TransactionItem extends StatelessWidget {
       borderRadius: BorderRadius.circular(24),
       child: InkWell(
         borderRadius: BorderRadius.circular(24),
-        onTap: () {
+        onTap: onTap ?? () {
           context.push(
             RoutePaths.detailTransaction,
             extra: ({

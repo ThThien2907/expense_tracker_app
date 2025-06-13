@@ -116,14 +116,12 @@ class PieChartReportPage extends StatelessWidget {
                             return AmountPerCategoryItem(
                               data: categories[index],
                               totalAmount: totalAmount,
+                              initialDate: initialDate,
                             );
                           },
                           separatorBuilder: (context, index) {
-                            return const Padding(
-                              padding: EdgeInsets.symmetric(vertical: 16),
-                              child: Divider(
-                                color: AppColors.light40,
-                              ),
+                            return const Divider(
+                              color: AppColors.light40,
                             );
                           },
                         );
