@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:expense_tracker_app/core/network/connection_checker.dart';
-import 'package:expense_tracker_app/features/transaction/data/models/transaction_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class TransactionRemoteDatasource {
@@ -48,7 +47,7 @@ class TransactionRemoteDatasourceImpl implements TransactionRemoteDatasource {
           .select('*, categories(*)')
           .eq('user_id', user.id).order('created_at');
 
-      return Right(response.map((e) => TransactionModel.fromMap(e)).toList());
+      return Right(response);
     } on PostgrestException catch (e) {
       return Left(e.message);
     } catch (e) {

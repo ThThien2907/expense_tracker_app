@@ -61,12 +61,12 @@ final class BudgetRemoved extends BudgetEvent {
 }
 
 final class BudgetChanged extends BudgetEvent {
-  final List<dynamic> data;
+  final List<BudgetEntity> budgets;
 
-  const BudgetChanged({required this.data});
+  const BudgetChanged({required this.budgets});
 
   @override
-  List<Object?> get props => [data];
+  List<Object?> get props => [budgets];
 }
 
 final class ClearBudgets extends BudgetEvent {

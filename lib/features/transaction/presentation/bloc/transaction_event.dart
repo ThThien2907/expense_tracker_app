@@ -101,10 +101,10 @@ final class ClearTransactions extends TransactionEvent {
 }
 
 final class TransactionAddedByWallet extends TransactionEvent {
-  final Map<String, dynamic> data;
+  final TransactionEntity transaction;
 
-  const TransactionAddedByWallet({required this.data});
+  const TransactionAddedByWallet({required this.transaction});
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [transaction];
 }

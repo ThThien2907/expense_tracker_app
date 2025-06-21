@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:expense_tracker_app/features/category/data/data_sources/category_remote_datasource.dart';
+import 'package:expense_tracker_app/features/category/data/models/category_model.dart';
 import 'package:expense_tracker_app/features/category/domain/repositories/category_repository.dart';
 
 class CategoryRepositoryImpl implements CategoryRepository {
@@ -15,7 +16,8 @@ class CategoryRepositoryImpl implements CategoryRepository {
         return Left(ifLeft);
       },
       (ifRight) {
-        return Right(ifRight);
+        List<Map<String, dynamic>> response = ifRight;
+        return Right(response.map((e) => CategoryModel.fromMap(e)).toList());
       },
     );
   }
@@ -38,7 +40,8 @@ class CategoryRepositoryImpl implements CategoryRepository {
         return Left(ifLeft);
       },
       (ifRight) {
-        return Right(ifRight);
+        List<Map<String, dynamic>> response = ifRight;
+        return Right(CategoryModel.fromMap(response.first));
       },
     );
   }
@@ -76,7 +79,8 @@ class CategoryRepositoryImpl implements CategoryRepository {
         return Left(ifLeft);
       },
       (ifRight) {
-        return Right(ifRight);
+        List<Map<String, dynamic>> response = ifRight;
+        return Right(CategoryModel.fromMap(response.first));
       },
     );
   }

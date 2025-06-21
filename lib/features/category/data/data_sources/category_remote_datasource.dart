@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:expense_tracker_app/core/network/connection_checker.dart';
-import 'package:expense_tracker_app/features/category/data/models/category_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class CategoryRemoteDatasource {
@@ -46,7 +45,7 @@ class CategoryRemoteDatasourceImpl implements CategoryRemoteDatasource {
           .select()
           .or('user_id.eq.${user.id},user_id.is.null');
 
-      return Right(response.map((e) => CategoryModel.fromMap(e)).toList());
+      return Right(response);
     } on PostgrestException catch (e) {
       return Left(e.message);
     } catch (e) {
@@ -75,7 +74,7 @@ class CategoryRemoteDatasourceImpl implements CategoryRemoteDatasource {
         'user_id': user.id,
       }).select();
 
-      return Right(CategoryModel.fromMap(response.first));
+      return Right(response);
     } on PostgrestException catch (e) {
       return Left(e.message);
     } catch (e) {
@@ -105,7 +104,7 @@ class CategoryRemoteDatasourceImpl implements CategoryRemoteDatasource {
           .eq('category_id', categoryId)
           .select();
 
-      return Right(CategoryModel.fromMap(response.first));
+      return Right(response);
     } on PostgrestException catch (e) {
       return Left(e.message);
     } catch (e) {

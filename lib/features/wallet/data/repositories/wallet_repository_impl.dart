@@ -1,5 +1,7 @@
 import 'package:dartz/dartz.dart';
+import 'package:expense_tracker_app/features/transaction/data/models/transaction_model.dart';
 import 'package:expense_tracker_app/features/wallet/data/data_sources/wallet_remote_datasource.dart';
+import 'package:expense_tracker_app/features/wallet/data/models/wallet_model.dart';
 import 'package:expense_tracker_app/features/wallet/domain/repositories/wallet_repository.dart';
 
 class WalletRepositoryImpl implements WalletRepository {
@@ -15,7 +17,8 @@ class WalletRepositoryImpl implements WalletRepository {
         return Left(ifLeft);
       },
       (ifRight) {
-        return Right(ifRight);
+        List<Map<String, dynamic>> response = ifRight;
+        return Right(response.map((e) => WalletModel.fromMap(e)).toList());
       },
     );
   }
@@ -36,7 +39,13 @@ class WalletRepositoryImpl implements WalletRepository {
         return Left(ifLeft);
       },
       (ifRight) {
-        return Right(ifRight);
+        Map<String, dynamic> response = ifRight;
+        print(response.toString());
+        final wallet = WalletModel.fromMap(response['wallet']);
+        final transaction = response['transaction'] != null
+            ? TransactionModel.fromMap(response['transaction'])
+            : null;
+        return Right(<String, dynamic>{'wallet': wallet, 'transaction': transaction});
       },
     );
   }
@@ -55,11 +64,16 @@ class WalletRepositoryImpl implements WalletRepository {
       type: type,
     );
     return response.fold(
-          (ifLeft) {
+      (ifLeft) {
         return Left(ifLeft);
       },
-          (ifRight) {
-        return Right(ifRight);
+      (ifRight) {
+        Map<String, dynamic> response = ifRight;
+        final wallet = WalletModel.fromMap(response['wallet']);
+        final transaction = response['transaction'] != null
+            ? TransactionModel.fromMap(response['transaction'])
+            : null;
+        return Right(<String, dynamic>{'wallet': wallet, 'transaction': transaction});
       },
     );
   }
@@ -70,10 +84,10 @@ class WalletRepositoryImpl implements WalletRepository {
       walletId: walletId,
     );
     return response.fold(
-          (ifLeft) {
+      (ifLeft) {
         return Left(ifLeft);
       },
-          (ifRight) {
+      (ifRight) {
         return Right(ifRight);
       },
     );

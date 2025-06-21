@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:expense_tracker_app/features/budget/presentation/bloc/budget_bloc.dart';
-import 'package:expense_tracker_app/features/transaction/data/models/transaction_model.dart';
 import 'package:expense_tracker_app/features/transaction/domain/entities/transaction_entity.dart';
 import 'package:expense_tracker_app/features/transaction/domain/use_cases/add_new_transaction.dart';
 import 'package:expense_tracker_app/features/transaction/domain/use_cases/delete_transaction.dart';
@@ -102,14 +101,14 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
       },
       (ifRight) {
         final data = ifRight;
-        final newTransaction = TransactionModel.fromMap(data['transaction']);
+        final newTransaction = data['transaction'];
 
         state.transactions.insert(0, newTransaction);
         state.transactions.sort((a, b) => b.createdAt.compareTo(a.createdAt));
 
-        event.walletBloc.add(WalletChanged(data: data['wallet']));
+        event.walletBloc.add(WalletChanged(wallet: data['wallet']));
         if (data['budgets'] != null) {
-          event.budgetBloc.add(BudgetChanged(data: data['budgets']));
+          event.budgetBloc.add(BudgetChanged(budgets: data['budgets']));
         }
         emit(state.copyWith(
           status: TransactionStatus.success,
@@ -144,7 +143,7 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
       },
       (ifRight) {
         final data = ifRight;
-        final newTransaction = TransactionModel.fromMap(data['transaction']);
+        final newTransaction = data['transaction'];
 
         state.transactions.removeWhere(
               (e) => e.transactionId == newTransaction.transactionId,
@@ -152,14 +151,14 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
         state.transactions.insert(0, newTransaction);
         state.transactions.sort((a, b) => b.createdAt.compareTo(a.createdAt));
 
-        event.walletBloc.add(WalletChanged(data: data['old_wallet']));
-        event.walletBloc.add(WalletChanged(data: data['new_wallet']));
+        event.walletBloc.add(WalletChanged(wallet: data['old_wallet']));
+        event.walletBloc.add(WalletChanged(wallet: data['new_wallet']));
 
         if (data['old_budgets'] != null) {
-          event.budgetBloc.add(BudgetChanged(data: data['old_budgets']));
+          event.budgetBloc.add(BudgetChanged(budgets: data['old_budgets']));
         }
         if (data['new_budgets'] != null) {
-          event.budgetBloc.add(BudgetChanged(data: data['new_budgets']));
+          event.budgetBloc.add(BudgetChanged(budgets: data['new_budgets']));
         }
 
         emit(state.copyWith(
@@ -193,9 +192,9 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
         state.transactions.removeWhere(
           (e) => e.transactionId == event.transactionId,
         );
-        event.walletBloc.add(WalletChanged(data: data['wallet']));
+        event.walletBloc.add(WalletChanged(wallet: data['wallet']));
         if (data['budgets'] != null) {
-          event.budgetBloc.add(BudgetChanged(data: data['budgets']));
+          event.budgetBloc.add(BudgetChanged(budgets: data['budgets']));
         }
         emit(state.copyWith(
           status: TransactionStatus.success,
@@ -210,7 +209,7 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
   ) {
     emit(state.copyWith(status: TransactionStatus.loading));
 
-    final newTransaction = TransactionModel.fromMap(event.data);
+    final newTransaction = event.transaction;
     state.transactions.insert(0, newTransaction);
 
     emit(state.copyWith(status: TransactionStatus.success));

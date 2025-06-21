@@ -77,14 +77,14 @@ final class WalletRemoved extends WalletEvent {
 }
 
 final class WalletChanged extends WalletEvent {
-  final Map<String, dynamic> data;
+  final WalletEntity wallet;
 
   const WalletChanged({
-    required this.data,
+    required this.wallet,
   });
 
   @override
-  List<Object?> get props => [data];
+  List<Object?> get props => [wallet];
 }
 
 final class ClearWallets extends WalletEvent {

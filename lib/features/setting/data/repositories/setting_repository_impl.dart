@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:expense_tracker_app/features/setting/data/data_sources/setting_remote_datasource.dart';
+import 'package:expense_tracker_app/features/setting/data/models/setting_model.dart';
 import 'package:expense_tracker_app/features/setting/domain/repositories/setting_repository.dart';
 
 class SettingRepositoryImpl implements SettingRepository {
@@ -16,7 +17,8 @@ class SettingRepositoryImpl implements SettingRepository {
         return Left(ifLeft);
       },
       (ifRight) {
-        return Right(ifRight);
+        List<Map<String, dynamic>> response = ifRight;
+        return Right(SettingModel.fromMap(response.first));
       },
     );
   }
@@ -36,7 +38,8 @@ class SettingRepositoryImpl implements SettingRepository {
         return Left(ifLeft);
       },
       (ifRight) {
-        return Right(ifRight);
+        List<Map<String, dynamic>> response = ifRight;
+        return Right(SettingModel.fromMap(response.first));
       },
     );
   }
@@ -52,11 +55,12 @@ class SettingRepositoryImpl implements SettingRepository {
     );
 
     return response.fold(
-          (ifLeft) {
+      (ifLeft) {
         return Left(ifLeft);
       },
-          (ifRight) {
-        return Right(ifRight);
+      (ifRight) {
+        List<Map<String, dynamic>> response = ifRight;
+        return Right(SettingModel.fromMap(response.first));
       },
     );
   }

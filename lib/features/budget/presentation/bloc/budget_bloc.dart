@@ -180,14 +180,14 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
     Emitter<BudgetState> emit,
   ) {
     emit(state.copyWith(status: BudgetStatus.loading));
-    for (var budget in event.data) {
-      state.budgets.firstWhere((e) => e.budgetId == budget['budget_id']).amountSpent =
-          (budget['amount_spent'] as num).toDouble();
+    for (var budget in event.budgets) {
+      state.budgets.firstWhere((e) => e.budgetId == budget.budgetId).amountSpent =
+          (budget.amountSpent as num).toDouble();
     }
     emit(state.copyWith(status: BudgetStatus.success));
 
-    for (var budget in event.data) {
-      final budgetExceeded = state.budgets.firstWhere((e) => e.budgetId == budget['budget_id']);
+    for (var budget in event.budgets) {
+      final budgetExceeded = state.budgets.firstWhere((e) => e.budgetId == budget.budgetId);
       if (budgetExceeded.amountSpent - budgetExceeded.amountLimit > 0) {
         emit(state.copyWith(
           status: BudgetStatus.exceeded,

@@ -30,7 +30,7 @@ class _CurrencyPageState extends State<CurrencyPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: AppLocalizations.of(context)!.language,
+        title: AppLocalizations.of(context)!.currency,
         centerTitle: true,
       ),
       body: BlocConsumer<SettingBloc, SettingState>(

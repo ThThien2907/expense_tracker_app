@@ -21,8 +21,7 @@ class SettingBloc extends Bloc<SettingEvent, SettingState> {
   })  : _loadCurrentUserSettings = loadCurrentUserSettings,
         _updateLanguage = updateLanguage,
         _updateCurrency = updateCurrency,
-        super(const SettingState())
-  {
+        super(const SettingState()) {
     on<SettingStarted>(_onSettingStarted);
     on<ClearSettings>(_onClearSettings);
     on<SettingLanguageChanged>(_onSettingLanguageChanged);
@@ -33,23 +32,22 @@ class SettingBloc extends Bloc<SettingEvent, SettingState> {
     SettingStarted event,
     Emitter emit,
   ) async {
-    if (event.settingEntity != null){
+    if (event.settingEntity != null) {
       emit(state.copyWith(
         status: SettingStatus.success,
         setting: event.settingEntity,
       ));
-    }
-    else {
+    } else {
       final response = await _loadCurrentUserSettings.call();
 
       response.fold(
-            (ifLeft) {
+        (ifLeft) {
           emit(state.copyWith(
             status: SettingStatus.failure,
             errorMessage: ifLeft,
           ));
         },
-            (ifRight) {
+        (ifRight) {
           emit(state.copyWith(
             status: SettingStatus.success,
             setting: ifRight,
@@ -119,13 +117,13 @@ class SettingBloc extends Bloc<SettingEvent, SettingState> {
     );
 
     response.fold(
-          (ifLeft) {
+      (ifLeft) {
         emit(state.copyWith(
           status: SettingStatus.failure,
           errorMessage: ifLeft,
         ));
       },
-          (ifRight) {
+      (ifRight) {
         emit(state.copyWith(
           status: SettingStatus.success,
           setting: ifRight,

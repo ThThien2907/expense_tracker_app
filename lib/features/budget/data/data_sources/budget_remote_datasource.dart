@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:expense_tracker_app/core/network/connection_checker.dart';
-import 'package:expense_tracker_app/features/budget/data/models/budget_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class BudgetRemoteDatasource {
@@ -47,7 +46,7 @@ class BudgetRemoteDatasourceImpl implements BudgetRemoteDatasource {
           .eq('user_id', user!.id)
           .order('created_at', ascending: false);
 
-      return Right(response.map((e) => BudgetModel.fromMap(e)).toList());
+      return Right(response);
     } on PostgrestException catch (e) {
       return Left(e.message);
     } catch (e) {
@@ -96,7 +95,7 @@ class BudgetRemoteDatasourceImpl implements BudgetRemoteDatasource {
           .select('*, categories(*)');
 
       if (response.isNotEmpty) {
-        return Right(BudgetModel.fromMap(response.first));
+        return Right(response);
       }
       return const Left('Failure, please try again later');
     } on PostgrestException catch (e) {
@@ -148,7 +147,7 @@ class BudgetRemoteDatasourceImpl implements BudgetRemoteDatasource {
           .select('*, categories(*)');
 
       if (response.isNotEmpty) {
-        return Right(BudgetModel.fromMap(response.first));
+        return Right(response);
       }
       return const Left('Failure, please try again later');
     } on PostgrestException catch (e) {

@@ -103,7 +103,7 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
       )),
       (ifRight) {
         final data = ifRight as Map<String, dynamic>;
-        final newWallet = WalletModel.fromMap(data['wallet']);
+        final newWallet = data['wallet'];
         _updateTotalWallet(event: event, newWallet: newWallet);
         state.wallets.add(newWallet);
         state.wallets.sort((a, b) => b.balance.compareTo(a.balance));
@@ -111,7 +111,7 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
         if (data['transaction'] != null) {
           event.transactionBloc.add(
             TransactionAddedByWallet(
-              data: data['transaction'],
+              transaction: data['transaction'],
             ),
           );
         }
@@ -148,7 +148,7 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
       final data = response.fold((ifLeft) => null, (ifRight) => ifRight)
           as Map<String, dynamic>;
 
-      final newWallet = WalletModel.fromMap(data['wallet']);
+      final newWallet = data['wallet'];
       final oldWallet = state.wallets.firstWhere(
         (wallet) => wallet.walletId == event.walletId,
       );
@@ -164,7 +164,7 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
       if (data['transaction'] != null) {
         event.transactionBloc.add(
           TransactionAddedByWallet(
-            data: data['transaction'],
+            transaction: data['transaction'],
           ),
         );
       }
@@ -228,7 +228,7 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
       status: WalletStatus.loading,
     ));
 
-    final newWallet = WalletModel.fromMap(event.data);
+    final newWallet = event.wallet;
     final oldWallet =
         state.wallets.firstWhere((e) => e.walletId == newWallet.walletId);
 

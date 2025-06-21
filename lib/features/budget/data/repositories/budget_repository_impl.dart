@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:expense_tracker_app/features/budget/data/data_sources/budget_remote_datasource.dart';
+import 'package:expense_tracker_app/features/budget/data/models/budget_model.dart';
 import 'package:expense_tracker_app/features/budget/domain/repositories/budget_repository.dart';
 
 class BudgetRepositoryImpl implements BudgetRepository {
@@ -26,7 +27,8 @@ class BudgetRepositoryImpl implements BudgetRepository {
         return Left(ifLeft);
       },
       (ifRight) {
-        return Right(ifRight);
+        List<Map<String, dynamic>> response = ifRight;
+        return Right(BudgetModel.fromMap(response.first));
       },
     );
   }
@@ -68,7 +70,8 @@ class BudgetRepositoryImpl implements BudgetRepository {
         return Left(ifLeft);
       },
       (ifRight) {
-        return Right(ifRight);
+        List<Map<String, dynamic>> response = ifRight;
+        return Right(BudgetModel.fromMap(response.first));
       },
     );
   }
@@ -82,7 +85,8 @@ class BudgetRepositoryImpl implements BudgetRepository {
         return Left(ifLeft);
       },
       (ifRight) {
-        return Right(ifRight);
+        List<Map<String, dynamic>> response = ifRight;
+        return Right(response.map((e) => BudgetModel.fromMap(e)).toList());
       },
     );
   }

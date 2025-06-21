@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:expense_tracker_app/core/network/connection_checker.dart';
-import 'package:expense_tracker_app/features/setting/data/models/setting_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class SettingRemoteDatasource {
@@ -36,7 +35,7 @@ class SettingRemoteDatasourceImpl implements SettingRemoteDatasource {
             .from('settings')
             .select()
             .eq('user_id', session.user.id);
-        return Right(SettingModel.fromMap(response.first));
+        return Right(response);
       }
 
       return const Left('No data');
@@ -64,7 +63,7 @@ class SettingRemoteDatasourceImpl implements SettingRemoteDatasource {
           .eq('user_id', userId)
           .select();
       if (response.isNotEmpty) {
-        return Right(SettingModel.fromMap(response.first));
+        return Right(response);
       }
       return const Left('Failure, please try again later');
     } on PostgrestException catch (e) {
@@ -91,7 +90,7 @@ class SettingRemoteDatasourceImpl implements SettingRemoteDatasource {
           .eq('user_id', userId)
           .select();
       if (response.isNotEmpty) {
-        return Right(SettingModel.fromMap(response.first));
+        return Right(response);
       }
       return const Left('Failure, please try again later');
     } on PostgrestException catch (e) {

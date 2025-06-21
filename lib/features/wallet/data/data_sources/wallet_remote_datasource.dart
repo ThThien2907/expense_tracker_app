@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:expense_tracker_app/core/network/connection_checker.dart';
-import 'package:expense_tracker_app/features/wallet/data/models/wallet_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class WalletRemoteDatasource {
@@ -44,7 +43,7 @@ class WalletRemoteDatasourceImpl implements WalletRemoteDatasource {
       final response =
           await supabaseClient.from('wallets').select().eq('user_id', user.id);
 
-      return Right(response.map((e) => WalletModel.fromMap(e)).toList());
+      return Right(response);
     } on PostgrestException catch (e) {
       return Left(e.message);
     } catch (e) {
