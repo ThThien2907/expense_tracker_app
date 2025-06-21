@@ -1,6 +1,7 @@
 import 'package:expense_tracker_app/core/common/cubits/app_user/app_user_cubit.dart';
 import 'package:expense_tracker_app/core/network/connection_checker.dart';
 import 'package:expense_tracker_app/core/services/notification_service.dart';
+import 'package:expense_tracker_app/core/services/secure_local_storage.dart';
 import 'package:expense_tracker_app/features/auth/data/data_sources/auth_remote_data_source.dart';
 import 'package:expense_tracker_app/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:expense_tracker_app/features/auth/domain/repositories/auth_repository.dart';
@@ -55,14 +56,19 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 final serviceLocator = GetIt.instance;
 
 Future<void> initDependencies() async {
+  serviceLocator.registerLazySingleton(() => SecureLocalStorage());
   final supabase = await Supabase.initialize(
     url: 'https://harzbvmqcfbokibcctss.supabase.co',
     anonKey:
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhhcnpidm1xY2Zib2tpYmNjdHNzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMyMzE4NzgsImV4cCI6MjA1ODgwNzg3OH0.jWCQ4bkXP8y2z5DccSG3gXg0gFtZjlieRzlqcUyy6kY',
+    authOptions: FlutterAuthClientOptions(
+      localStorage: serviceLocator<SecureLocalStorage>(),
+    ),
   );
   const webClientId = '36344512343-2socokh5o6csm65fdc6msobdcdqbvhni.apps.googleusercontent.com';
 
   serviceLocator.registerLazySingleton(() => supabase.client);
+
 
   serviceLocator.registerLazySingleton(() => GoogleSignIn(
     serverClientId: webClientId,
